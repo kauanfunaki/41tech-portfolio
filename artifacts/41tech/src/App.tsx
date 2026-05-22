@@ -11,7 +11,6 @@ import { AdminLayout } from "@/components/layout/AdminLayout";
 import Home from "@/pages/Home";
 import Projects from "@/pages/Projects";
 import ProjectDetail from "@/pages/ProjectDetail";
-import Team from "@/pages/Team";
 import CaseDetail from "@/pages/CaseDetail";
 import AboutUs from "@/pages/AboutUs";
 
@@ -75,10 +74,7 @@ function Router() {
       <Route path="/projetos/:slug">
         <PublicLayout><ProjectDetail /></PublicLayout>
       </Route>
-      <Route path="/equipe">
-        <PublicLayout><Team /></PublicLayout>
-      </Route>
-      <Route path="/sobre-nos">
+      <Route path="/sobre-mim">
         <PublicLayout><AboutUs /></PublicLayout>
       </Route>
       <Route path="/cases/:slug">

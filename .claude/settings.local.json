@@ -7,7 +7,11 @@
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\kauan.brasileiro\\\\AppData\\\\Local\" | Where-Object {$_.Name -match \"pnpm\"} | Select-Object Name)",
       "PowerShell(& \"C:\\\\Users\\\\kauan.brasileiro\\\\Desktop\\\\node-v22.20.0-win-x64\\\\node_modules\\\\corepack\\\\shims\\\\pnpm\" --version 2>&1)",
       "PowerShell(Set-Location \"C:\\\\Users\\\\kauan.brasileiro\\\\Documents\\\\1. Apps\\\\41tech-portfolio\"; npx pnpm config set store-dir \"$env:LOCALAPPDATA\\\\pnpm\\\\store\\\\v10\" --global 2>&1)",
-      "PowerShell($env:DATABASE_URL = \"postgresql://portfolio_user:41Tech%402026@localhost:5432/portfolio_db\"; Set-Location \"C:\\\\Users\\\\kauan.brasileiro\\\\Documents\\\\1. Apps\\\\41tech-portfolio\\\\lib\\\\db\"; & \"C:\\\\Users\\\\kauan.brasileiro\\\\Documents\\\\1. Apps\\\\41tech-portfolio\\\\lib\\\\db\\\\node_modules\\\\.bin\\\\drizzle-kit.cmd\" push --config ./drizzle.config.ts 2>&1 | Select-Object -First 30)"
+      "PowerShell($env:DATABASE_URL = \"postgresql://portfolio_user:41Tech%402026@localhost:5432/portfolio_db\"; Set-Location \"C:\\\\Users\\\\kauan.brasileiro\\\\Documents\\\\1. Apps\\\\41tech-portfolio\\\\lib\\\\db\"; & \"C:\\\\Users\\\\kauan.brasileiro\\\\Documents\\\\1. Apps\\\\41tech-portfolio\\\\lib\\\\db\\\\node_modules\\\\.bin\\\\drizzle-kit.cmd\" push --config ./drizzle.config.ts 2>&1 | Select-Object -First 30)",
+      "Bash(pnpm exec *)",
+      "PowerShell(Get-Command pnpm -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Command npx -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Command npm -ErrorAction SilentlyContinue)"
     ]
   }
 }

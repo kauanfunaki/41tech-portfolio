@@ -1,6 +1,6 @@
 import { useGetStatsSummary, getGetStatsSummaryQueryKey } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FolderGit2, Users, Briefcase, Cpu, Loader2 } from "lucide-react";
+import { FolderGit2, Briefcase, Cpu, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
@@ -15,8 +15,8 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground mt-2">Visão geral do sistema</p>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {[1, 2, 3, 4].map(i => (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map(i => (
             <Card key={i}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <Skeleton className="h-4 w-[100px]" />
@@ -48,18 +48,11 @@ export default function Dashboard() {
       color: "text-secondary"
     },
     {
-      title: "Membros da Equipe",
-      value: stats?.totalTeamMembers || 0,
-      icon: Users,
-      description: "Cadastrados no sistema",
-      color: "text-accent"
-    },
-    {
       title: "Tecnologias",
       value: stats?.totalTechnologies || 0,
       icon: Cpu,
       description: "Stack tecnológico",
-      color: "text-destructive"
+      color: "text-accent"
     }
   ];
 
@@ -67,10 +60,10 @@ export default function Dashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground mt-2">Visão geral da infraestrutura corporativa.</p>
+        <p className="text-muted-foreground mt-2">Visão geral do seu portfólio.</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {statCards.map((stat, index) => (
           <Card key={index} className="bg-card border-border hover:border-primary/30 transition-colors">
             <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
