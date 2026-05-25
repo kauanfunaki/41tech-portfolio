@@ -16,8 +16,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
+import { useT } from "@/lib/languageContext";
 
 function CaseDetailInner() {
+  const t = useT();
   const [, params] = useRoute("/cases/:slug");
   const slug = params?.slug || "";
 
@@ -27,10 +29,10 @@ function CaseDetailInner() {
   const { data: settings } = useGetSiteSettings();
 
   useSEO({
-    title: caseStudy?.title ?? "Case",
+    title: caseStudy?.title ?? t.caseDetail.seoFallbackTitle,
     description: caseStudy?.problem
       ? caseStudy.problem.slice(0, 160)
-      : "Estudo de caso detalhado com problema, solução e resultados.",
+      : t.caseDetail.seoFallbackDesc,
     image: caseStudy?.coverImageUrl ?? undefined,
   });
 
@@ -76,10 +78,10 @@ function CaseDetailInner() {
       <div className="container mx-auto px-4 py-40 text-center bg-[#05070D] min-h-screen flex flex-col items-center justify-center">
         <LayoutTemplate className="w-20 h-20 text-muted-foreground mb-8" />
         <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-          Case não encontrado
+          {t.caseDetail.notFound}
         </h1>
         <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
-          <Link href="/cases">Voltar para cases</Link>
+          <Link href="/cases">{t.caseDetail.backToCases}</Link>
         </Button>
       </div>
     );
@@ -98,7 +100,7 @@ function CaseDetailInner() {
             className="inline-flex items-center text-sm font-bold text-[#AAB6D3] hover:text-[#00D8FF] mb-12 transition-colors uppercase tracking-wider"
           >
             <ArrowLeft className="w-5 h-5 mr-3" />
-            Voltar para Cases
+            {t.caseDetail.back}
           </Link>
 
           <motion.div
@@ -109,7 +111,7 @@ function CaseDetailInner() {
           >
             <div className="flex flex-wrap gap-3 mb-6">
               <Badge className="bg-background/80 text-white border-[rgba(255,255,255,0.1)] hover:bg-background text-sm px-4 py-1">
-                Estudo de Caso
+                {t.caseDetail.badge}
               </Badge>
               {caseStudy.clientSegment && (
                 <Badge className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 text-sm px-4 py-1">
@@ -169,7 +171,7 @@ function CaseDetailInner() {
               >
                 <a href={caseStudy.relatedUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-5 h-5 mr-2" />
-                  Ver projeto relacionado
+                  {t.caseDetail.relatedProject}
                 </a>
               </Button>
             </div>
@@ -186,7 +188,7 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">Impacto Direto</h2>
+                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.caseDetail.impact}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {metrics.map((metric, i) => (
                     <div
@@ -200,7 +202,7 @@ function CaseDetailInner() {
               </motion.section>
             )}
 
-            {/* Problem */}
+            {/* Challenge */}
             {caseStudy.problem && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
@@ -211,7 +213,7 @@ function CaseDetailInner() {
                   <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                     <AlertTriangle className="w-6 h-6 text-red-500" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">O Desafio</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.caseDetail.challenge}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-red-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(239,68,68,0.05)]">
                   <p className="whitespace-pre-wrap">{caseStudy.problem}</p>
@@ -230,7 +232,7 @@ function CaseDetailInner() {
                   <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                     <Zap className="w-6 h-6 text-primary" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">A Solução</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.caseDetail.solution}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-primary/30 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(18,61,255,0.05)]">
                   <p className="whitespace-pre-wrap">{caseStudy.solution}</p>
@@ -249,7 +251,7 @@ function CaseDetailInner() {
                   <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-emerald-400" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">O Resultado</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.caseDetail.result}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(16,185,129,0.05)]">
                   <p className="whitespace-pre-wrap">{caseStudy.result}</p>
@@ -264,7 +266,7 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">Galeria</h2>
+                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.caseDetail.gallery}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {galleryImages.map((imgUrl, i) => (
                     <div
@@ -273,7 +275,7 @@ function CaseDetailInner() {
                     >
                       <img
                         src={imgUrl}
-                        alt={`Galeria ${i + 1}`}
+                        alt={`${t.caseDetail.gallery} ${i + 1}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
                     </div>
@@ -290,18 +292,16 @@ function CaseDetailInner() {
               className="pt-12 border-t border-[rgba(255,255,255,0.05)]"
             >
               <div className="p-12 rounded-2xl bg-gradient-to-br from-[#061A44] to-[#0B1020] border border-primary/20 text-center">
-                <h3 className="text-3xl font-bold text-white mb-4">
-                  Gostou deste case?
-                </h3>
+                <h3 className="text-3xl font-bold text-white mb-4">{t.caseDetail.ctaTitle}</h3>
                 <p className="text-[#AAB6D3] text-lg mb-8 max-w-xl mx-auto">
-                  Posso desenvolver uma solução com o mesmo nível de resultado para o seu negócio.
+                  {t.caseDetail.ctaSubtitle}
                 </p>
                 <Button
                   size="lg"
                   onClick={handleContactClick}
                   className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue"
                 >
-                  Falar comigo <Send className="ml-2 w-4 h-4" />
+                  {t.caseDetail.ctaBtn} <Send className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </motion.section>
@@ -311,24 +311,24 @@ function CaseDetailInner() {
           <div className="lg:col-span-4">
             <div className="p-8 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] space-y-8 sticky top-32 glassmorphism">
               <h3 className="font-bold text-2xl text-white border-b border-[rgba(255,255,255,0.1)] pb-6">
-                Detalhes do Case
+                {t.caseDetail.sidebarTitle}
               </h3>
 
               <div className="space-y-6">
                 <div>
                   <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-3">
-                    Tipo
+                    {t.caseDetail.typeLabel}
                   </span>
                   <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-[#061A44] text-[#00D8FF] border border-[#00D8FF]/30">
                     <Briefcase className="w-4 h-4" />
-                    Estudo de Caso
+                    {t.caseDetail.badge}
                   </span>
                 </div>
 
                 {caseStudy.clientSegment && (
                   <div className="pt-6 border-t border-[rgba(255,255,255,0.1)]">
                     <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-3">
-                      Segmento
+                      {t.caseDetail.segmentLabel}
                     </span>
                     <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-primary/10 text-primary border border-primary/20">
                       {caseStudy.clientSegment}
@@ -339,7 +339,7 @@ function CaseDetailInner() {
                 {metrics.length > 0 && (
                   <div className="pt-6 border-t border-[rgba(255,255,255,0.1)]">
                     <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-4">
-                      Resultados
+                      {t.caseDetail.resultsLabel}
                     </span>
                     <div className="space-y-2">
                       {metrics.map((m, i) => (
@@ -362,7 +362,7 @@ function CaseDetailInner() {
                     >
                       <a href={caseStudy.relatedUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Projeto relacionado
+                        {t.caseDetail.relatedProjectBtn}
                       </a>
                     </Button>
                   </div>

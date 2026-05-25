@@ -7,8 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
+import { useT } from "@/lib/languageContext";
 
 export default function ProjectDetail() {
+  const t = useT();
   const [, params] = useRoute("/projetos/:slug");
   const slug = params?.slug || "";
 
@@ -37,8 +39,8 @@ export default function ProjectDetail() {
   );
 
   useSEO({
-    title: project?.title ?? "Projeto",
-    description: project?.shortDescription ?? "Detalhes do projeto no portfólio de Kauan Funaki.",
+    title: project?.title ?? t.projectDetail.seoFallbackTitle,
+    description: project?.shortDescription ?? t.projectDetail.seoFallbackDesc,
     image: project?.coverImageUrl ?? project?.thumbnailUrl ?? undefined,
   });
 
@@ -73,9 +75,11 @@ export default function ProjectDetail() {
     return (
       <div className="container mx-auto px-4 py-40 text-center bg-[#05070D] min-h-screen flex flex-col items-center justify-center">
         <LayoutTemplate className="w-20 h-20 text-muted-foreground mb-8" />
-        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">Projeto não encontrado</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+          {t.projectDetail.notFound}
+        </h1>
         <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
-          <Link href="/projetos">Voltar para projetos</Link>
+          <Link href="/projetos">{t.projectDetail.backToProjects}</Link>
         </Button>
       </div>
     );
@@ -88,9 +92,12 @@ export default function ProjectDetail() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <Link href="/projetos" className="inline-flex items-center text-sm font-bold text-[#AAB6D3] hover:text-[#00D8FF] mb-12 transition-colors uppercase tracking-wider">
+          <Link
+            href="/projetos"
+            className="inline-flex items-center text-sm font-bold text-[#AAB6D3] hover:text-[#00D8FF] mb-12 transition-colors uppercase tracking-wider"
+          >
             <ArrowLeft className="w-5 h-5 mr-3" />
-            Voltar ao Portfólio
+            {t.projectDetail.back}
           </Link>
 
           <motion.div
@@ -107,7 +114,7 @@ export default function ProjectDetail() {
               )}
               {project.featured && (
                 <Badge className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 text-sm px-4 py-1">
-                  Projeto Destaque
+                  {t.projectDetail.featured}
                 </Badge>
               )}
             </div>
@@ -161,18 +168,27 @@ export default function ProjectDetail() {
           {(project.demoUrl || project.repositoryUrl) && (
             <div className="flex flex-wrap gap-4 mb-12">
               {project.demoUrl && (
-                <Button asChild size="lg" className="h-12 px-6 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-12 px-6 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0"
+                >
                   <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-5 h-5 mr-2" />
-                    Ver demonstração
+                    {t.projectDetail.demo}
                   </a>
                 </Button>
               )}
               {project.repositoryUrl && (
-                <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base font-bold border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-12 px-6 text-base font-bold border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism"
+                >
                   <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">
                     <Github className="w-5 h-5 mr-2" />
-                    Repositório
+                    {t.projectDetail.repo}
                   </a>
                 </Button>
               )}
@@ -189,7 +205,7 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">Impacto Direto</h2>
+                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.impact}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {metrics.map((metric, i) => (
                     <div key={i} className="p-6 rounded-2xl bg-[rgba(18,61,255,0.05)] border border-[rgba(18,61,255,0.1)] flex items-center justify-center text-center">
@@ -206,7 +222,7 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">Visão Geral</h2>
+                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.overview}</h2>
                 <div className="prose prose-invert max-w-none text-xl text-[#AAB6D3] leading-relaxed">
                   <p className="whitespace-pre-wrap">{project.fullDescription}</p>
                 </div>
@@ -223,7 +239,7 @@ export default function ProjectDetail() {
                   <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                     <AlertTriangle className="w-6 h-6 text-red-500" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">O Problema</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.problem}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-red-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(239,68,68,0.05)]">
                   <p className="whitespace-pre-wrap">{project.problem}</p>
@@ -241,7 +257,7 @@ export default function ProjectDetail() {
                   <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                     <Zap className="w-6 h-6 text-primary" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">A Solução</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.solution}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-primary/30 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(18,61,255,0.05)]">
                   <p className="whitespace-pre-wrap">{project.solution}</p>
@@ -259,7 +275,7 @@ export default function ProjectDetail() {
                   <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-emerald-400" />
                   </div>
-                  <h2 className="text-3xl font-bold text-foreground">O Resultado</h2>
+                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.result}</h2>
                 </div>
                 <div className="p-8 md:p-10 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(16,185,129,0.05)]">
                   <p className="whitespace-pre-wrap">{project.result}</p>
@@ -273,11 +289,15 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">Galeria</h2>
+                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.gallery}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {galleryImages.map((imgUrl, i) => (
                     <div key={i} className="aspect-video w-full rounded-xl overflow-hidden border border-[rgba(255,255,255,0.1)] bg-[#0B1020]">
-                      <img src={imgUrl} alt={`Galeria ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                      <img
+                        src={imgUrl}
+                        alt={`${t.projectDetail.gallery} ${i + 1}`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
                   ))}
                 </div>
@@ -291,12 +311,16 @@ export default function ProjectDetail() {
               className="pt-12 border-t border-[rgba(255,255,255,0.05)]"
             >
               <div className="p-12 rounded-2xl bg-gradient-to-br from-[#061A44] to-[#0B1020] border border-primary/20 text-center">
-                <h3 className="text-3xl font-bold text-white mb-4">Gostou deste projeto?</h3>
+                <h3 className="text-3xl font-bold text-white mb-4">{t.projectDetail.ctaTitle}</h3>
                 <p className="text-[#AAB6D3] text-lg mb-8 max-w-xl mx-auto">
-                  Posso construir uma solução com este mesmo nível de qualidade para a sua empresa.
+                  {t.projectDetail.ctaSubtitle}
                 </p>
-                <Button size="lg" onClick={handleContactClick} className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue">
-                  Falar comigo <Send className="ml-2 w-4 h-4" />
+                <Button
+                  size="lg"
+                  onClick={handleContactClick}
+                  className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue"
+                >
+                  {t.projectDetail.ctaBtn} <Send className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </motion.section>
@@ -304,19 +328,29 @@ export default function ProjectDetail() {
 
           <div className="lg:col-span-4">
             <div className="p-8 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] space-y-8 sticky top-32 glassmorphism">
-              <h3 className="font-bold text-2xl text-white border-b border-[rgba(255,255,255,0.1)] pb-6">Detalhes Técnicos</h3>
+              <h3 className="font-bold text-2xl text-white border-b border-[rgba(255,255,255,0.1)] pb-6">
+                {t.projectDetail.sidebarTitle}
+              </h3>
 
               <div className="space-y-6">
                 <div>
-                  <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-3">Status do Projeto</span>
+                  <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-3">
+                    {t.projectDetail.statusLabel}
+                  </span>
                   <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-[#061A44] text-[#00D8FF] border border-[#00D8FF]/30 capitalize">
-                    {project.status === 'completed' ? 'Concluído' : project.status === 'in_progress' ? 'Em Andamento' : project.status}
+                    {project.status === "completed"
+                      ? t.projectDetail.statusCompleted
+                      : project.status === "in_progress"
+                      ? t.projectDetail.statusInProgress
+                      : project.status}
                   </span>
                 </div>
 
                 {projectTechs && projectTechs.length > 0 && (
                   <div className="pt-6 border-t border-[rgba(255,255,255,0.1)]">
-                    <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-4">Stack Utilizada</span>
+                    <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-4">
+                      {t.projectDetail.stackUsed}
+                    </span>
                     <div className="flex flex-wrap gap-2">
                       {projectTechs.map((tech) => (
                         <div
@@ -332,7 +366,9 @@ export default function ProjectDetail() {
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                           ) : (
-                            <span className="text-[#00D8FF] font-bold text-sm leading-none">{tech.name.charAt(0)}</span>
+                            <span className="text-[#00D8FF] font-bold text-sm leading-none">
+                              {tech.name.charAt(0)}
+                            </span>
                           )}
                           <span className="font-mono">{tech.name}</span>
                         </div>
@@ -344,18 +380,25 @@ export default function ProjectDetail() {
                 {(project.demoUrl || project.repositoryUrl) && (
                   <div className="pt-6 border-t border-[rgba(255,255,255,0.1)] space-y-4">
                     {project.demoUrl && (
-                      <Button asChild className="w-full h-14 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue justify-center">
+                      <Button
+                        asChild
+                        className="w-full h-14 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue justify-center"
+                      >
                         <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-5 h-5 mr-3" />
-                          Ver Demonstração
+                          {t.projectDetail.demo}
                         </a>
                       </Button>
                     )}
                     {project.repositoryUrl && (
-                      <Button asChild className="w-full h-14 text-base font-bold justify-center border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism" variant="outline">
+                      <Button
+                        asChild
+                        className="w-full h-14 text-base font-bold justify-center border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism"
+                        variant="outline"
+                      >
                         <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">
                           <Github className="w-5 h-5 mr-3" />
-                          Repositório
+                          {t.projectDetail.repo}
                         </a>
                       </Button>
                     )}

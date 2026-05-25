@@ -5,26 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { useGetSiteSettings, useListTechnologies, useListTeamMembers } from "@workspace/api-client-react";
 import { Send, CheckCircle2, Github, Linkedin, MapPin } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
-
-const DIFFERENTIALS = [
-  "Entendo a operação antes de escrever código",
-  "Crio soluções sob medida para cada negócio",
-  "Conecto dados, sistemas e pessoas",
-  "Penso em escala, segurança e manutenção",
-];
-
-const STEPS = [
-  { num: "01", title: "Diagnóstico do processo", desc: "Mapeio o fluxo atual, os gargalos e as oportunidades de melhoria." },
-  { num: "02", title: "Desenho da solução", desc: "Defino a arquitetura e as ferramentas ideais para o seu contexto." },
-  { num: "03", title: "Desenvolvimento", desc: "Construo com agilidade, boas práticas e código limpo." },
-  { num: "04", title: "Validação com usuários", desc: "Testo junto a quem vai usar no dia a dia, refinando o produto." },
-  { num: "05", title: "Deploy e melhoria contínua", desc: "Coloco em produção e evoluo com base no uso real." },
-];
+import { useT } from "@/lib/languageContext";
 
 export default function AboutUs() {
+  const t = useT();
+
   useSEO({
-    title: "Sobre mim",
-    description: "Desenvolvedor Full Stack B2B focado em sistemas, automações e inteligência de dados. Conheça minha história e stack tecnológico.",
+    title: t.about.title,
+    description: t.about.seoDescription,
   });
 
   const { data: settings } = useGetSiteSettings();
@@ -64,13 +52,13 @@ export default function AboutUs() {
         <div className="container mx-auto px-4 relative z-10 max-w-4xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              Minha história
+              {t.about.badge}
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-foreground tracking-tight leading-tight">
-              Sobre mim
+              {t.about.title}
             </h1>
             <p className="text-xl md:text-2xl text-[#AAB6D3] leading-relaxed">
-              Desenvolvedor Full Stack focado em transformar operação real em sistemas, automações e inteligência de dados.
+              {t.about.subtitle}
             </p>
           </motion.div>
         </div>
@@ -117,7 +105,7 @@ export default function AboutUs() {
                   <p className="text-sm font-mono text-primary font-bold mt-1">{me?.roleTitle ?? "Dev Full Stack"}</p>
                   <div className="flex items-center justify-center gap-1 mt-2 text-xs text-[#AAB6D3]">
                     <MapPin className="w-3 h-3" />
-                    Brasil
+                    {t.footer.country}
                   </div>
                 </div>
 
@@ -148,17 +136,17 @@ export default function AboutUs() {
               {/* Right — bio + skills */}
               <div className="flex-1 p-10 md:p-12 flex flex-col justify-center gap-8">
                 <div>
-                  <h2 className="text-3xl font-extrabold text-foreground mb-4">Quem sou</h2>
+                  <h2 className="text-3xl font-extrabold text-foreground mb-4">{t.about.sectionWho}</h2>
                   <p className="text-lg text-[#AAB6D3] leading-relaxed">
-                    {me?.bio
-                      ? me.bio
-                      : "Uno desenvolvimento de software, automação, BI, integrações e inteligência artificial para resolver gargalos operacionais reais dentro de empresas. Comecei no Grupo 41 resolvendo problemas internos — e rapidamente percebi que essas soluções valem para muitas outras empresas."}
+                    {me?.bio ? me.bio : t.about.defaultBio}
                   </p>
                 </div>
 
                 {me?.skills && me.skills.length > 0 && (
                   <div>
-                    <p className="text-xs font-bold text-[#AAB6D3] uppercase tracking-widest mb-3">Especialidades</p>
+                    <p className="text-xs font-bold text-[#AAB6D3] uppercase tracking-widest mb-3">
+                      {t.about.specialties}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {me.skills.map((skill) => (
                         <Badge
@@ -176,7 +164,7 @@ export default function AboutUs() {
                   <div className="px-4 py-2 rounded-xl bg-primary/10 border border-primary/20">
                     <span className="text-2xl font-extrabold text-primary">B2B</span>
                   </div>
-                  <p className="text-sm text-[#AAB6D3]">Focado em empresas que precisam de tecnologia séria para problemas sérios.</p>
+                  <p className="text-sm text-[#AAB6D3]">{t.about.b2bLabel}</p>
                 </div>
               </div>
             </div>
@@ -190,9 +178,9 @@ export default function AboutUs() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-extrabold mb-12 text-foreground">O que me diferencia</h2>
+          <h2 className="text-4xl font-extrabold mb-12 text-foreground">{t.about.sectionDiff}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {DIFFERENTIALS.map((item, i) => (
+            {t.about.differentials.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
@@ -215,9 +203,9 @@ export default function AboutUs() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-extrabold mb-12 text-foreground">Como trabalho</h2>
+          <h2 className="text-4xl font-extrabold mb-12 text-foreground">{t.about.sectionHow}</h2>
           <div className="space-y-0">
-            {STEPS.map((step, i) => (
+            {t.about.steps.map((step, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
@@ -229,18 +217,18 @@ export default function AboutUs() {
                 {/* Icon + connector column */}
                 <div className="flex flex-col items-center shrink-0">
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0D1A3D] to-[#05070D] border border-primary/30 flex items-center justify-center shadow-[0_0_16px_rgba(18,61,255,0.15)]">
-                    <span className="text-sm font-black text-primary">{step.num}</span>
+                    <span className="text-sm font-black text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  {i < STEPS.length - 1 && (
+                  {i < t.about.steps.length - 1 && (
                     <div className="w-px flex-1 my-2 min-h-[2rem] bg-gradient-to-b from-primary/40 to-primary/10" />
                   )}
                 </div>
 
                 {/* Content */}
-                <div className={`pt-2 ${i < STEPS.length - 1 ? "pb-10" : ""}`}>
-                  <h3 className="text-xl font-bold text-foreground mb-2">
-                    {step.title}
-                  </h3>
+                <div className={`pt-2 ${i < t.about.steps.length - 1 ? "pb-10" : ""}`}>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{step.title}</h3>
                   <p className="text-[#AAB6D3] text-lg leading-relaxed">{step.desc}</p>
                 </div>
               </motion.div>
@@ -256,7 +244,7 @@ export default function AboutUs() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl font-extrabold mb-12 text-foreground">Minha stack</h2>
+            <h2 className="text-4xl font-extrabold mb-12 text-foreground">{t.about.sectionStack}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {techGroups.map((group, i) => (
                 <motion.div
@@ -284,7 +272,9 @@ export default function AboutUs() {
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                         ) : (
-                          <span className="text-[#00D8FF] font-bold text-sm leading-none">{tech.name.charAt(0)}</span>
+                          <span className="text-[#00D8FF] font-bold text-sm leading-none">
+                            {tech.name.charAt(0)}
+                          </span>
                         )}
                         <span className="font-mono text-sm">{tech.name}</span>
                       </div>
@@ -307,17 +297,17 @@ export default function AboutUs() {
             <div className="absolute inset-0 tech-grid opacity-20" />
             <div className="relative z-10">
               <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
-                Tem um processo manual travando sua operação?
+                {t.about.ctaTitle}
               </h3>
               <p className="text-[#AAB6D3] text-xl mb-10 max-w-2xl mx-auto">
-                Posso transformar isso em sistema. Vamos conversar.
+                {t.about.ctaSubtitle}
               </p>
               <Button
                 size="lg"
                 onClick={handleContactClick}
                 className="h-14 px-10 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue"
               >
-                Falar comigo <Send className="ml-2 w-5 h-5" />
+                {t.about.ctaBtn} <Send className="ml-2 w-5 h-5" />
               </Button>
             </div>
           </div>

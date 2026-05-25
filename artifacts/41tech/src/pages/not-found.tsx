@@ -2,8 +2,11 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Home, FolderGit2, ArrowRight, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/languageContext";
 
 export default function NotFound() {
+  const t = useT();
+
   return (
     <div className="min-h-screen bg-[#05070D] flex items-center justify-center relative overflow-hidden">
       <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" />
@@ -20,12 +23,12 @@ export default function NotFound() {
         </div>
 
         <h1 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4 -mt-4">
-          Página não encontrada
+          {t.notFound.title}
         </h1>
         <p className="text-lg text-[#AAB6D3] mb-12 leading-relaxed">
-          A página que você está procurando não existe ou foi movida.
+          {t.notFound.desc1}
           <br />
-          Explore o portfólio pelos links abaixo.
+          {t.notFound.desc2}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -36,7 +39,7 @@ export default function NotFound() {
           >
             <Link href="/">
               <Home className="w-5 h-5 mr-2" />
-              Início
+              {t.notFound.home}
             </Link>
           </Button>
 
@@ -48,7 +51,7 @@ export default function NotFound() {
           >
             <Link href="/projetos">
               <FolderGit2 className="w-5 h-5 mr-2" />
-              Ver Projetos
+              {t.notFound.projects}
             </Link>
           </Button>
 
@@ -60,7 +63,7 @@ export default function NotFound() {
           >
             <Link href="/cases">
               <Briefcase className="w-5 h-5 mr-2" />
-              Ver Cases <ArrowRight className="w-4 h-4 ml-1" />
+              {t.notFound.cases} <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </Button>
         </div>

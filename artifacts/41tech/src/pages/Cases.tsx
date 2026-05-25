@@ -7,12 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
+import { useT } from "@/lib/languageContext";
 
 export default function Cases() {
+  const t = useT();
+
   useSEO({
-    title: "Cases",
-    description:
-      "Estudos de caso detalhados: problemas reais, soluções desenvolvidas e resultados mensuráveis.",
+    title: t.cases.title,
+    description: t.cases.subtitle,
   });
 
   const { data: cases, isLoading } = useListCases();
@@ -48,14 +50,13 @@ export default function Cases() {
             className="max-w-3xl mb-12"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              Estudos de Caso
+              {t.cases.badge}
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-foreground tracking-tight">
-              Cases
+              {t.cases.title}
             </h1>
             <p className="text-xl md:text-2xl text-[#AAB6D3] leading-relaxed">
-              Problemas reais, soluções desenvolvidas e resultados mensuráveis —
-              detalhados do início ao fim.
+              {t.cases.subtitle}
             </p>
           </motion.div>
 
@@ -69,7 +70,7 @@ export default function Cases() {
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar por título, segmento..."
+                placeholder={t.cases.searchPlaceholder}
                 className="pl-12 h-14 bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.1)] focus-visible:ring-primary text-lg"
               />
             </div>
@@ -139,7 +140,7 @@ export default function Cases() {
 
                       <div className="mt-auto overflow-hidden relative z-10">
                         <div className="flex items-center text-primary font-semibold translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                          Ver case completo{" "}
+                          {t.cases.viewFull}{" "}
                           <ArrowRight className="w-5 h-5 ml-2" />
                         </div>
                       </div>
@@ -153,12 +154,10 @@ export default function Cases() {
           <div className="text-center py-32 bg-[#0B1020] border border-[rgba(255,255,255,0.05)] rounded-2xl">
             <Briefcase className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
             <h3 className="text-2xl font-bold text-foreground mb-2">
-              {searchQuery ? "Nenhum case encontrado" : "Nenhum case publicado ainda"}
+              {searchQuery ? t.cases.emptySearchTitle : t.cases.emptyNoneTitle}
             </h3>
             <p className="text-[#AAB6D3] text-lg">
-              {searchQuery
-                ? "Nenhum case corresponde à busca."
-                : "Em breve haverá estudos de caso disponíveis aqui."}
+              {searchQuery ? t.cases.emptySearchDesc : t.cases.emptyNoneDesc}
             </p>
           </div>
         )}
@@ -168,8 +167,7 @@ export default function Cases() {
           <div className="mt-12 flex items-center gap-3 text-sm text-[#AAB6D3] justify-center">
             <Lock className="w-4 h-4" />
             <span>
-              {cases.filter((c) => c.isPublic === false).length} case(s) privados
-              não exibidos publicamente
+              {cases.filter((c) => c.isPublic === false).length} {t.cases.privateCases}
             </span>
           </div>
         )}
