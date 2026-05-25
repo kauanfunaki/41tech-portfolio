@@ -286,10 +286,10 @@ export default function ProjectDetail() {
               <div className="p-12 rounded-2xl bg-gradient-to-br from-[#061A44] to-[#0B1020] border border-primary/20 text-center">
                 <h3 className="text-3xl font-bold text-white mb-4">Gostou deste projeto?</h3>
                 <p className="text-[#AAB6D3] text-lg mb-8 max-w-xl mx-auto">
-                  Podemos construir uma solução com este mesmo nível de qualidade para a sua empresa.
+                  Posso construir uma solução com este mesmo nível de qualidade para a sua empresa.
                 </p>
                 <Button size="lg" onClick={handleContactClick} className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue">
-                  Falar conosco <Send className="ml-2 w-4 h-4" />
+                  Falar comigo <Send className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </motion.section>

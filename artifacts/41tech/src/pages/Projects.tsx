@@ -49,11 +49,11 @@ export default function Projects() {
             className="max-w-3xl mb-12"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              Nosso Portfólio
+              Meu Portfólio
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-foreground tracking-tight">Projetos</h1>
             <p className="text-xl md:text-2xl text-[#AAB6D3] leading-relaxed">
-              Conheça os sistemas e plataformas que construímos para otimizar operações corporativas.
+              Conheça os sistemas e plataformas que construí para otimizar operações corporativas.
             </p>
           </motion.div>
 

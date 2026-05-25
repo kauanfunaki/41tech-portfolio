@@ -1,8 +1,9 @@
-import { Link } from "wouter";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useGetSiteSettings, useListTechnologies } from "@workspace/api-client-react";
-import { Send, CheckCircle2, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useGetSiteSettings, useListTechnologies, useListTeamMembers } from "@workspace/api-client-react";
+import { Send, CheckCircle2, Github, Linkedin, MapPin } from "lucide-react";
 
 const DIFFERENTIALS = [
   "Entendo a operação antes de escrever código",
@@ -22,6 +23,23 @@ const STEPS = [
 export default function AboutUs() {
   const { data: settings } = useGetSiteSettings();
   const { data: technologies } = useListTechnologies();
+  const { data: teamMembers } = useListTeamMembers();
+
+  const me = useMemo(() => {
+    if (!teamMembers?.length) return null;
+    return teamMembers.filter(m => m.isActive).sort((a, b) => a.sortOrder - b.sortOrder)[0] ?? null;
+  }, [teamMembers]);
+
+  const techGroups = useMemo(() => {
+    if (!technologies?.length) return [];
+    const map: Record<string, typeof technologies> = {};
+    for (const tech of technologies) {
+      const cat = tech.category || "Outros";
+      if (!map[cat]) map[cat] = [];
+      map[cat].push(tech);
+    }
+    return Object.entries(map).map(([category, techs]) => ({ category, techs }));
+  }, [technologies]);
 
   const handleContactClick = () => {
     if (settings?.whatsappUrl) {
@@ -54,30 +72,105 @@ export default function AboutUs() {
 
       <div className="container mx-auto px-4 py-24 space-y-32 max-w-5xl">
 
-        {/* Quem somos */}
+        {/* Profile Card */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl font-extrabold mb-6 text-foreground">Quem sou</h2>
-              <p className="text-xl text-[#AAB6D3] leading-relaxed">
-                Uno desenvolvimento de software, automação, BI, integrações e inteligência artificial para resolver gargalos operacionais reais dentro de empresas.
-              </p>
-              <p className="text-xl text-[#AAB6D3] leading-relaxed mt-4">
-                Comecei no Grupo 41 resolvendo problemas internos — e rapidamente percebi que essas soluções valem para muitas outras empresas.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] p-10 relative overflow-hidden">
-              <div className="absolute inset-0 tech-grid opacity-20" />
-              <div className="relative z-10 space-y-6">
-                <div className="text-5xl font-extrabold text-primary">B2B</div>
-                <p className="text-[#AAB6D3] text-lg">Focado em empresas que precisam de tecnologia séria para problemas sérios.</p>
-                <div className="pt-4 border-t border-[rgba(255,255,255,0.08)]">
-                  <span className="font-mono font-bold text-lg text-primary tracking-tight">Kauan Funaki</span>
+          <div className="rounded-3xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] overflow-hidden relative">
+            <div className="absolute inset-0 tech-grid opacity-10 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col md:flex-row gap-0">
+              {/* Left — avatar + social */}
+              <div className="flex flex-col items-center justify-center gap-6 p-10 md:p-12 md:border-r border-[rgba(255,255,255,0.06)] md:w-72 shrink-0">
+                <div className="relative">
+                  <div className="w-44 h-44 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_40px_rgba(18,61,255,0.2)]">
+                    {me?.avatarUrl ? (
+                      <img
+                        src={me.avatarUrl}
+                        alt={me.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#061A44] to-[#123DFF]/20 flex items-center justify-center text-5xl font-extrabold text-white">
+                        {(me?.name ?? "K").charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 border-2 border-[#0B1020] flex items-center justify-center">
+                    <span className="w-3 h-3 rounded-full bg-white animate-pulse" />
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <p className="text-xl font-extrabold text-white">{me?.name ?? "Kauan Funaki"}</p>
+                  <p className="text-sm font-mono text-primary font-bold mt-1">{me?.roleTitle ?? "Dev Full Stack"}</p>
+                  <div className="flex items-center justify-center gap-1 mt-2 text-xs text-[#AAB6D3]">
+                    <MapPin className="w-3 h-3" />
+                    Brasil
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  {(me?.linkedinUrl ?? settings?.linkedinUrl) && (
+                    <a
+                      href={me?.linkedinUrl ?? settings?.linkedinUrl ?? "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[#AAB6D3] hover:text-white hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all duration-300"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                  )}
+                  {me?.githubUrl && (
+                    <a
+                      href={me.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[#AAB6D3] hover:text-white hover:bg-[#333] hover:border-[#555] transition-all duration-300"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Right — bio + skills */}
+              <div className="flex-1 p-10 md:p-12 flex flex-col justify-center gap-8">
+                <div>
+                  <h2 className="text-3xl font-extrabold text-foreground mb-4">Quem sou</h2>
+                  <p className="text-lg text-[#AAB6D3] leading-relaxed">
+                    {me?.bio
+                      ? me.bio
+                      : "Uno desenvolvimento de software, automação, BI, integrações e inteligência artificial para resolver gargalos operacionais reais dentro de empresas. Comecei no Grupo 41 resolvendo problemas internos — e rapidamente percebi que essas soluções valem para muitas outras empresas."}
+                  </p>
+                </div>
+
+                {me?.skills && me.skills.length > 0 && (
+                  <div>
+                    <p className="text-xs font-bold text-[#AAB6D3] uppercase tracking-widest mb-3">Especialidades</p>
+                    <div className="flex flex-wrap gap-2">
+                      {me.skills.map((skill) => (
+                        <Badge
+                          key={skill}
+                          className="bg-[rgba(18,61,255,0.08)] text-[#00D8FF] border border-[rgba(18,61,255,0.25)] font-mono text-xs font-normal px-3 py-1 hover:bg-[rgba(18,61,255,0.15)] transition-colors"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-4 pt-4 border-t border-[rgba(255,255,255,0.06)]">
+                  <div className="px-4 py-2 rounded-xl bg-primary/10 border border-primary/20">
+                    <span className="text-2xl font-extrabold text-primary">B2B</span>
+                  </div>
+                  <p className="text-sm text-[#AAB6D3]">Focado em empresas que precisam de tecnologia séria para problemas sérios.</p>
                 </div>
               </div>
             </div>
@@ -109,7 +202,7 @@ export default function AboutUs() {
           </div>
         </motion.section>
 
-        {/* Como trabalhamos */}
+        {/* Como trabalho */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -117,36 +210,40 @@ export default function AboutUs() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl font-extrabold mb-12 text-foreground">Como trabalho</h2>
-          <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-[#00D8FF]/30 to-transparent hidden md:block" />
-            <div className="space-y-8">
-              {STEPS.map((step, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex gap-8 items-start md:pl-4"
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 relative z-10">
+          <div className="space-y-0">
+            {STEPS.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex gap-6 items-start"
+              >
+                {/* Icon + connector column */}
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0D1A3D] to-[#05070D] border border-primary/30 flex items-center justify-center shadow-[0_0_16px_rgba(18,61,255,0.15)]">
                     <span className="text-sm font-black text-primary">{step.num}</span>
                   </div>
-                  <div className="pt-2">
-                    <h3 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-                      {step.title}
-                      <ChevronRight className="w-4 h-4 text-primary" />
-                    </h3>
-                    <p className="text-[#AAB6D3] text-lg leading-relaxed">{step.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  {i < STEPS.length - 1 && (
+                    <div className="w-px flex-1 my-2 min-h-[2rem] bg-gradient-to-b from-primary/40 to-primary/10" />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className={`pt-2 ${i < STEPS.length - 1 ? "pb-10" : ""}`}>
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-[#AAB6D3] text-lg leading-relaxed">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.section>
 
-        {/* Nossa stack */}
-        {technologies && technologies.length > 0 && (
+        {/* Minha stack */}
+        {techGroups.length > 0 && (
           <motion.section
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -154,14 +251,40 @@ export default function AboutUs() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl font-extrabold mb-12 text-foreground">Minha stack</h2>
-            <div className="flex flex-wrap gap-3">
-              {technologies.map((tech) => (
-                <div
-                  key={tech.id}
-                  className="px-5 py-3 rounded-xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] text-[#AAB6D3] font-medium hover:border-primary/40 hover:text-white transition-all"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {techGroups.map((group, i) => (
+                <motion.div
+                  key={group.category}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="space-y-5"
                 >
-                  {tech.name}
-                </div>
+                  <h3 className="text-base font-bold text-white border-b border-[rgba(255,255,255,0.1)] pb-3">
+                    {group.category}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {group.techs.map((tech) => (
+                      <div
+                        key={tech.id}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[rgba(18,61,255,0.12)] border border-[rgba(18,61,255,0.3)] text-white hover:bg-[rgba(18,61,255,0.2)] hover:scale-105 hover:border-[#00D8FF]/50 transition-all cursor-default"
+                      >
+                        {tech.iconUrl ? (
+                          <img
+                            src={tech.iconUrl}
+                            alt={tech.name}
+                            className="w-4 h-4 object-contain"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                          />
+                        ) : (
+                          <span className="text-[#00D8FF] font-bold text-sm leading-none">{tech.name.charAt(0)}</span>
+                        )}
+                        <span className="font-mono text-sm">{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </motion.section>
@@ -181,7 +304,7 @@ export default function AboutUs() {
                 Tem um processo manual travando sua operação?
               </h3>
               <p className="text-[#AAB6D3] text-xl mb-10 max-w-2xl mx-auto">
-                Podemos transformar isso em sistema. Vamos conversar.
+                Posso transformar isso em sistema. Vamos conversar.
               </p>
               <Button
                 size="lg"

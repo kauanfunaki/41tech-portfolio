@@ -119,7 +119,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-[#AAB6D3] max-w-2xl mx-auto leading-relaxed">
-              Criamos sistemas, automações, dashboards e integrações que transformam processos manuais em soluções digitais escaláveis.
+              Crio sistemas, automações, dashboards e integrações que transformam processos manuais em soluções digitais escaláveis.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
               <Button size="lg" onClick={handlePrimaryCtaClick} className="w-full sm:w-auto h-14 px-8 text-base font-semibold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue">
@@ -142,7 +142,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">O que fazemos</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">O que faço</h2>
             <p className="text-xl text-[#AAB6D3] max-w-2xl mx-auto">Engenharia de software focada em resolver gargalos operacionais complexos.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -264,7 +264,7 @@ export default function Home() {
               className="text-center mb-20"
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">Stack Tecnológico</h2>
-              <p className="text-xl text-[#AAB6D3] max-w-2xl mx-auto">Utilizamos as ferramentas certas para cada problema real.</p>
+              <p className="text-xl text-[#AAB6D3] max-w-2xl mx-auto">Utilizo as ferramentas certas para cada problema real.</p>
             </motion.div>
 
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -323,7 +323,7 @@ export default function Home() {
             Se existe uma rotina repetitiva, uma planilha crítica ou um processo manual travando sua operação, podemos transformar isso em sistema.
           </p>
           <Button size="lg" onClick={handlePrimaryCtaClick} className="h-16 px-10 text-lg font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue hover:scale-105 transition-transform">
-            Falar conosco
+            Falar comigo
           </Button>
         </motion.div>
       </section>
@@ -338,7 +338,7 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground tracking-tight">Vamos construir algo incrível.</h2>
-            <p className="text-lg text-[#AAB6D3]">Conte-nos sobre o seu desafio. Nós ajudamos a encontrar a melhor solução.</p>
+            <p className="text-lg text-[#AAB6D3]">Conte-me sobre o seu desafio. Posso ajudar a encontrar a melhor solução.</p>
           </motion.div>
 
           <motion.div
