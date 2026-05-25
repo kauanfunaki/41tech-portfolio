@@ -213,8 +213,8 @@ export default function AdminTeam() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Equipe</h1>
-          <p className="text-muted-foreground">Gerencie os membros da equipe mostrados no site.</p>
+          <h1 className="text-3xl font-bold text-foreground">Meu Perfil</h1>
+          <p className="text-muted-foreground">Gerencie seu perfil profissional exibido na página "Sobre mim".</p>
         </div>
         
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>

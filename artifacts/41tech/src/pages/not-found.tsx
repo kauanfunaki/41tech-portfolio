@@ -1,21 +1,70 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { Link } from "wouter";
+import { motion } from "framer-motion";
+import { Home, FolderGit2, ArrowRight, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md mx-4">
-        <CardContent className="pt-6">
-          <div className="flex mb-4 gap-2">
-            <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
-          </div>
+    <div className="min-h-screen bg-[#05070D] flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 blur-[150px] rounded-full pointer-events-none" />
 
-          <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
-          </p>
-        </CardContent>
-      </Card>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 text-center px-4 max-w-2xl mx-auto"
+      >
+        <div className="text-[10rem] md:text-[14rem] font-extrabold leading-none text-transparent bg-clip-text bg-gradient-to-b from-primary/40 to-primary/5 select-none mb-4">
+          404
+        </div>
+
+        <h1 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4 -mt-4">
+          Página não encontrada
+        </h1>
+        <p className="text-lg text-[#AAB6D3] mb-12 leading-relaxed">
+          A página que você está procurando não existe ou foi movida.
+          <br />
+          Explore o portfólio pelos links abaixo.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            asChild
+            size="lg"
+            className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue w-full sm:w-auto"
+          >
+            <Link href="/">
+              <Home className="w-5 h-5 mr-2" />
+              Início
+            </Link>
+          </Button>
+
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="h-14 px-8 text-base font-bold border-[rgba(255,255,255,0.15)] text-white hover:bg-white/5 glassmorphism w-full sm:w-auto"
+          >
+            <Link href="/projetos">
+              <FolderGit2 className="w-5 h-5 mr-2" />
+              Ver Projetos
+            </Link>
+          </Button>
+
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="h-14 px-8 text-base font-bold border-[rgba(255,255,255,0.15)] text-white hover:bg-white/5 glassmorphism w-full sm:w-auto"
+          >
+            <Link href="/cases">
+              <Briefcase className="w-5 h-5 mr-2" />
+              Ver Cases <ArrowRight className="w-4 h-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
+      </motion.div>
     </div>
   );
 }

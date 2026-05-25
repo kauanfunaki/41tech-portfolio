@@ -45,7 +45,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
     { href: "/admin-41tech/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin-41tech/projects", label: "Projetos", icon: FolderGit2 },
     { href: "/admin-41tech/cases", label: "Cases", icon: Briefcase },
-    { href: "/admin-41tech/team", label: "Equipe", icon: Users },
+    { href: "/admin-41tech/team", label: "Meu Perfil", icon: Users },
     { href: "/admin-41tech/technologies", label: "Tecnologias", icon: Cpu },
     { href: "/admin-41tech/settings", label: "Configurações", icon: Settings2 },
   ];

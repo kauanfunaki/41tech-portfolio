@@ -11,7 +11,8 @@
       "Bash(pnpm exec *)",
       "PowerShell(Get-Command pnpm -ErrorAction SilentlyContinue)",
       "PowerShell(Get-Command npx -ErrorAction SilentlyContinue)",
-      "PowerShell(Get-Command npm -ErrorAction SilentlyContinue)"
+      "PowerShell(Get-Command npm -ErrorAction SilentlyContinue)",
+      "Bash(xargs grep -l \"equipe\\\\|team\")"
     ]
   }
 }

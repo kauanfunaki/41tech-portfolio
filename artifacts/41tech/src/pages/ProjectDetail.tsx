@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function ProjectDetail() {
   const [, params] = useRoute("/projetos/:slug");
@@ -34,6 +35,12 @@ export default function ProjectDetail() {
     () => project?.metricsSummary?.split('|').map(m => m.trim()).filter(Boolean) ?? [],
     [project?.metricsSummary]
   );
+
+  useSEO({
+    title: project?.title ?? "Projeto",
+    description: project?.shortDescription ?? "Detalhes do projeto no portfólio de Kauan Funaki.",
+    image: project?.coverImageUrl ?? project?.thumbnailUrl ?? undefined,
+  });
 
   const heroMedia = useMemo(() => {
     if (!project) return null;

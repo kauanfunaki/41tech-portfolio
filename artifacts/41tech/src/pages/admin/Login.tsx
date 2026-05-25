@@ -93,7 +93,7 @@ export default function Login() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-muted-foreground uppercase text-xs tracking-wider">E-mail corporativo</FormLabel>
+                    <FormLabel className="text-muted-foreground uppercase text-xs tracking-wider">E-mail de acesso</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

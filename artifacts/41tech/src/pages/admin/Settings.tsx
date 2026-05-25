@@ -186,8 +186,8 @@ export default function AdminSettings() {
 
               <FormField control={form.control} name="linkedinUrl" render={({ field }) => (
                 <FormItem className="md:col-span-2">
-                  <FormLabel>LinkedIn da Empresa</FormLabel>
-                  <FormControl><Input {...field} value={field.value ?? ""} placeholder="https://linkedin.com/company/..." /></FormControl>
+                  <FormLabel>Seu LinkedIn</FormLabel>
+                  <FormControl><Input {...field} value={field.value ?? ""} placeholder="https://linkedin.com/in/..." /></FormControl>
                   <FormMessage />
                 </FormItem>
               )} />

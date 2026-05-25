@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin-41tech/
+
+Sitemap: https://seu-dominio.com/sitemap.xml

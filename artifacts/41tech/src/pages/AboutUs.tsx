@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useGetSiteSettings, useListTechnologies, useListTeamMembers } from "@workspace/api-client-react";
 import { Send, CheckCircle2, Github, Linkedin, MapPin } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const DIFFERENTIALS = [
   "Entendo a operação antes de escrever código",
@@ -21,6 +22,11 @@ const STEPS = [
 ];
 
 export default function AboutUs() {
+  useSEO({
+    title: "Sobre mim",
+    description: "Desenvolvedor Full Stack B2B focado em sistemas, automações e inteligência de dados. Conheça minha história e stack tecnológico.",
+  });
+
   const { data: settings } = useGetSiteSettings();
   const { data: technologies } = useListTechnologies();
   const { data: teamMembers } = useListTeamMembers();

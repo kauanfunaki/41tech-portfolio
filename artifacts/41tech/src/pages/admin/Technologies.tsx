@@ -168,7 +168,7 @@ export default function AdminTechnologies() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Tecnologias</h1>
-          <p className="text-muted-foreground">Gerencie o stack tecnológico corporativo.</p>
+          <p className="text-muted-foreground">Gerencie seu stack tecnológico.</p>
         </div>
         
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>

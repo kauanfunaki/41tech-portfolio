@@ -1,36 +1,62 @@
-import { useState, useMemo } from "react";
-import { Link } from "wouter";
+import { useState, useMemo, useEffect } from "react";
+import { Link, useSearch, useLocation } from "wouter";
 import { useListProjects } from "@workspace/api-client-react";
 import { Blocks, ArrowRight, Search } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
+import { inferCategory } from "@/lib/inferCategory";
+import { useSEO } from "@/hooks/useSEO";
 
 const ALL_CATEGORIES = ["Todos", "Sistema Web", "BI & Dados", "Automação", "Integração", "IA", "Infra & Deploy", "ERP", "Outro"];
 
 export default function Projects() {
-  const { data: projects, isLoading } = useListProjects();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
+  useSEO({
+    title: "Projetos",
+    description: "Portfólio de sistemas, automações, dashboards e integrações desenvolvidos para otimizar operações corporativas.",
+  });
 
-  const inferCategory = (title: string) => {
-    const t = title.toLowerCase();
-    if (t.includes('dashboard') || t.includes('bi') || t.includes('dados')) return "BI & Dados";
-    if (t.includes('automação') || t.includes('integração') || t.includes('n8n')) return "Automação";
-    return "Sistema Web";
+  const searchString = useSearch();
+  const [, navigate] = useLocation();
+
+  const urlParams = new URLSearchParams(searchString);
+  const selectedCategory = urlParams.get("categoria") || "Todos";
+
+  // Search uses local state + debounce to avoid janky URL updates on every keystroke
+  const [searchQuery, setSearchQuery] = useState(urlParams.get("q") || "");
+
+  const { data: projects, isLoading } = useListProjects();
+
+  // Sync search query to URL (debounced 350ms)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const p = new URLSearchParams();
+      if (searchQuery) p.set("q", searchQuery);
+      if (selectedCategory !== "Todos") p.set("categoria", selectedCategory);
+      const qs = p.toString();
+      navigate(qs ? `/projetos?${qs}` : "/projetos", { replace: true });
+    }, 350);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
+
+  const handleCategoryChange = (cat: string) => {
+    const p = new URLSearchParams();
+    if (searchQuery) p.set("q", searchQuery);
+    if (cat !== "Todos") p.set("categoria", cat);
+    const qs = p.toString();
+    navigate(qs ? `/projetos?${qs}` : "/projetos", { replace: true });
   };
 
   const filteredProjects = useMemo(() => {
     if (!projects) return [];
-    
-    return projects.filter(project => {
-      const matchSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          project.shortDescription.toLowerCase().includes(searchQuery.toLowerCase());
-      
+    return projects.filter((project) => {
+      const matchSearch =
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.shortDescription.toLowerCase().includes(searchQuery.toLowerCase());
       const projectCategory = project.category || inferCategory(project.title);
       const matchCategory = selectedCategory === "Todos" || projectCategory === selectedCategory;
-
       return matchSearch && matchCategory;
     });
   }, [projects, searchQuery, selectedCategory]);
@@ -42,7 +68,7 @@ export default function Projects() {
         <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -57,7 +83,7 @@ export default function Projects() {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -65,7 +91,7 @@ export default function Projects() {
           >
             <div className="relative max-w-md">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input 
+              <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar por nome, descrição..."
@@ -73,13 +99,13 @@ export default function Projects() {
               />
             </div>
             <div className="flex flex-wrap gap-2">
-              {ALL_CATEGORIES.map(category => (
+              {ALL_CATEGORIES.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryChange(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedCategory === category 
-                      ? "bg-primary text-white border-transparent" 
+                    selectedCategory === category
+                      ? "bg-primary text-white border-transparent"
                       : "bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] text-[#AAB6D3] hover:text-white hover:bg-[rgba(255,255,255,0.08)]"
                   }`}
                 >
@@ -94,7 +120,7 @@ export default function Projects() {
       <div className="container mx-auto px-4 py-24">
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[1, 2, 3, 4, 5, 6].map(i => (
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="space-y-4">
                 <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-[#0B1020]" />
                 <Skeleton className="h-8 w-3/4 bg-[#0B1020]" />
@@ -132,7 +158,6 @@ export default function Projects() {
                           </svg>
                         </div>
                       )}
-                      
                       <div className="absolute top-4 right-4 flex gap-2">
                         <Badge className="bg-background/80 backdrop-blur-md border border-[rgba(255,255,255,0.1)] text-white hover:bg-background">
                           {project.category || inferCategory(project.title)}
@@ -145,18 +170,18 @@ export default function Projects() {
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent opacity-80" />
                     </div>
-                    
+
                     <div className="p-8 flex flex-col flex-1 relative">
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       <h3 className="text-2xl font-bold mb-4 group-hover:text-[#00D8FF] transition-colors text-foreground">{project.title}</h3>
                       <p className="text-[#AAB6D3] line-clamp-3 mb-6 flex-1 text-lg leading-relaxed">{project.shortDescription}</p>
-                      
+
                       {project.metricsSummary && (
                         <div className="mb-6 p-3 rounded-lg bg-[rgba(18,61,255,0.05)] border border-[rgba(18,61,255,0.1)]">
                           <p className="text-sm font-semibold text-[#00D8FF]">{project.metricsSummary}</p>
                         </div>
                       )}
-                      
+
                       <div className="mt-auto overflow-hidden">
                         <div className="flex items-center text-primary font-semibold translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                           Ver detalhes <ArrowRight className="w-5 h-5 ml-2" />
