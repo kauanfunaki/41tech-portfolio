@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Plus, Edit, Trash2, Loader2 } from "lucide-react";
+import { Edit, Trash2, Loader2 } from "lucide-react";
 import { 
   useListTeamMembers, 
   getListTeamMembersQueryKey,
@@ -30,7 +30,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -216,19 +215,13 @@ export default function AdminTeam() {
           <h1 className="text-3xl font-bold text-foreground">Meu Perfil</h1>
           <p className="text-muted-foreground">Gerencie seu perfil profissional exibido na página "Sobre mim".</p>
         </div>
-        
+
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={handleOpenCreate}>
-              <Plus className="w-4 h-4 mr-2" />
-              Adicionar Membro
-            </Button>
-          </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] p-0 flex flex-col">
             <DialogHeader className="p-6 border-b border-border">
-              <DialogTitle>{editingId ? "Editar Membro" : "Novo Membro da Equipe"}</DialogTitle>
+              <DialogTitle>Editar Perfil</DialogTitle>
               <DialogDescription>
-                Detalhes do membro que aparecerão na página Equipe.
+                Atualize as informações do seu perfil profissional.
               </DialogDescription>
             </DialogHeader>
 

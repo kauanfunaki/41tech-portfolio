@@ -1,69 +1,30 @@
-import { ReactNode } from "react";
-import { Link } from "wouter";
-import { Menu } from "lucide-react";
+import { ReactNode, useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { useGetSiteSettings } from "@workspace/api-client-react";
 import { Logo } from "@/components/brand/Logo";
 import { useLanguage } from "@/lib/languageContext";
 import type { Lang } from "@/lib/translations";
 
-function LangToggle({ compact = false }: { compact?: boolean }) {
+function LangToggle({ large = false }: { large?: boolean }) {
   const { lang, setLang } = useLanguage();
-
   const toggle = (l: Lang) => () => setLang(l);
-
-  if (compact) {
-    // Mobile version — simple button row
-    return (
-      <div className="flex items-center gap-1 rounded-full border border-[rgba(255,255,255,0.12)] overflow-hidden w-fit">
-        <button
-          onClick={toggle("pt")}
-          className={`px-4 py-2 text-sm font-bold transition-colors ${
-            lang === "pt"
-              ? "bg-primary text-white"
-              : "text-muted-foreground hover:text-white"
-          }`}
-        >
-          PT
-        </button>
-        <button
-          onClick={toggle("en")}
-          className={`px-4 py-2 text-sm font-bold transition-colors ${
-            lang === "en"
-              ? "bg-primary text-white"
-              : "text-muted-foreground hover:text-white"
-          }`}
-        >
-          EN
-        </button>
-      </div>
-    );
-  }
-
-  // Desktop version
+  const base = large ? "px-4 py-2 text-sm" : "px-2.5 py-1 text-xs";
   return (
-    <div className="flex items-center rounded-full border border-[rgba(255,255,255,0.12)] overflow-hidden text-xs">
+    <div className={`flex items-center rounded border border-[#272729] overflow-hidden ${large ? "" : ""}`}>
       <button
         onClick={toggle("pt")}
-        className={`px-3 py-1.5 font-bold tracking-wide transition-colors ${
-          lang === "pt"
-            ? "bg-primary text-white"
-            : "text-muted-foreground hover:text-white"
+        className={`${base} font-bold tracking-wide transition-colors ${
+          lang === "pt" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
         PT
       </button>
       <button
         onClick={toggle("en")}
-        className={`px-3 py-1.5 font-bold tracking-wide transition-colors ${
-          lang === "en"
-            ? "bg-primary text-white"
-            : "text-muted-foreground hover:text-white"
+        className={`${base} font-bold tracking-wide transition-colors ${
+          lang === "en" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
         EN
@@ -75,6 +36,18 @@ function LangToggle({ compact = false }: { compact?: boolean }) {
 export function PublicLayout({ children }: { children: ReactNode }) {
   const { data: settings } = useGetSiteSettings();
   const { t } = useLanguage();
+  const [location] = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu on navigation
+  useEffect(() => { setMobileOpen(false); }, [location]);
 
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (settings?.whatsappUrl) {
@@ -83,149 +56,146 @@ export function PublicLayout({ children }: { children: ReactNode }) {
     }
   };
 
+  const navLinks = [
+    { href: "/projetos", label: t.nav.projects },
+    { href: "/cases", label: t.nav.cases },
+    { href: "/sobre-mim", label: t.nav.about },
+  ];
+
   return (
-    <div className="min-h-screen bg-background flex flex-col text-foreground selection:bg-primary/30">
-      <header className="sticky top-0 z-50 w-full border-b border-[rgba(255,255,255,0.10)] glassmorphism">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-[#0D0D0E] flex flex-col text-[#F0F0F0] selection:bg-primary/30">
+      {/* Header */}
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "bg-[#0D0D0E]/95 backdrop-blur-sm border-b border-[#272729]"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Logo className="text-xl" />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-            <Link href="/projetos" className="hover:text-primary transition-colors">
-              {t.nav.projects}
-            </Link>
-            <Link href="/cases" className="hover:text-primary transition-colors">
-              {t.nav.cases}
-            </Link>
-            <Link href="/sobre-mim" className="hover:text-primary transition-colors">
-              {t.nav.about}
-            </Link>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`transition-colors ${
+                  location.startsWith(link.href)
+                    ? "text-[#F0F0F0]"
+                    : "text-[#888895] hover:text-[#F0F0F0]"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop right: lang + CTA */}
+          <div className="hidden md:flex items-center gap-4">
             <LangToggle />
             <Button
               asChild
-              className="border-0 text-white bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0]"
+              size="sm"
+              className="bg-primary hover:bg-primary/90 text-white border-0 rounded font-semibold px-4"
             >
-              <a href="#contato" onClick={handleContactClick}>
+              <a href="/#contato" onClick={handleContactClick}>
                 {t.nav.contact}
               </a>
             </Button>
-          </nav>
+          </div>
 
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-background border-border">
-              <div className="flex flex-col gap-6 mt-12">
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden p-2 text-[#888895] hover:text-[#F0F0F0] transition-colors"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileOpen && (
+          <div className="md:hidden bg-[#0D0D0E] border-t border-[#272729]">
+            <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col gap-6">
+              {navLinks.map((link) => (
                 <Link
-                  href="/"
-                  className="text-lg font-medium hover:text-primary transition-colors"
+                  key={link.href}
+                  href={link.href}
+                  className="text-lg font-medium text-[#F0F0F0] hover:text-primary transition-colors"
                 >
-                  {t.nav.home}
+                  {link.label}
                 </Link>
-                <Link
-                  href="/projetos"
-                  className="text-lg font-medium hover:text-primary transition-colors"
-                >
-                  {t.nav.projects}
-                </Link>
-                <Link
-                  href="/cases"
-                  className="text-lg font-medium hover:text-primary transition-colors"
-                >
-                  {t.nav.cases}
-                </Link>
-                <Link
-                  href="/sobre-mim"
-                  className="text-lg font-medium hover:text-primary transition-colors"
-                >
-                  {t.nav.about}
-                </Link>
-                <LangToggle compact />
+              ))}
+              <div className="pt-4 border-t border-[#272729] flex items-center justify-between">
+                <LangToggle large />
                 <Button
                   asChild
-                  className="w-full mt-2 bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] border-0 text-white"
+                  className="bg-primary hover:bg-primary/90 text-white border-0 rounded font-semibold"
                 >
-                  <a href="#contato" onClick={handleContactClick}>
+                  <a href="/#contato" onClick={handleContactClick}>
                     {t.nav.contact}
                   </a>
                 </Button>
               </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+            </div>
+          </div>
+        )}
       </header>
 
+      {/* Page content */}
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-[rgba(255,255,255,0.10)] bg-[#05070D] py-12 md:py-16">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="space-y-4 md:col-span-2">
-            <div className="flex items-center gap-2">
-              <Logo className="text-xl" />
-            </div>
-            <p className="text-muted-foreground max-w-sm mt-4">
+      {/* Footer */}
+      <footer className="border-t border-[#272729] bg-[#0D0D0E] py-16">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div className="md:col-span-2 space-y-4">
+            <Logo className="text-xl" />
+            <p className="text-sm text-[#888895] leading-relaxed max-w-sm mt-4">
               {t.footer.description}
             </p>
           </div>
           <div>
-            <h4 className="font-medium mb-4 text-foreground">{t.footer.navTitle}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/projetos" className="hover:text-primary transition-colors">
-                  {t.nav.projects}
-                </Link>
-              </li>
-              <li>
-                <Link href="/cases" className="hover:text-primary transition-colors">
-                  {t.nav.cases}
-                </Link>
-              </li>
-              <li>
-                <Link href="/sobre-mim" className="hover:text-primary transition-colors">
-                  {t.nav.about}
-                </Link>
-              </li>
+            <h4 className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-4">
+              {t.footer.navTitle}
+            </h4>
+            <ul className="space-y-2 text-sm text-[#888895]">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-[#F0F0F0] transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-4 text-foreground">{t.footer.contactTitle}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {settings?.contactEmail ? (
+            <h4 className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-4">
+              {t.footer.contactTitle}
+            </h4>
+            <ul className="space-y-2 text-sm text-[#888895]">
+              {settings?.contactEmail && (
                 <li>
-                  <a
-                    href={`mailto:${settings.contactEmail}`}
-                    className="hover:text-primary transition-colors"
-                  >
+                  <a href={`mailto:${settings.contactEmail}`} className="hover:text-[#F0F0F0] transition-colors">
                     {settings.contactEmail}
                   </a>
                 </li>
-              ) : (
-                <li>contato@grupo41.com.br</li>
               )}
               {settings?.whatsappUrl && (
                 <li>
-                  <a
-                    href={settings.whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
+                  <a href={settings.whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-[#F0F0F0] transition-colors">
                     WhatsApp
                   </a>
                 </li>
               )}
               {settings?.linkedinUrl && (
                 <li>
-                  <a
-                    href={settings.linkedinUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
+                  <a href={settings.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-[#F0F0F0] transition-colors">
                     LinkedIn
                   </a>
                 </li>
@@ -234,8 +204,8 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             </ul>
           </div>
         </div>
-        <div className="container mx-auto px-4 mt-12 pt-8 border-t border-[rgba(255,255,255,0.10)] text-sm text-muted-foreground text-center md:text-left">
-          &copy; {new Date().getFullYear()} Kauan Funaki. {t.footer.rights}
+        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-[#272729] text-xs text-[#555560]">
+          © {new Date().getFullYear()} Kauan Funaki — {t.footer.rights}
         </div>
       </footer>
     </div>

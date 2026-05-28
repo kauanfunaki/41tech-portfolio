@@ -44,6 +44,7 @@
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
   --font-sans: var(--app-font-sans);
+  --font-display: var(--app-font-display);
   --font-serif: var(--app-font-serif);
   --font-mono: var(--app-font-mono);
 
@@ -53,83 +54,80 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ─── Public site: editorial neutral dark ─── */
 :root {
-  --background: 224 88% 4%;           /* #05070D */
-  --foreground: 0 0% 100%;            /* #FFFFFF */
-  --border: 220 20% 15%;              /* rgba border */
-  --card: 224 70% 6%;                 /* #0B1020 */
-  --card-foreground: 0 0% 100%;
-  --card-border: 220 20% 13%;
+  --background: 240 4% 5%;          /* #0D0D0E */
+  --foreground: 0 0% 94%;           /* #F0F0F0 */
+  --border: 240 3% 16%;             /* #272729 */
+  --card: 240 4% 8%;                /* #131314 */
+  --card-foreground: 0 0% 94%;
+  --card-border: 240 3% 14%;        /* #232325 */
   --sidebar: 224 70% 6%;
   --sidebar-foreground: 0 0% 100%;
   --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 230 97% 54%;     /* #123DFF */
+  --sidebar-primary: 230 97% 54%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 224 70% 10%;
   --sidebar-accent-foreground: 0 0% 80%;
   --sidebar-ring: 230 97% 54%;
-  --popover: 224 70% 6%;
-  --popover-foreground: 0 0% 100%;
-  --popover-border: 220 20% 13%;
-  --primary: 230 97% 54%;             /* #123DFF */
+  --popover: 240 4% 8%;
+  --popover-foreground: 0 0% 94%;
+  --popover-border: 240 3% 14%;
+  --primary: 230 97% 54%;           /* #123DFF — brand blue */
   --primary-foreground: 0 0% 100%;
-  --secondary: 224 50% 12%;
-  --secondary-foreground: 215 30% 70%;
-  --muted: 224 50% 10%;
-  --muted-foreground: 215 30% 68%;    /* #AAB6D3 */
-  --accent: 191 100% 43%;             /* #00D8FF neon auxiliar */
-  --accent-foreground: 224 88% 4%;
+  --secondary: 240 3% 12%;
+  --secondary-foreground: 240 4% 65%;
+  --muted: 240 3% 11%;
+  --muted-foreground: 240 4% 55%;   /* #8A8A90 */
+  --accent: 230 97% 54%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 220 20% 15%;
+  --input: 240 3% 16%;
   --ring: 230 97% 54%;
   --chart-1: 230 97% 54%;
   --chart-2: 191 100% 43%;
   --chart-3: 220 50% 50%;
   --chart-4: 260 70% 60%;
   --chart-5: 190 80% 50%;
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
   --app-font-sans: 'Inter', system-ui, sans-serif;
+  --app-font-display: 'Syne', system-ui, sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: 'Space Mono', monospace;
 }
 
 .dark {
-  --background: 224 88% 4%;           /* #05070D */
-  --foreground: 0 0% 100%;            /* #FFFFFF */
-  --border: 220 20% 15%;              /* rgba border */
-  --card: 224 70% 6%;                 /* #0B1020 */
-  --card-foreground: 0 0% 100%;
-  --card-border: 220 20% 13%;
+  --background: 240 4% 5%;
+  --foreground: 0 0% 94%;
+  --border: 240 3% 16%;
+  --card: 240 4% 8%;
+  --card-foreground: 0 0% 94%;
+  --card-border: 240 3% 14%;
   --sidebar: 224 70% 6%;
   --sidebar-foreground: 0 0% 100%;
   --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 230 97% 54%;     /* #123DFF */
+  --sidebar-primary: 230 97% 54%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 224 70% 10%;
   --sidebar-accent-foreground: 0 0% 80%;
   --sidebar-ring: 230 97% 54%;
-  --popover: 224 70% 6%;
-  --popover-foreground: 0 0% 100%;
-  --popover-border: 220 20% 13%;
-  --primary: 230 97% 54%;             /* #123DFF */
+  --popover: 240 4% 8%;
+  --popover-foreground: 0 0% 94%;
+  --popover-border: 240 3% 14%;
+  --primary: 230 97% 54%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 224 50% 12%;
-  --secondary-foreground: 215 30% 70%;
-  --muted: 224 50% 10%;
-  --muted-foreground: 215 30% 68%;    /* #AAB6D3 */
-  --accent: 191 100% 43%;             /* #00D8FF neon auxiliar */
-  --accent-foreground: 224 88% 4%;
+  --secondary: 240 3% 12%;
+  --secondary-foreground: 240 4% 65%;
+  --muted: 240 3% 11%;
+  --muted-foreground: 240 4% 55%;
+  --accent: 230 97% 54%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 220 20% 15%;
+  --input: 240 3% 16%;
   --ring: 230 97% 54%;
-  --chart-1: 230 97% 54%;
-  --chart-2: 191 100% 43%;
-  --chart-3: 220 50% 50%;
-  --chart-4: 260 70% 60%;
-  --chart-5: 190 80% 50%;
 }
 
 @layer base {
@@ -143,55 +141,51 @@
 }
 
 @layer utilities {
+  /* ── Typography ── */
+  .font-display {
+    font-family: var(--app-font-display);
+  }
+
+  .section-num {
+    font-family: var(--app-font-mono);
+    font-size: 0.7rem;
+    color: hsl(240 4% 38%);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
   .gradient-text {
-    background: linear-gradient(135deg, #ffffff 40%, #123DFF 70%, #00D8FF 100%);
+    background: linear-gradient(to right, #F0F0F0 20%, #123DFF 70%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  /* ── Subtle effects — kept ONLY for admin and CTA buttons ── */
   .glow-blue {
-    box-shadow: 0 0 20px rgba(18, 61, 255, 0.4), 0 0 60px rgba(18, 61, 255, 0.15);
+    box-shadow: 0 0 16px rgba(18, 61, 255, 0.35), 0 0 40px rgba(18, 61, 255, 0.1);
   }
 
-  .glow-blue-text {
-    text-shadow: 0 0 40px rgba(18, 61, 255, 0.6), 0 0 80px rgba(0, 216, 255, 0.3);
-  }
-
-  .tech-grid {
-    background-image: 
-      linear-gradient(rgba(18, 61, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(18, 61, 255, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
+  /* ── Admin-only ── */
   .glassmorphism {
     background: rgba(11, 16, 32, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
-}
 
-.glitch-wrapper {
-  position: relative;
-  overflow: hidden;
-}
+  .tech-grid {
+    background-image:
+      linear-gradient(rgba(18, 61, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 61, 255, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
 
-.glitch-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(0, 240, 255, 0.1), transparent);
-  transform: skewX(-20deg);
-  animation: glitch-slide 3s infinite;
-}
-
-@keyframes glitch-slide {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
+  /* ── Project list row ── */
+  .project-row {
+    @apply flex items-center gap-6 py-6 border-b border-[#272729] group cursor-pointer transition-all duration-200;
+  }
+  .project-row:hover {
+    @apply pl-3 border-b-primary/30;
+  }
 }

@@ -13,6 +13,7 @@ import {
   useListTechnologies,
   useGetProjectTechnologies,
   useSetProjectTechnologies,
+  useListCases,
 } from "@workspace/api-client-react";
 
 import { Button } from "@/components/ui/button";
@@ -67,9 +68,6 @@ const projectSchema = z.object({
   problem: z.string().optional().nullable(),
   solution: z.string().optional().nullable(),
   result: z.string().optional().nullable(),
-  previewType: z.enum(["image", "video", "none"]).default("none"),
-  previewUrl: z.string().optional().nullable().or(z.literal("")),
-  previewAlt: z.string().optional().nullable(),
   coverImageUrl: z.string().optional().nullable().or(z.literal("")),
   thumbnailUrl: z.string().optional().nullable().or(z.literal("")),
   galleryImages: z.string().optional().nullable(),
@@ -77,11 +75,32 @@ const projectSchema = z.object({
   metricsSummary: z.string().optional().nullable(),
   demoUrl: z.string().url("Deve ser uma URL válida").optional().nullable().or(z.literal("")),
   repositoryUrl: z.string().url("Deve ser uma URL válida").optional().nullable().or(z.literal("")),
+  linkedCaseSlug: z.string().optional().nullable(),
   status: z.string().min(1, "Status é obrigatório"),
   featured: z.boolean().default(false),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
+
+const EMPTY_DEFAULTS: ProjectFormValues = {
+  title: "",
+  slug: "",
+  shortDescription: "",
+  fullDescription: "",
+  problem: "",
+  solution: "",
+  result: "",
+  coverImageUrl: "",
+  thumbnailUrl: "",
+  galleryImages: "",
+  category: "",
+  metricsSummary: "",
+  demoUrl: "",
+  repositoryUrl: "",
+  linkedCaseSlug: "",
+  status: "published",
+  featured: false,
+};
 
 export default function AdminProjects() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -95,6 +114,7 @@ export default function AdminProjects() {
 
   const { data: projects, isLoading } = useListProjects();
   const { data: allTechnologies } = useListTechnologies();
+  const { data: allCases } = useListCases();
   const { data: existingTechs } = useGetProjectTechnologies(editingSlug ?? "", {
     query: { enabled: !!editingSlug && isFormOpen },
   });
@@ -111,51 +131,11 @@ export default function AdminProjects() {
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
-    defaultValues: {
-      title: "",
-      slug: "",
-      shortDescription: "",
-      fullDescription: "",
-      problem: "",
-      solution: "",
-      result: "",
-      previewType: "none",
-      previewUrl: "",
-      previewAlt: "",
-      coverImageUrl: "",
-      thumbnailUrl: "",
-      galleryImages: "",
-      category: "",
-      metricsSummary: "",
-      demoUrl: "",
-      repositoryUrl: "",
-      status: "published",
-      featured: false,
-    },
+    defaultValues: EMPTY_DEFAULTS,
   });
 
   const handleOpenCreate = () => {
-    form.reset({
-      title: "",
-      slug: "",
-      shortDescription: "",
-      fullDescription: "",
-      problem: "",
-      solution: "",
-      result: "",
-      previewType: "none",
-      previewUrl: "",
-      previewAlt: "",
-      coverImageUrl: "",
-      thumbnailUrl: "",
-      galleryImages: "",
-      category: "",
-      metricsSummary: "",
-      demoUrl: "",
-      repositoryUrl: "",
-      status: "published",
-      featured: false,
-    });
+    form.reset(EMPTY_DEFAULTS);
     setSelectedTechIds([]);
     setEditingSlug(null);
     setIsFormOpen(true);
@@ -170,9 +150,6 @@ export default function AdminProjects() {
       problem: project.problem || "",
       solution: project.solution || "",
       result: project.result || "",
-      previewType: project.previewType || "none",
-      previewUrl: project.previewUrl || "",
-      previewAlt: project.previewAlt || "",
       coverImageUrl: project.coverImageUrl || "",
       thumbnailUrl: project.thumbnailUrl || "",
       galleryImages: project.galleryImages || "",
@@ -180,6 +157,7 @@ export default function AdminProjects() {
       metricsSummary: project.metricsSummary || "",
       demoUrl: project.demoUrl || "",
       repositoryUrl: project.repositoryUrl || "",
+      linkedCaseSlug: project.linkedCaseSlug || "",
       status: project.status,
       featured: project.featured,
     });
@@ -192,19 +170,17 @@ export default function AdminProjects() {
     setIsDeleteOpen(true);
   };
 
-  const watchedPreviewType = form.watch("previewType");
-  const watchedPreviewUrl = form.watch("previewUrl");
-
   const onSubmit = async (values: ProjectFormValues) => {
     const data = {
       ...values,
+      // Fields removed from form but still required by API — send null
+      previewType: null,
+      previewUrl: null,
+      previewAlt: null,
       fullDescription: values.fullDescription || null,
       problem: values.problem || null,
       solution: values.solution || null,
       result: values.result || null,
-      previewType: values.previewType || null,
-      previewUrl: values.previewUrl || null,
-      previewAlt: values.previewAlt || null,
       coverImageUrl: values.coverImageUrl || null,
       thumbnailUrl: values.thumbnailUrl || null,
       galleryImages: values.galleryImages || null,
@@ -212,6 +188,7 @@ export default function AdminProjects() {
       metricsSummary: values.metricsSummary || null,
       demoUrl: values.demoUrl || null,
       repositoryUrl: values.repositoryUrl || null,
+      linkedCaseSlug: values.linkedCaseSlug || null,
     };
 
     let finalSlug: string;
@@ -252,7 +229,7 @@ export default function AdminProjects() {
 
   const confirmDelete = () => {
     if (!deletingSlug) return;
-    
+
     deleteMutation.mutate(
       { slug: deletingSlug },
       {
@@ -268,6 +245,17 @@ export default function AdminProjects() {
     );
   };
 
+  // Gallery: append a newly-uploaded URL to the textarea value
+  const handleGalleryUpload = (uploadedUrl: string) => {
+    const current = form.getValues("galleryImages") || "";
+    const lines = current.split("\n").map(l => l.trim()).filter(Boolean);
+    if (!lines.includes(uploadedUrl)) {
+      form.setValue("galleryImages", [...lines, uploadedUrl].join("\n"), { shouldDirty: true });
+    }
+  };
+
+  const publicCases = allCases?.filter((c) => c.isPublic !== false) ?? [];
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -275,7 +263,7 @@ export default function AdminProjects() {
           <h1 className="text-3xl font-bold text-foreground">Projetos</h1>
           <p className="text-muted-foreground">Gerencie o seu portfólio de projetos.</p>
         </div>
-        
+
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
           <DialogTrigger asChild>
             <Button onClick={handleOpenCreate}>
@@ -290,10 +278,11 @@ export default function AdminProjects() {
                 Preencha os detalhes do projeto para exibição no portfólio.
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="flex-1 min-h-0 overflow-y-auto p-6">
               <Form {...form}>
                 <form id="project-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Title + Slug */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField control={form.control} name="title" render={({ field }) => (
                       <FormItem>
@@ -311,6 +300,7 @@ export default function AdminProjects() {
                     )} />
                   </div>
 
+                  {/* Category + Status */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField control={form.control} name="category" render={({ field }) => (
                       <FormItem>
@@ -342,6 +332,7 @@ export default function AdminProjects() {
                     )} />
                   </div>
 
+                  {/* Short description */}
                   <FormField control={form.control} name="shortDescription" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Descrição Curta</FormLabel>
@@ -349,15 +340,18 @@ export default function AdminProjects() {
                       <FormMessage />
                     </FormItem>
                   )} />
-                  
+
+                  {/* Metrics */}
                   <FormField control={form.control} name="metricsSummary" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Métricas de Resultado (resumo)</FormLabel>
+                      <FormLabel>Métricas de Resultado</FormLabel>
                       <FormControl><Input {...field} value={field.value || ""} placeholder="-60% tempo | 100% centralização" /></FormControl>
+                      <p className="text-xs text-muted-foreground mt-1">Separe métricas com " | " (pipe). Ex: -60% tempo | 3× mais rápido</p>
                       <FormMessage />
                     </FormItem>
                   )} />
 
+                  {/* Detailed content */}
                   <div className="grid grid-cols-1 gap-6 border-t border-border pt-6">
                     <h3 className="font-medium text-lg">Conteúdo Detalhado</h3>
                     <FormField control={form.control} name="fullDescription" render={({ field }) => (
@@ -390,85 +384,13 @@ export default function AdminProjects() {
                     )} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-6 border-t border-border pt-6">
-                    <h3 className="font-medium text-lg">Mídia e Preview do Projeto</h3>
-                    <p className="text-sm text-muted-foreground -mt-4">Defina como o projeto será exibido visualmente na página pública.</p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <FormField control={form.control} name="previewType" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Tipo de preview</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value || "none"}>
-                            <FormControl>
-                              <SelectTrigger><SelectValue placeholder="Selecione o tipo" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="none">Nenhum (fallback premium)</SelectItem>
-                              <SelectItem value="image">Imagem / GIF</SelectItem>
-                              <SelectItem value="video">Vídeo</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-
-                      <FormField control={form.control} name="previewAlt" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Texto alternativo da preview</FormLabel>
-                          <FormControl><Input {...field} value={field.value || ""} placeholder="Ex: Dashboard de gestão financeira" /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                    </div>
-
-                    <FormField control={form.control} name="previewUrl" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>URL da imagem ou vídeo de preview</FormLabel>
-                        <FormControl>
-                          {watchedPreviewType === "video" ? (
-                            <Input {...field} value={field.value || ""} placeholder="Cole aqui a URL do vídeo demonstrativo." />
-                          ) : (
-                            <ImageUploadField
-                              value={field.value || ""}
-                              onChange={field.onChange}
-                              folder="projects"
-                              placeholder="Cole URL ou faça upload da imagem/GIF de preview."
-                              previewClassName="hidden"
-                            />
-                          )}
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-
-                    {watchedPreviewUrl && watchedPreviewType !== "none" && (
-                      <div className="rounded-xl overflow-hidden border border-border bg-muted aspect-video w-full relative">
-                        {watchedPreviewType === "image" ? (
-                          <img
-                            src={watchedPreviewUrl}
-                            alt="Preview"
-                            className="w-full h-full object-cover"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                          />
-                        ) : watchedPreviewType === "video" ? (
-                          <video
-                            src={watchedPreviewUrl}
-                            controls
-                            muted
-                            playsInline
-                            className="w-full h-full object-cover"
-                            onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
-                          />
-                        ) : null}
-                      </div>
-                    )}
-                  </div>
-
+                  {/* Media */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-border pt-6">
-                    <h3 className="font-medium text-lg md:col-span-2">Imagens Adicionais</h3>
+                    <h3 className="font-medium text-lg md:col-span-2">Imagens do Projeto</h3>
+
                     <FormField control={form.control} name="coverImageUrl" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Imagem de capa do projeto</FormLabel>
+                        <FormLabel>Imagem de capa</FormLabel>
                         <FormControl>
                           <ImageUploadField
                             value={field.value || ""}
@@ -481,9 +403,10 @@ export default function AdminProjects() {
                         <FormMessage />
                       </FormItem>
                     )} />
+
                     <FormField control={form.control} name="thumbnailUrl" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Thumbnail (cards)</FormLabel>
+                        <FormLabel>Thumbnail (cards na listagem)</FormLabel>
                         <FormControl>
                           <ImageUploadField
                             value={field.value || ""}
@@ -496,15 +419,37 @@ export default function AdminProjects() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <div className="md:col-span-2">
+
+                    {/* Gallery */}
+                    <div className="md:col-span-2 space-y-3">
+                      <FormLabel>Galeria de imagens</FormLabel>
+                      <p className="text-xs text-muted-foreground">
+                        Faça upload de cada imagem — a URL será adicionada automaticamente à lista abaixo. Ou cole URLs manualmente, uma por linha.
+                      </p>
+                      {/* Upload widget (appends to textarea) */}
+                      <ImageUploadField
+                        value=""
+                        onChange={handleGalleryUpload}
+                        folder="projects"
+                        placeholder="Clique para fazer upload e adicionar à galeria"
+                        previewClassName="hidden"
+                      />
                       <FormField control={form.control} name="galleryImages" render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Galeria de imagens</FormLabel>
-                          <FormControl><Textarea {...field} value={field.value || ""} className="h-24" placeholder="Adicione uma URL por linha." /></FormControl>
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              value={field.value || ""}
+                              className="h-28 font-mono text-xs"
+                              placeholder="https://cdn.exemplo.com/img1.jpg&#10;https://cdn.exemplo.com/img2.jpg"
+                            />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )} />
                     </div>
+
+                    {/* Links */}
                     <FormField control={form.control} name="demoUrl" render={({ field }) => (
                       <FormItem>
                         <FormLabel>Link de demonstração</FormLabel>
@@ -521,7 +466,37 @@ export default function AdminProjects() {
                     )} />
                   </div>
 
-                  {/* Stack utilizada */}
+                  {/* Case link */}
+                  <div className="border-t border-border pt-6">
+                    <h3 className="font-medium text-lg mb-1">Case relacionado</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Vincule este projeto a um case para exibir o botão "Ver case completo" na página do projeto.
+                    </p>
+                    <FormField control={form.control} name="linkedCaseSlug" render={({ field }) => (
+                      <FormItem className="max-w-sm">
+                        <FormLabel>Case (opcional)</FormLabel>
+                        <Select
+                          onValueChange={(v) => field.onChange(v === "__none__" ? "" : v)}
+                          value={field.value || "__none__"}
+                        >
+                          <FormControl>
+                            <SelectTrigger><SelectValue placeholder="Nenhum" /></SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="__none__">Nenhum</SelectItem>
+                            {publicCases.map((c) => (
+                              <SelectItem key={c.id} value={c.slug}>
+                                {c.title}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+
+                  {/* Stack */}
                   <div className="border-t border-border pt-6 space-y-3">
                     <h3 className="font-medium text-lg">Stack Utilizada</h3>
                     <p className="text-sm text-muted-foreground -mt-1">Selecione as tecnologias usadas neste projeto.</p>
@@ -555,6 +530,7 @@ export default function AdminProjects() {
                     )}
                   </div>
 
+                  {/* Featured */}
                   <FormField control={form.control} name="featured" render={({ field }) => (
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-border p-4 bg-card">
                       <FormControl>

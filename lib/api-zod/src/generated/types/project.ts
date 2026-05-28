@@ -26,6 +26,7 @@ export interface Project {
   metricsSummary?: string | null;
   demoUrl?: string | null;
   repositoryUrl?: string | null;
+  linkedCaseSlug?: string | null;
   status: string;
   featured: boolean;
   createdAt: string;

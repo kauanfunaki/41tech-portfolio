@@ -21,6 +21,7 @@ export const projectsTable = pgTable("projects", {
   metricsSummary: text("metrics_summary"),
   demoUrl: text("demo_url"),
   repositoryUrl: text("repository_url"),
+  linkedCaseSlug: text("linked_case_slug"),
   status: text("status").notNull().default("active"),
   featured: boolean("featured").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),

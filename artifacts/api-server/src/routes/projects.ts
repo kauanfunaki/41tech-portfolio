@@ -26,6 +26,7 @@ function mapProject(p: typeof projectsTable.$inferSelect) {
     metricsSummary: p.metricsSummary,
     demoUrl: p.demoUrl,
     repositoryUrl: p.repositoryUrl,
+    linkedCaseSlug: p.linkedCaseSlug,
     status: p.status,
     featured: p.featured,
     createdAt: p.createdAt.toISOString(),
@@ -89,6 +90,7 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
     metricsSummary: data.metricsSummary ?? null,
     demoUrl: data.demoUrl ?? null,
     repositoryUrl: data.repositoryUrl ?? null,
+    linkedCaseSlug: data.linkedCaseSlug ?? null,
     status: data.status,
     featured: data.featured,
   }).returning();
@@ -322,6 +324,7 @@ router.put("/:slug", requireAuth, async (req: Request, res: Response) => {
       metricsSummary: data.metricsSummary ?? null,
       demoUrl: data.demoUrl ?? null,
       repositoryUrl: data.repositoryUrl ?? null,
+      linkedCaseSlug: data.linkedCaseSlug ?? null,
       status: data.status,
       featured: data.featured,
       updatedAt: new Date(),

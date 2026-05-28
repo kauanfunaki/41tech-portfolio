@@ -208,6 +208,8 @@ export const translations = {
       statusCompleted: "Concluído",
       statusInProgress: "Em Andamento",
       stackUsed: "Stack Utilizada",
+      viewCaseBtn: "Ver case completo",
+      viewCaseLabel: "Este projeto tem um case detalhado",
     },
     caseDetail: {
       back: "Voltar para Cases",
@@ -447,6 +449,8 @@ export const translations = {
       statusCompleted: "Completed",
       statusInProgress: "In Progress",
       stackUsed: "Stack Used",
+      viewCaseBtn: "View full case",
+      viewCaseLabel: "This project has a detailed case study",
     },
     caseDetail: {
       back: "Back to Cases",

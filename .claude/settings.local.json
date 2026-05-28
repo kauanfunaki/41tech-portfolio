@@ -12,7 +12,10 @@
       "PowerShell(Get-Command pnpm -ErrorAction SilentlyContinue)",
       "PowerShell(Get-Command npx -ErrorAction SilentlyContinue)",
       "PowerShell(Get-Command npm -ErrorAction SilentlyContinue)",
-      "Bash(xargs grep -l \"equipe\\\\|team\")"
+      "Bash(xargs grep -l \"equipe\\\\|team\")",
+      "WebFetch(domain:briceclain.com)",
+      "Bash(pnpm --filter @workspace/db drizzle-kit push)",
+      "PowerShell($env:PATH = \"$env:PATH;C:\\\\Users\\\\kauan.brasileiro\\\\AppData\\\\Roaming\\\\npm\"; Get-Command pnpm 2>&1 | Select-Object -First 1)"
     ]
   }
 }

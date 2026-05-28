@@ -1,10 +1,8 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
 import { useListCases } from "@workspace/api-client-react";
-import { Briefcase, ArrowRight, Search, Lock } from "lucide-react";
+import { ArrowRight, Search, Lock } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
 import { useT } from "@/lib/languageContext";
@@ -37,113 +35,107 @@ export default function Cases() {
   }, [publicCases, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#05070D]">
+    <div className="min-h-screen bg-[#0D0D0E]">
       {/* Page Header */}
-      <section className="pt-32 pb-24 relative overflow-hidden bg-[#0B1020] border-b border-[rgba(255,255,255,0.05)]">
-        <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" />
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="pt-32 pb-16 border-b border-[#272729]">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mb-12"
+            transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              {t.cases.badge}
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-foreground tracking-tight">
+            <span className="section-num mb-4 block">// 00</span>
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
               {t.cases.title}
             </h1>
-            <p className="text-xl md:text-2xl text-[#AAB6D3] leading-relaxed">
+            <p className="text-lg text-[#888895] max-w-xl leading-relaxed">
               {t.cases.subtitle}
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="mt-10"
           >
-            <div className="relative max-w-md">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
+            <div className="relative max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555560]" />
+              <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.cases.searchPlaceholder}
-                className="pl-12 h-14 bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.1)] focus-visible:ring-primary text-lg"
+                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#272729] rounded text-sm text-[#F0F0F0] placeholder:text-[#555560] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
           </motion.div>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-24">
+      {/* Cases list */}
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16">
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-0">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="space-y-4">
-                <Skeleton className="h-48 w-full rounded-2xl bg-[#0B1020]" />
-                <Skeleton className="h-8 w-3/4 bg-[#0B1020]" />
-                <Skeleton className="h-4 w-full bg-[#0B1020]" />
+              <div key={i} className="flex items-start gap-6 py-8 border-b border-[#272729]">
+                <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0 mt-1" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-5 w-48 bg-[#1A1A1B]" />
+                  <Skeleton className="h-4 w-80 bg-[#1A1A1B]" />
+                  <Skeleton className="h-4 w-64 bg-[#1A1A1B]" />
+                </div>
               </div>
             ))}
           </div>
         ) : filtered.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
             {filtered.map((c, i) => (
               <motion.div
                 key={c.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: Math.min(i * 0.06, 0.3) }}
               >
                 <Link href={`/cases/${c.slug}`}>
-                  <div className="group h-full flex flex-col rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.08)] bg-[#0B1020] hover:border-primary/50 transition-all duration-500 hover:scale-[1.02] shadow-lg cursor-pointer">
-                    {/* Top accent bar */}
-                    <div className="h-1 w-full bg-gradient-to-r from-primary via-[#00D8FF] to-primary/0" />
+                  <div className="group flex items-start gap-6 py-8 border-b border-[#272729] cursor-pointer hover:pl-3 transition-all duration-200">
+                    {/* Index */}
+                    <span className="font-mono text-xs text-[#555560] w-8 shrink-0 mt-1 select-none">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
 
-                    <div className="p-8 flex flex-col flex-1 relative">
-                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                      <div className="flex items-start justify-between gap-4 mb-5 relative z-10">
-                        <div className="flex flex-wrap gap-2">
-                          {c.clientSegment && (
-                            <Badge className="bg-primary/10 text-primary border border-primary/20 font-mono text-xs">
-                              {c.clientSegment}
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                          <Briefcase className="w-5 h-5 text-primary" />
-                        </div>
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                        <h3 className="text-base font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">
+                          {c.title}
+                        </h3>
+                        {c.clientSegment && (
+                          <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                            {c.clientSegment}
+                          </span>
+                        )}
                       </div>
 
-                      <h3 className="text-2xl font-bold mb-3 group-hover:text-[#00D8FF] transition-colors text-foreground relative z-10">
-                        {c.title}
-                      </h3>
-
                       {c.problem && (
-                        <p className="text-[#AAB6D3] line-clamp-2 mb-5 flex-1 text-base leading-relaxed relative z-10">
+                        <p className="text-sm text-[#888895] line-clamp-2 leading-relaxed mb-2">
                           {c.problem}
                         </p>
                       )}
 
                       {c.metricsSummary && (
-                        <div className="mb-5 p-3 rounded-lg bg-[rgba(18,61,255,0.05)] border border-[rgba(18,61,255,0.1)] relative z-10">
-                          <p className="text-sm font-semibold text-[#00D8FF]">
-                            {c.metricsSummary}
-                          </p>
-                        </div>
+                        <p className="text-xs font-mono text-primary/70 line-clamp-1">
+                          {c.metricsSummary.split("|")[0].trim()}
+                        </p>
                       )}
+                    </div>
 
-                      <div className="mt-auto overflow-hidden relative z-10">
-                        <div className="flex items-center text-primary font-semibold translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                          {t.cases.viewFull}{" "}
-                          <ArrowRight className="w-5 h-5 ml-2" />
-                        </div>
-                      </div>
+                    {/* Arrow */}
+                    <div className="flex items-center gap-1.5 mt-0.5 shrink-0">
+                      <span className="text-xs text-[#555560] group-hover:text-primary transition-colors hidden sm:block">
+                        {t.cases.viewFull}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
                 </Link>
@@ -151,12 +143,11 @@ export default function Cases() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 bg-[#0B1020] border border-[rgba(255,255,255,0.05)] rounded-2xl">
-            <Briefcase className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
-            <h3 className="text-2xl font-bold text-foreground mb-2">
+          <div className="py-32 text-center border-t border-[#272729]">
+            <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
               {searchQuery ? t.cases.emptySearchTitle : t.cases.emptyNoneTitle}
-            </h3>
-            <p className="text-[#AAB6D3] text-lg">
+            </p>
+            <p className="text-sm text-[#888895]">
               {searchQuery ? t.cases.emptySearchDesc : t.cases.emptyNoneDesc}
             </p>
           </div>
@@ -164,8 +155,8 @@ export default function Cases() {
 
         {/* Private cases note */}
         {cases && cases.some((c) => c.isPublic === false) && (
-          <div className="mt-12 flex items-center gap-3 text-sm text-[#AAB6D3] justify-center">
-            <Lock className="w-4 h-4" />
+          <div className="mt-12 flex items-center gap-2 text-xs font-mono text-[#555560] justify-center">
+            <Lock className="w-3.5 h-3.5" />
             <span>
               {cases.filter((c) => c.isPublic === false).length} {t.cases.privateCases}
             </span>

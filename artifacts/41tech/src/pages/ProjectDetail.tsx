@@ -1,10 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { useGetProject, getGetProjectQueryKey, useGetSiteSettings, useGetProjectTechnologies } from "@workspace/api-client-react";
-import { ArrowLeft, ExternalLink, Github, LayoutTemplate, AlertTriangle, Zap, TrendingUp, Send } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, LayoutTemplate, Send, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
 import { useT } from "@/lib/languageContext";
@@ -22,10 +21,10 @@ export default function ProjectDetail() {
   const { data: projectTechs } = useGetProjectTechnologies(slug, {
     query: { enabled: !!slug }
   });
-  const [previewError, setPreviewError] = useState(false);
+  const [coverError, setCoverError] = useState(false);
 
   useEffect(() => {
-    setPreviewError(false);
+    setCoverError(false);
   }, [slug]);
 
   const galleryImages = useMemo(
@@ -44,13 +43,7 @@ export default function ProjectDetail() {
     image: project?.coverImageUrl ?? project?.thumbnailUrl ?? undefined,
   });
 
-  const heroMedia = useMemo(() => {
-    if (!project) return null;
-    if (!previewError && project.previewType === "image" && project.previewUrl) return { type: "image" as const, url: project.previewUrl };
-    if (!previewError && project.previewType === "video" && project.previewUrl) return { type: "video" as const, url: project.previewUrl };
-    if (project.coverImageUrl) return { type: "image" as const, url: project.coverImageUrl };
-    return null;
-  }, [project, previewError]);
+  const coverUrl = project?.coverImageUrl || project?.thumbnailUrl || null;
 
   const handleContactClick = () => {
     if (settings?.whatsappUrl) {
@@ -62,23 +55,23 @@ export default function ProjectDetail() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-32 bg-[#05070D] min-h-screen">
-        <Skeleton className="h-8 w-32 mb-12 bg-[#0B1020]" />
-        <Skeleton className="h-16 w-3/4 mb-6 bg-[#0B1020]" />
-        <Skeleton className="h-6 w-1/2 mb-16 bg-[#0B1020]" />
-        <Skeleton className="aspect-[21/9] w-full rounded-2xl mb-16 bg-[#0B1020]" />
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-32 min-h-screen">
+        <Skeleton className="h-4 w-32 mb-12 bg-[#1A1A1B]" />
+        <Skeleton className="h-12 w-3/4 mb-4 bg-[#1A1A1B]" />
+        <Skeleton className="h-5 w-1/2 mb-16 bg-[#1A1A1B]" />
+        <Skeleton className="aspect-video w-full rounded bg-[#1A1A1B]" />
       </div>
     );
   }
 
   if (isError || !project) {
     return (
-      <div className="container mx-auto px-4 py-40 text-center bg-[#05070D] min-h-screen flex flex-col items-center justify-center">
-        <LayoutTemplate className="w-20 h-20 text-muted-foreground mb-8" />
-        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-40 text-center min-h-screen flex flex-col items-center justify-center">
+        <LayoutTemplate className="w-16 h-16 text-[#333336] mb-8" />
+        <h1 className="text-2xl font-bold mb-6 text-[#F0F0F0]">
           {t.projectDetail.notFound}
         </h1>
-        <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
+        <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-white rounded">
           <Link href="/projetos">{t.projectDetail.backToProjects}</Link>
         </Button>
       </div>
@@ -86,213 +79,201 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-[#05070D]">
-      <div className="relative pt-32 pb-40 overflow-hidden bg-[#0B1020] border-b border-[rgba(255,255,255,0.05)]">
-        <div className="absolute inset-0 tech-grid opacity-10 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
-
-        <div className="container mx-auto px-4 relative z-10">
+    <div className="min-h-screen bg-[#0D0D0E]">
+      {/* Header */}
+      <section className="pt-32 pb-16 border-b border-[#272729]">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           <Link
             href="/projetos"
-            className="inline-flex items-center text-sm font-bold text-[#AAB6D3] hover:text-[#00D8FF] mb-12 transition-colors uppercase tracking-wider"
+            className="inline-flex items-center text-xs font-mono text-[#555560] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
           >
-            <ArrowLeft className="w-5 h-5 mr-3" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             {t.projectDetail.back}
           </Link>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-5xl"
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex flex-wrap gap-3 mb-6">
+            <div className="flex flex-wrap items-center gap-3 mb-5">
               {project.category && (
-                <Badge className="bg-background/80 text-white border-[rgba(255,255,255,0.1)] hover:bg-background text-sm px-4 py-1">
+                <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
                   {project.category}
-                </Badge>
+                </span>
               )}
               {project.featured && (
-                <Badge className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 text-sm px-4 py-1">
+                <span className="text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2 py-0.5 rounded">
                   {t.projectDetail.featured}
-                </Badge>
+                </span>
               )}
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-foreground tracking-tight leading-tight">
+
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
               {project.title}
             </h1>
-            <p className="text-xl md:text-3xl text-[#AAB6D3] leading-relaxed max-w-4xl">
+            <p className="text-lg md:text-xl text-[#888895] leading-relaxed max-w-2xl">
               {project.shortDescription}
             </p>
-          </motion.div>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 -mt-24 relative z-20 pb-32">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          {heroMedia ? (
-            <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-[rgba(255,255,255,0.1)] bg-[#0B1020] mb-8 relative">
-              {heroMedia.type === "video" ? (
-                <video
-                  src={heroMedia.url}
-                  controls
-                  muted
-                  playsInline
-                  poster={project.coverImageUrl ?? undefined}
-                  className="w-full h-full object-cover"
-                  onError={() => setPreviewError(true)}
-                />
-              ) : (
-                <>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-background/40 to-transparent opacity-60 z-10" />
-                  <img
-                    src={heroMedia.url}
-                    alt={project.previewAlt || project.title}
-                    className="w-full h-full object-cover"
-                    onError={() => setPreviewError(true)}
-                  />
-                </>
-              )}
-            </div>
-          ) : (
-            <div className="aspect-[21/9] w-full rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-[rgba(255,255,255,0.1)] bg-gradient-to-br from-[#061A44] to-[#0B1020] flex items-center justify-center mb-8 relative overflow-hidden">
-              <div className="absolute inset-0 tech-grid opacity-30" />
-              <LayoutTemplate className="w-32 h-32 text-primary/30 relative z-10" />
-            </div>
-          )}
-
-          {(project.demoUrl || project.repositoryUrl) && (
-            <div className="flex flex-wrap gap-4 mb-12">
-              {project.demoUrl && (
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-12 px-6 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0"
-                >
-                  <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-5 h-5 mr-2" />
+            {/* Action links */}
+            {(project.demoUrl || project.repositoryUrl) && (
+              <div className="flex flex-wrap gap-3 mt-8">
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
                     {t.projectDetail.demo}
                   </a>
-                </Button>
-              )}
-              {project.repositoryUrl && (
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 px-6 text-base font-bold border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism"
-                >
-                  <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">
-                    <Github className="w-5 h-5 mr-2" />
+                )}
+                {project.repositoryUrl && (
+                  <a
+                    href={project.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
+                  >
+                    <Github className="w-4 h-4" />
                     {t.projectDetail.repo}
                   </a>
-                </Button>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Cover image */}
+      {coverUrl && !coverError && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="max-w-6xl mx-auto px-6 md:px-12 py-8"
+        >
+          <div className="aspect-video w-full rounded border border-[#272729] overflow-hidden bg-[#131314]">
+            <img
+              src={coverUrl}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              onError={() => setCoverError(true)}
+            />
+          </div>
         </motion.div>
+      )}
 
+      {/* Linked case banner */}
+      {project.linkedCaseSlug && (
+        <div className="max-w-6xl mx-auto px-6 md:px-12 py-2">
+          <Link href={`/cases/${project.linkedCaseSlug}`}>
+            <div className="flex items-center justify-between px-6 py-4 border border-primary/30 bg-primary/5 rounded hover:bg-primary/10 transition-colors group">
+              <div>
+                <p className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-0.5">
+                  {t.projectDetail.viewCaseLabel}
+                </p>
+                <p className="text-sm font-semibold text-[#F0F0F0]">
+                  {t.projectDetail.viewCaseBtn}
+                </p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        </div>
+      )}
+
+      {/* Main content */}
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-8 space-y-20">
+          {/* Left: article */}
+          <div className="lg:col-span-8 space-y-16">
 
+            {/* Metrics */}
             {metrics.length > 0 && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.impact}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.impact}</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#272729] border border-[#272729] rounded overflow-hidden">
                   {metrics.map((metric, i) => (
-                    <div key={i} className="p-6 rounded-2xl bg-[rgba(18,61,255,0.05)] border border-[rgba(18,61,255,0.1)] flex items-center justify-center text-center">
-                      <p className="text-2xl font-bold text-[#00D8FF]">{metric}</p>
+                    <div key={i} className="bg-[#0D0D0E] px-6 py-5">
+                      <p className="text-base font-semibold text-[#F0F0F0]">{metric}</p>
                     </div>
                   ))}
                 </div>
               </motion.section>
             )}
 
+            {/* Overview */}
             {project.fullDescription && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.overview}</h2>
-                <div className="prose prose-invert max-w-none text-xl text-[#AAB6D3] leading-relaxed">
-                  <p className="whitespace-pre-wrap">{project.fullDescription}</p>
-                </div>
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.overview}</h2>
+                <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{project.fullDescription}</p>
               </motion.section>
             )}
 
+            {/* Problem */}
             {project.problem && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                    <AlertTriangle className="w-6 h-6 text-red-500" />
-                  </div>
-                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.problem}</h2>
-                </div>
-                <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-red-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(239,68,68,0.05)]">
-                  <p className="whitespace-pre-wrap">{project.problem}</p>
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.problem}</h2>
+                <div className="border-l-2 border-[#272729] pl-6">
+                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{project.problem}</p>
                 </div>
               </motion.section>
             )}
 
+            {/* Solution */}
             {project.solution && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-primary" />
-                  </div>
-                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.solution}</h2>
-                </div>
-                <div className="p-8 md:p-10 rounded-2xl bg-[#0B1020] border border-primary/30 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(18,61,255,0.05)]">
-                  <p className="whitespace-pre-wrap">{project.solution}</p>
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.solution}</h2>
+                <div className="border-l-2 border-primary/40 pl-6">
+                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{project.solution}</p>
                 </div>
               </motion.section>
             )}
 
+            {/* Result */}
             {project.result && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <h2 className="text-3xl font-bold text-foreground">{t.projectDetail.result}</h2>
-                </div>
-                <div className="p-8 md:p-10 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-white text-lg md:text-xl leading-relaxed shadow-[inset_0_0_20px_rgba(16,185,129,0.05)]">
-                  <p className="whitespace-pre-wrap">{project.result}</p>
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.result}</h2>
+                <div className="border-l-2 border-[#272729] pl-6">
+                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{project.result}</p>
                 </div>
               </motion.section>
             )}
 
+            {/* Gallery */}
             {galleryImages.length > 0 && (
               <motion.section
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8 text-foreground">{t.projectDetail.gallery}</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.projectDetail.gallery}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryImages.map((imgUrl, i) => (
-                    <div key={i} className="aspect-video w-full rounded-xl overflow-hidden border border-[rgba(255,255,255,0.1)] bg-[#0B1020]">
+                    <div key={i} className="aspect-video w-full rounded border border-[#272729] bg-[#131314] overflow-hidden">
                       <img
                         src={imgUrl}
                         alt={`${t.projectDetail.gallery} ${i + 1}`}
@@ -304,107 +285,117 @@ export default function ProjectDetail() {
               </motion.section>
             )}
 
+            {/* CTA */}
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pt-12 border-t border-[rgba(255,255,255,0.05)]"
+              className="pt-12 border-t border-[#272729]"
             >
-              <div className="p-12 rounded-2xl bg-gradient-to-br from-[#061A44] to-[#0B1020] border border-primary/20 text-center">
-                <h3 className="text-3xl font-bold text-white mb-4">{t.projectDetail.ctaTitle}</h3>
-                <p className="text-[#AAB6D3] text-lg mb-8 max-w-xl mx-auto">
-                  {t.projectDetail.ctaSubtitle}
-                </p>
-                <Button
-                  size="lg"
-                  onClick={handleContactClick}
-                  className="h-14 px-8 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue"
-                >
-                  {t.projectDetail.ctaBtn} <Send className="ml-2 w-4 h-4" />
-                </Button>
-              </div>
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-3">
+                {t.projectDetail.ctaTitle}
+              </h3>
+              <p className="text-[#888895] text-base mb-6 max-w-md">
+                {t.projectDetail.ctaSubtitle}
+              </p>
+              <button
+                onClick={handleContactClick}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+              >
+                {t.projectDetail.ctaBtn}
+                <Send className="w-4 h-4" />
+              </button>
             </motion.section>
           </div>
 
+          {/* Sidebar */}
           <div className="lg:col-span-4">
-            <div className="p-8 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0B1020] space-y-8 sticky top-32 glassmorphism">
-              <h3 className="font-bold text-2xl text-white border-b border-[rgba(255,255,255,0.1)] pb-6">
+            <div className="border border-[#272729] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
+              <h3 className="font-mono text-xs text-[#555560] uppercase tracking-widest pb-4 border-b border-[#272729]">
                 {t.projectDetail.sidebarTitle}
               </h3>
 
-              <div className="space-y-6">
-                <div>
-                  <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-3">
-                    {t.projectDetail.statusLabel}
-                  </span>
-                  <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-[#061A44] text-[#00D8FF] border border-[#00D8FF]/30 capitalize">
-                    {project.status === "completed"
-                      ? t.projectDetail.statusCompleted
-                      : project.status === "in_progress"
-                      ? t.projectDetail.statusInProgress
-                      : project.status}
-                  </span>
-                </div>
-
-                {projectTechs && projectTechs.length > 0 && (
-                  <div className="pt-6 border-t border-[rgba(255,255,255,0.1)]">
-                    <span className="text-sm font-bold text-[#AAB6D3] uppercase tracking-wider block mb-4">
-                      {t.projectDetail.stackUsed}
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {projectTechs.map((tech) => (
-                        <div
-                          key={tech.id}
-                          title={tech.category ?? undefined}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[rgba(18,61,255,0.08)] border border-[rgba(18,61,255,0.2)] text-white text-xs hover:border-[#00D8FF]/40 transition-colors"
-                        >
-                          {tech.iconUrl ? (
-                            <img
-                              src={tech.iconUrl}
-                              alt={tech.name}
-                              className="w-4 h-4 object-contain"
-                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                            />
-                          ) : (
-                            <span className="text-[#00D8FF] font-bold text-sm leading-none">
-                              {tech.name.charAt(0)}
-                            </span>
-                          )}
-                          <span className="font-mono">{tech.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {(project.demoUrl || project.repositoryUrl) && (
-                  <div className="pt-6 border-t border-[rgba(255,255,255,0.1)] space-y-4">
-                    {project.demoUrl && (
-                      <Button
-                        asChild
-                        className="w-full h-14 text-base font-bold bg-gradient-to-r from-[#123DFF] to-[#0A28CC] hover:from-[#1a47ff] hover:to-[#1230e0] text-white border-0 glow-blue justify-center"
-                      >
-                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-5 h-5 mr-3" />
-                          {t.projectDetail.demo}
-                        </a>
-                      </Button>
-                    )}
-                    {project.repositoryUrl && (
-                      <Button
-                        asChild
-                        className="w-full h-14 text-base font-bold justify-center border-[rgba(255,255,255,0.2)] text-white hover:bg-white/5 glassmorphism"
-                        variant="outline"
-                      >
-                        <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-5 h-5 mr-3" />
-                          {t.projectDetail.repo}
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                )}
+              {/* Status */}
+              <div>
+                <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+                  {t.projectDetail.statusLabel}
+                </p>
+                <span className="text-sm text-[#F0F0F0] capitalize">
+                  {project.status === "completed"
+                    ? t.projectDetail.statusCompleted
+                    : project.status === "in_progress"
+                    ? t.projectDetail.statusInProgress
+                    : project.status}
+                </span>
               </div>
+
+              {/* Stack */}
+              {projectTechs && projectTechs.length > 0 && (
+                <div className="pt-4 border-t border-[#272729]">
+                  <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
+                    {t.projectDetail.stackUsed}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {projectTechs.map((tech) => (
+                      <div
+                        key={tech.id}
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#272729] bg-[#0D0D0E] text-xs text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                      >
+                        {tech.iconUrl ? (
+                          <img
+                            src={tech.iconUrl}
+                            alt={tech.name}
+                            className="w-3.5 h-3.5 object-contain"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                          />
+                        ) : null}
+                        <span className="font-mono">{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Links */}
+              {(project.demoUrl || project.repositoryUrl) && (
+                <div className="pt-4 border-t border-[#272729] space-y-2">
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-[#888895] hover:text-primary transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      {t.projectDetail.demo}
+                    </a>
+                  )}
+                  {project.repositoryUrl && (
+                    <a
+                      href={project.repositoryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                    >
+                      <Github className="w-3.5 h-3.5" />
+                      {t.projectDetail.repo}
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {/* Case link (sidebar) */}
+              {project.linkedCaseSlug && (
+                <div className="pt-4 border-t border-[#272729]">
+                  <Link
+                    href={`/cases/${project.linkedCaseSlug}`}
+                    className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors font-medium"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" />
+                    {t.projectDetail.viewCaseBtn}
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

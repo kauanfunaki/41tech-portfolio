@@ -1,11 +1,9 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { useListProjects } from "@workspace/api-client-react";
-import { Blocks, ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
 import { inferCategory } from "@/lib/inferCategory";
 import { useSEO } from "@/hooks/useSEO";
 import { useT } from "@/lib/languageContext";
@@ -37,7 +35,6 @@ export default function Projects() {
   const urlParams = new URLSearchParams(searchString);
   const selectedCategory = urlParams.get("categoria") || "Todos";
 
-  // Search uses local state + debounce to avoid janky URL updates on every keystroke
   const [searchQuery, setSearchQuery] = useState(urlParams.get("q") || "");
 
   const { data: projects, isLoading } = useListProjects();
@@ -52,7 +49,7 @@ export default function Projects() {
       navigate(qs ? `/projetos?${qs}` : "/projetos", { replace: true });
     }, 350);
     return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const handleCategoryChange = (cat: string) => {
@@ -77,53 +74,51 @@ export default function Projects() {
   }, [projects, searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[#05070D]">
+    <div className="min-h-screen bg-[#0D0D0E]">
       {/* Page Header */}
-      <section className="pt-32 pb-24 relative overflow-hidden bg-[#0B1020] border-b border-[rgba(255,255,255,0.05)]">
-        <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="pt-32 pb-16 border-b border-[#272729]">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mb-12"
+            transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
-              {t.projects.badge}
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-foreground tracking-tight">
+            <span className="section-num mb-4 block">// 00</span>
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
               {t.projects.title}
             </h1>
-            <p className="text-xl md:text-2xl text-[#AAB6D3] leading-relaxed">
+            <p className="text-lg text-[#888895] max-w-xl leading-relaxed">
               {t.projects.subtitle}
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="mt-10 space-y-5"
           >
-            <div className="relative max-w-md">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
+            {/* Search */}
+            <div className="relative max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555560]" />
+              <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.projects.searchPlaceholder}
-                className="pl-12 h-14 bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.1)] focus-visible:ring-primary text-lg"
+                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#272729] rounded text-sm text-[#F0F0F0] placeholder:text-[#555560] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
+
+            {/* Category filters */}
             <div className="flex flex-wrap gap-2">
               {ALL_CATEGORY_KEYS.map((key, i) => (
                 <button
                   key={key}
                   onClick={() => handleCategoryChange(key)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`px-3 py-1 text-xs font-medium rounded border transition-colors ${
                     selectedCategory === key
-                      ? "bg-primary text-white border-transparent"
-                      : "bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] text-[#AAB6D3] hover:text-white hover:bg-[rgba(255,255,255,0.08)]"
+                      ? "bg-primary text-white border-primary"
+                      : "bg-transparent border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448]"
                   }`}
                 >
                   {t.projects.categories[i]}
@@ -134,117 +129,106 @@ export default function Projects() {
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-24">
+      {/* Projects list */}
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16">
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="space-y-4">
-                <Skeleton className="aspect-[4/3] w-full rounded-2xl bg-[#0B1020]" />
-                <Skeleton className="h-8 w-3/4 bg-[#0B1020]" />
-                <Skeleton className="h-4 w-full bg-[#0B1020]" />
-                <Skeleton className="h-4 w-2/3 bg-[#0B1020]" />
+          <div className="space-y-0">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex items-center gap-6 py-6 border-b border-[#272729]">
+                <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0" />
+                <Skeleton className="w-16 h-16 rounded bg-[#1A1A1B] shrink-0" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-5 w-48 bg-[#1A1A1B]" />
+                  <Skeleton className="h-4 w-72 bg-[#1A1A1B]" />
+                </div>
               </div>
             ))}
           </div>
         ) : filteredProjects.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1 }}
-                className="h-full"
-              >
-                <Link href={`/projetos/${project.slug}`}>
-                  <div className="group h-full flex flex-col rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.08)] bg-[#0B1020] hover:border-primary/50 transition-all duration-500 hover:scale-[1.02] shadow-lg">
-                    <div className="aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-[#061A44] to-[#05070D] relative flex items-center justify-center">
-                      {(() => {
-                        const cardImg =
-                          project.thumbnailUrl ||
-                          (project.previewType === "image" ? project.previewUrl : null) ||
-                          project.coverImageUrl;
-                        return cardImg ? (
+          <div>
+            {filteredProjects.map((project, i) => {
+              const cardImg =
+                project.thumbnailUrl ||
+                project.coverImageUrl ||
+                null;
+              const category = project.category || inferCategory(project.title);
+
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: Math.min(i * 0.06, 0.3) }}
+                >
+                  <Link href={`/projetos/${project.slug}`}>
+                    <div className="project-row">
+                      {/* Index */}
+                      <span className="font-mono text-xs text-[#555560] w-8 shrink-0 select-none">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+
+                      {/* Thumbnail */}
+                      <div className="w-16 h-16 rounded border border-[#272729] bg-[#131314] shrink-0 overflow-hidden">
+                        {cardImg ? (
                           <img
                             src={cardImg}
-                            alt={project.previewAlt || project.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                            alt={project.title}
+                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                             onError={(e) => {
                               (e.currentTarget as HTMLImageElement).style.display = "none";
                             }}
                           />
-                        ) : null;
-                      })()}
-                      {!(
-                        project.thumbnailUrl ||
-                        (project.previewType === "image" ? project.previewUrl : null) ||
-                        project.coverImageUrl
-                      ) && (
-                        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:scale-110 transition-transform duration-700">
-                          <svg
-                            className="w-1/2 h-1/2 text-primary"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="9" y1="21" x2="9" y2="9"></line>
-                          </svg>
-                        </div>
-                      )}
-                      <div className="absolute top-4 right-4 flex gap-2">
-                        <Badge className="bg-background/80 backdrop-blur-md border border-[rgba(255,255,255,0.1)] text-white hover:bg-background">
-                          {project.category || inferCategory(project.title)}
-                        </Badge>
-                        {project.featured && (
-                          <Badge className="bg-primary/90 backdrop-blur-md border border-primary text-white hover:bg-primary">
-                            {t.projects.featured}
-                          </Badge>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[#333336]">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+                              <rect x="3" y="3" width="18" height="18" rx="2" />
+                              <line x1="3" y1="9" x2="21" y2="9" />
+                              <line x1="9" y1="21" x2="9" y2="9" />
+                            </svg>
+                          </div>
                         )}
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent opacity-80" />
-                    </div>
 
-                    <div className="p-8 flex flex-col flex-1 relative">
-                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                      <h3 className="text-2xl font-bold mb-4 group-hover:text-[#00D8FF] transition-colors text-foreground">
-                        {project.title}
-                      </h3>
-                      <p className="text-[#AAB6D3] line-clamp-3 mb-6 flex-1 text-lg leading-relaxed">
-                        {project.shortDescription}
-                      </p>
-
-                      {project.metricsSummary && (
-                        <div className="mb-6 p-3 rounded-lg bg-[rgba(18,61,255,0.05)] border border-[rgba(18,61,255,0.1)]">
-                          <p className="text-sm font-semibold text-[#00D8FF]">
-                            {project.metricsSummary}
+                      {/* Main content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-3 mb-1">
+                          <h3 className="text-base font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">
+                            {project.title}
+                          </h3>
+                          <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                            {category}
+                          </span>
+                          {project.featured && (
+                            <span className="text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2 py-0.5 rounded">
+                              {t.projects.featured}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-[#888895] line-clamp-1 leading-relaxed">
+                          {project.shortDescription}
+                        </p>
+                        {project.metricsSummary && (
+                          <p className="text-xs font-mono text-primary/70 mt-1 line-clamp-1">
+                            {project.metricsSummary.split("|")[0].trim()}
                           </p>
-                        </div>
-                      )}
-
-                      <div className="mt-auto overflow-hidden">
-                        <div className="flex items-center text-primary font-semibold translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                          {t.projects.viewDetails} <ArrowRight className="w-5 h-5 ml-2" />
-                        </div>
+                        )}
                       </div>
+
+                      {/* Arrow */}
+                      <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         ) : (
-          <div className="text-center py-32 bg-[#0B1020] border border-[rgba(255,255,255,0.05)] rounded-2xl">
-            <Blocks className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
-            <h3 className="text-2xl font-bold text-foreground mb-2">
+          <div className="py-32 text-center border-t border-[#272729]">
+            <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
               {t.projects.emptyTitle}
-            </h3>
-            <p className="text-[#AAB6D3] text-lg">{t.projects.emptyDesc}</p>
+            </p>
+            <p className="text-sm text-[#888895]">{t.projects.emptyDesc}</p>
           </div>
         )}
       </div>
