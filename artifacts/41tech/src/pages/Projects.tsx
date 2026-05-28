@@ -162,7 +162,7 @@ export default function Projects() {
                   transition={{ delay: Math.min(i * 0.06, 0.3) }}
                 >
                   <Link href={`/projetos/${project.slug}`}>
-                    <div className="project-row">
+                    <div className="project-row group">
                       {/* Index */}
                       <span className="font-mono text-xs text-[#555560] w-8 shrink-0 select-none">
                         {String(i + 1).padStart(2, "0")}
