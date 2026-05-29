@@ -11,13 +11,13 @@ function LangToggle({ large = false }: { large?: boolean }) {
   const toggle = (l: Lang) => () => setLang(l);
   const base = large ? "px-4 py-2 text-sm" : "px-2.5 py-1 text-xs";
   return (
-    <div className="flex items-center rounded border border-[#272729] overflow-hidden" role="group" aria-label="Seletor de idioma">
+    <div className="flex items-center rounded border border-[#323234] overflow-hidden" role="group" aria-label="Seletor de idioma">
       <button
         onClick={toggle("pt")}
         aria-label="Português"
         aria-pressed={lang === "pt"}
         className={`${base} font-bold tracking-wide transition-colors focus-ring ${
-          lang === "pt" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
+          lang === "pt" ? "bg-primary text-primary-foreground" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
         PT
@@ -27,7 +27,7 @@ function LangToggle({ large = false }: { large?: boolean }) {
         aria-label="English"
         aria-pressed={lang === "en"}
         className={`${base} font-bold tracking-wide transition-colors focus-ring ${
-          lang === "en" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
+          lang === "en" ? "bg-primary text-primary-foreground" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
         EN
@@ -65,7 +65,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? "bg-[#0D0D0E]/95 backdrop-blur-sm border-b border-[#272729]"
+            ? "bg-[#0D0D0E]/95 backdrop-blur-sm border-b border-[#323234]"
             : "bg-transparent"
         }`}
       >
@@ -113,7 +113,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-[#0D0D0E] border-t border-[#272729]" role="navigation" aria-label="Menu mobile">
+          <div className="md:hidden bg-[#0D0D0E] border-t border-[#323234]" role="navigation" aria-label="Menu mobile">
             <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col gap-6">
               {navLinks.map((link) => {
                 const isActive = location === link.href || location.startsWith(link.href + "/");
@@ -129,7 +129,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
                   </Link>
                 );
               })}
-              <div className="pt-4 border-t border-[#272729]">
+              <div className="pt-4 border-t border-[#323234]">
                 <LangToggle large />
               </div>
             </div>
@@ -141,7 +141,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="border-t border-[#272729] bg-[#0D0D0E] py-16">
+      <footer className="border-t border-[#323234] bg-[#0D0D0E] py-16">
         <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2 space-y-4">
             <Logo className="text-xl" />
@@ -150,7 +150,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             </p>
           </div>
           <div>
-            <h4 className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-4">
+            <h4 className="text-xs font-mono text-[#7A7A85] uppercase tracking-widest mb-4">
               {t.footer.navTitle}
             </h4>
             <ul className="space-y-2 text-sm text-[#888895]">
@@ -164,7 +164,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-4">
+            <h4 className="text-xs font-mono text-[#7A7A85] uppercase tracking-widest mb-4">
               {t.footer.contactTitle}
             </h4>
             <ul className="space-y-2 text-sm text-[#888895]">
@@ -193,7 +193,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             </ul>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-[#272729] text-xs text-[#555560]">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-[#323234] text-xs text-[#7A7A85]">
           © {new Date().getFullYear()} Kauan Funaki — {t.footer.rights}
         </div>
       </footer>

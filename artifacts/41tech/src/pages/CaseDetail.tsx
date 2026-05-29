@@ -89,11 +89,11 @@ function CaseDetailInner() {
   return (
     <div className="min-h-screen bg-[#0D0D0E]">
       {/* Header */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <Link
             href="/cases"
-            className="inline-flex items-center text-xs font-mono text-[#555560] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
+            className="inline-flex items-center text-xs font-mono text-[#7A7A85] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {t.caseDetail.back}
@@ -105,7 +105,7 @@ function CaseDetailInner() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+              <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
                 {t.caseDetail.badge}
               </span>
               {caseStudy.clientSegment && (
@@ -130,7 +130,7 @@ function CaseDetailInner() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-6xl mx-auto px-6 md:px-12 py-8"
         >
-          <div className="aspect-video w-full rounded border border-[#272729] overflow-hidden bg-[#131314]">
+          <div className="aspect-video w-full rounded border border-[#323234] overflow-hidden bg-[#131314]">
             {caseStudy.videoUrl ? (
               <video
                 src={caseStudy.videoUrl}
@@ -164,8 +164,8 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.caseDetail.impact}</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#272729] border border-[#272729] rounded overflow-hidden">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.impact}</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
                   {metrics.map((metric, i) => (
                     <div key={i} className="bg-[#0D0D0E] px-6 py-5">
                       <p className="text-base font-semibold text-[#F0F0F0]">{metric}</p>
@@ -182,8 +182,8 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.caseDetail.challenge}</h2>
-                <div className="border-l-2 border-[#272729] pl-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.challenge}</h2>
+                <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.problem}</p>
                 </div>
               </motion.section>
@@ -196,7 +196,7 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.caseDetail.solution}</h2>
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.solution}</h2>
                 <div className="border-l-2 border-primary/40 pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.solution}</p>
                 </div>
@@ -210,8 +210,8 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.caseDetail.result}</h2>
-                <div className="border-l-2 border-[#272729] pl-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.result}</h2>
+                <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.result}</p>
                 </div>
               </motion.section>
@@ -224,10 +224,10 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">{t.caseDetail.gallery}</h2>
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.gallery}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryImages.map((imgUrl, i) => (
-                    <div key={i} className="aspect-video w-full rounded border border-[#272729] bg-[#131314] overflow-hidden">
+                    <div key={i} className="aspect-video w-full rounded border border-[#323234] bg-[#131314] overflow-hidden">
                       <img
                         src={imgUrl}
                         alt={`${t.caseDetail.gallery} ${i + 1}`}
@@ -244,7 +244,7 @@ function CaseDetailInner() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pt-12 border-t border-[#272729]"
+              className="pt-12 border-t border-[#323234]"
             >
               <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-3">
                 {t.caseDetail.ctaTitle}
@@ -254,7 +254,7 @@ function CaseDetailInner() {
               </p>
               <button
                 onClick={handleContactClick}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
               >
                 {t.caseDetail.ctaBtn}
                 <Send className="w-4 h-4" />
@@ -264,14 +264,14 @@ function CaseDetailInner() {
 
           {/* Sidebar */}
           <div className="lg:col-span-4">
-            <div className="border border-[#272729] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
-              <h3 className="font-mono text-xs text-[#555560] uppercase tracking-widest pb-4 border-b border-[#272729]">
+            <div className="border border-[#323234] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
+              <h3 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pb-4 border-b border-[#323234]">
                 {t.caseDetail.sidebarTitle}
               </h3>
 
               {/* Type */}
               <div>
-                <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+                <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
                   {t.caseDetail.typeLabel}
                 </p>
                 <div className="flex items-center gap-1.5 text-sm text-[#888895]">
@@ -282,8 +282,8 @@ function CaseDetailInner() {
 
               {/* Segment */}
               {caseStudy.clientSegment && (
-                <div className="pt-4 border-t border-[#272729]">
-                  <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+                <div className="pt-4 border-t border-[#323234]">
+                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
                     {t.caseDetail.segmentLabel}
                   </p>
                   <span className="text-sm text-[#F0F0F0]">{caseStudy.clientSegment}</span>
@@ -292,8 +292,8 @@ function CaseDetailInner() {
 
               {/* Metrics */}
               {metrics.length > 0 && (
-                <div className="pt-4 border-t border-[#272729]">
-                  <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
+                <div className="pt-4 border-t border-[#323234]">
+                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-3">
                     {t.caseDetail.resultsLabel}
                   </p>
                   <div className="space-y-1.5">
@@ -306,7 +306,7 @@ function CaseDetailInner() {
 
               {/* Related URL */}
               {caseStudy.relatedUrl && (
-                <div className="pt-4 border-t border-[#272729]">
+                <div className="pt-4 border-t border-[#323234]">
                   <a
                     href={caseStudy.relatedUrl}
                     target="_blank"

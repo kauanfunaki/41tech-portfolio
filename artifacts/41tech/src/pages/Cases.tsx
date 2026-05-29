@@ -37,7 +37,7 @@ export default function Cases() {
   return (
     <div className="min-h-screen bg-[#0D0D0E]">
       {/* Page Header */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -60,12 +60,12 @@ export default function Cases() {
             className="mt-10"
           >
             <div className="relative max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555560]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7A7A85]" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.cases.searchPlaceholder}
-                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#272729] rounded text-sm text-[#F0F0F0] placeholder:text-[#555560] focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#323234] rounded text-sm text-[#F0F0F0] placeholder:text-[#7A7A85] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
           </motion.div>
@@ -77,7 +77,7 @@ export default function Cases() {
         {isLoading ? (
           <div className="space-y-0">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex items-start gap-6 py-8 border-b border-[#272729]">
+              <div key={i} className="flex items-start gap-6 py-8 border-b border-[#323234]">
                 <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0 mt-1" />
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-5 w-48 bg-[#1A1A1B]" />
@@ -98,9 +98,9 @@ export default function Cases() {
                 transition={{ delay: Math.min(i * 0.06, 0.3) }}
               >
                 <Link href={`/cases/${c.slug}`}>
-                  <div className="group flex items-start gap-6 py-8 border-b border-[#272729] cursor-pointer hover:pl-3 transition-all duration-200">
+                  <div className="group flex items-start gap-6 py-8 border-b border-[#323234] cursor-pointer hover:pl-3 transition-all duration-200">
                     {/* Index */}
-                    <span className="font-mono text-xs text-[#555560] w-8 shrink-0 mt-1 select-none">
+                    <span className="font-mono text-xs text-[#7A7A85] w-8 shrink-0 mt-1 select-none">
                       {String(i + 1).padStart(2, "0")}
                     </span>
 
@@ -111,7 +111,7 @@ export default function Cases() {
                           {c.title}
                         </h3>
                         {c.clientSegment && (
-                          <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                          <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
                             {c.clientSegment}
                           </span>
                         )}
@@ -132,10 +132,10 @@ export default function Cases() {
 
                     {/* Arrow */}
                     <div className="flex items-center gap-1.5 mt-0.5 shrink-0">
-                      <span className="text-xs text-[#555560] group-hover:text-primary transition-colors hidden sm:block">
+                      <span className="text-xs text-[#7A7A85] group-hover:text-primary transition-colors hidden sm:block">
                         {t.cases.viewFull}
                       </span>
-                      <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-[#7A7A85] group-hover:text-primary group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
                 </Link>
@@ -143,8 +143,8 @@ export default function Cases() {
             ))}
           </div>
         ) : (
-          <div className="py-32 text-center border-t border-[#272729]">
-            <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
+          <div className="py-32 text-center border-t border-[#323234]">
+            <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-3">
               {searchQuery ? t.cases.emptySearchTitle : t.cases.emptyNoneTitle}
             </p>
             <p className="text-sm text-[#888895]">
@@ -155,7 +155,7 @@ export default function Cases() {
 
         {/* Private cases note */}
         {cases && cases.some((c) => c.isPublic === false) && (
-          <div className="mt-12 flex items-center gap-2 text-xs font-mono text-[#555560] justify-center">
+          <div className="mt-12 flex items-center gap-2 text-xs font-mono text-[#7A7A85] justify-center">
             <Lock className="w-3.5 h-3.5" />
             <span>
               {cases.filter((c) => c.isPublic === false).length} {t.cases.privateCases}

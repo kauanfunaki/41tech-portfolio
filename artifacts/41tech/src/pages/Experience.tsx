@@ -64,7 +64,7 @@ export default function Experience() {
     <div className="min-h-screen bg-[#0D0D0E]">
 
       {/* ── HERO ── */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -97,7 +97,7 @@ export default function Experience() {
       </section>
 
       {/* ── TIMELINE ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -117,7 +117,7 @@ export default function Experience() {
                 <motion.article
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-16 py-10 border-b border-[#272729] last:border-0"
+                  className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-16 py-10 border-b border-[#323234] last:border-0"
                 >
                   {/* ── Meta column (left) ── */}
                   <div className="shrink-0 space-y-3">
@@ -127,11 +127,11 @@ export default function Experience() {
                         {t.experience.currentLabel}
                       </span>
                     )}
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#555560]">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#7A7A85]">
                       <CalendarDays className="w-3.5 h-3.5 shrink-0" />
                       {entry.period}
                     </div>
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#555560]">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#7A7A85]">
                       <MapPin className="w-3.5 h-3.5 shrink-0" />
                       {entry.modality}
                     </div>
@@ -154,13 +154,13 @@ export default function Experience() {
                     {/* Responsibilities */}
                     {entry.responsibilities.length > 0 && (
                       <div>
-                        <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-4">
+                        <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-4">
                           {t.experience.responsibilitiesLabel}
                         </p>
                         <ul className="space-y-2">
                           {entry.responsibilities.map((item, j) => (
                             <li key={j} className="flex items-start gap-2.5 text-sm text-[#888895]">
-                              <span className="w-1 h-1 rounded-full bg-[#555560] shrink-0 mt-2" />
+                              <span className="w-1 h-1 rounded-full bg-[#7A7A85] shrink-0 mt-2" />
                               {item}
                             </li>
                           ))}
@@ -171,7 +171,7 @@ export default function Experience() {
                     {/* Results / deliveries */}
                     {entry.results.length > 0 && (
                       <div>
-                        <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-4">
+                        <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-4">
                           {t.experience.resultsLabel}
                         </p>
                         <ul className="space-y-2">
@@ -188,14 +188,14 @@ export default function Experience() {
                     {/* Technologies */}
                     {entry.technologies.length > 0 && (
                       <div>
-                        <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
+                        <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-3">
                           {t.experience.techLabel}
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {entry.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-2.5 py-1 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
+                              className="text-xs font-mono text-[#888895] border border-[#323234] bg-[#131314] px-2.5 py-1 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
                             >
                               {tech}
                             </span>
@@ -212,7 +212,7 @@ export default function Experience() {
       </section>
 
       {/* ── TRABALHOS RELEVANTES ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -259,7 +259,7 @@ export default function Experience() {
             <motion.div variants={fadeUp}>
               <Link
                 href="/projetos"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
               >
                 {t.experience.ctaBtn}
                 <ArrowRight className="w-4 h-4" />

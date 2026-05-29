@@ -26,7 +26,9 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(npx vite *)",
       "Bash(netstat -ano)",
-      "Bash(findstr \":5173\")"
+      "Bash(findstr \":5173\")",
+      "WebFetch(domain:portfolio.41tech.cloud)",
+      "Bash(npm run *)"
     ]
   }
 }

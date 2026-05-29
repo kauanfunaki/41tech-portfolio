@@ -14,7 +14,7 @@ export default function NotFound() {
         transition={{ duration: 0.5 }}
         className="text-center px-6 max-w-lg mx-auto"
       >
-        <p className="font-mono text-[6rem] md:text-[9rem] font-bold leading-none text-[#272729] select-none mb-6">
+        <p className="font-mono text-[6rem] md:text-[9rem] font-bold leading-none text-[#323234] select-none mb-6">
           404
         </p>
 
@@ -28,7 +28,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
           >
             <Home className="w-4 h-4" />
             {t.notFound.home}
@@ -36,7 +36,7 @@ export default function NotFound() {
 
           <Link
             href="/projetos"
-            className="inline-flex items-center gap-2 px-4 py-2 border border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 border border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
           >
             <FolderGit2 className="w-4 h-4" />
             {t.notFound.projects}
@@ -44,7 +44,7 @@ export default function NotFound() {
 
           <Link
             href="/cases"
-            className="inline-flex items-center gap-2 px-4 py-2 border border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 border border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
           >
             <Briefcase className="w-4 h-4" />
             {t.notFound.cases}

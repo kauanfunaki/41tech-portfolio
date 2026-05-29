@@ -46,7 +46,7 @@ function StatusChip({ status, labelActive, labelDone }: { status: "active" | "do
       {labelActive}
     </span>
   ) : (
-    <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2.5 py-0.5 rounded">
+    <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2.5 py-0.5 rounded">
       {labelDone}
     </span>
   );
@@ -65,7 +65,7 @@ function SpecialtyCard({ specialty }: { specialty: SpecialtyEntry }) {
         {specialty.technologies.map((tech) => (
           <span
             key={tech}
-            className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded"
+            className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded"
           >
             {tech}
           </span>
@@ -111,7 +111,7 @@ export default function Expertise() {
     <div className="min-h-screen bg-[#0D0D0E]">
 
       {/* ── HERO ── */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -144,7 +144,7 @@ export default function Expertise() {
       </section>
 
       {/* ── RESUMO TÉCNICO ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -166,7 +166,7 @@ export default function Expertise() {
       </section>
 
       {/* ── FORMAÇÃO ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -186,11 +186,11 @@ export default function Expertise() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-8 border-b border-[#272729] last:border-0"
+                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-8 border-b border-[#323234] last:border-0"
                 >
                   {/* Period + institution */}
                   <div className="shrink-0">
-                    <p className="text-xs font-mono text-[#555560] mb-1">{entry.period}</p>
+                    <p className="text-xs font-mono text-[#7A7A85] mb-1">{entry.period}</p>
                     <p className="text-xs font-mono text-[#888895]">{entry.institution}</p>
                   </div>
 
@@ -215,7 +215,7 @@ export default function Expertise() {
       </section>
 
       {/* ── CERTIFICAÇÕES ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -230,7 +230,7 @@ export default function Expertise() {
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#272729] border border-[#272729] rounded overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
               {certifications.map((cert, i) => (
                 <motion.div
                   key={i}
@@ -238,7 +238,7 @@ export default function Expertise() {
                   className="bg-[#0D0D0E] p-5 flex flex-col gap-3 group"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <Award className="w-4 h-4 text-[#555560] shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
+                    <Award className="w-4 h-4 text-[#7A7A85] shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
                     <StatusChip
                       status={cert.status}
                       labelActive={t.expertise.statusActive}
@@ -247,7 +247,7 @@ export default function Expertise() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-[#F0F0F0] leading-snug">{cert.name}</p>
-                    <p className="text-xs text-[#555560] font-mono mt-1">
+                    <p className="text-xs text-[#7A7A85] font-mono mt-1">
                       {cert.institution} · {cert.year}
                     </p>
                   </div>
@@ -270,7 +270,7 @@ export default function Expertise() {
       </section>
 
       {/* ── ESPECIALIDADES ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -297,7 +297,7 @@ export default function Expertise() {
       </section>
 
       {/* ── STACK POR CATEGORIA ── */}
-      <section className="py-16 border-b border-[#272729]">
+      <section className="py-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -317,16 +317,16 @@ export default function Expertise() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-6 border-b border-[#272729] last:border-0 items-start"
+                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-6 border-b border-[#323234] last:border-0 items-start"
                 >
-                  <p className="font-mono text-xs text-[#555560] uppercase tracking-widest pt-1 shrink-0">
+                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pt-1 shrink-0">
                     {group.label}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {group.items.map((item) => (
                       <span
                         key={item.name}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#888895] border border-[#323234] bg-[#131314] px-3 py-1.5 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
                       >
                         {item.iconUrl && (
                           <img
@@ -372,7 +372,7 @@ export default function Expertise() {
             <motion.div variants={fadeUp}>
               <Link
                 href="/projetos"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
               >
                 {t.expertise.heroCta}
                 <ArrowRight className="w-4 h-4" />

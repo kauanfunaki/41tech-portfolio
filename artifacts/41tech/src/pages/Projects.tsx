@@ -76,7 +76,7 @@ export default function Projects() {
   return (
     <div className="min-h-screen bg-[#0D0D0E]">
       {/* Page Header */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -100,12 +100,12 @@ export default function Projects() {
           >
             {/* Search */}
             <div className="relative max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555560]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7A7A85]" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.projects.searchPlaceholder}
-                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#272729] rounded text-sm text-[#F0F0F0] placeholder:text-[#555560] focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#323234] rounded text-sm text-[#F0F0F0] placeholder:text-[#7A7A85] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
 
@@ -117,8 +117,8 @@ export default function Projects() {
                   onClick={() => handleCategoryChange(key)}
                   className={`px-3 py-1 text-xs font-medium rounded border transition-colors focus-ring ${
                     selectedCategory === key
-                      ? "bg-primary text-white border-primary shadow-[0_0_8px_rgba(18,61,255,0.3)]"
-                      : "bg-transparent border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448]"
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_8px_rgba(255,138,76,0.3)]"
+                      : "bg-transparent border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448]"
                   }`}
                 >
                   {t.projects.categories[i]}
@@ -134,7 +134,7 @@ export default function Projects() {
         {isLoading ? (
           <div className="space-y-0">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex items-center gap-6 py-7 border-b border-[#272729]">
+              <div key={i} className="flex items-center gap-6 py-7 border-b border-[#323234]">
                 <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0" />
                 <Skeleton className="w-16 h-16 rounded bg-[#1A1A1B] shrink-0" />
                 <div className="flex-1 space-y-2">
@@ -164,12 +164,12 @@ export default function Projects() {
                   <Link href={`/projetos/${project.slug}`}>
                     <div className="project-row group">
                       {/* Index */}
-                      <span className="font-mono text-xs text-[#555560] w-8 shrink-0 select-none">
+                      <span className="font-mono text-xs text-[#7A7A85] w-8 shrink-0 select-none">
                         {String(i + 1).padStart(2, "0")}
                       </span>
 
                       {/* Thumbnail */}
-                      <div className="w-16 h-16 rounded border border-[#272729] bg-[#131314] shrink-0 overflow-hidden">
+                      <div className="w-16 h-16 rounded border border-[#323234] bg-[#131314] shrink-0 overflow-hidden">
                         {cardImg ? (
                           <img
                             src={cardImg}
@@ -196,7 +196,7 @@ export default function Projects() {
                           <h3 className="text-base font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">
                             {project.title}
                           </h3>
-                          <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                          <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
                             {category}
                           </span>
                           {isDocumented && (
@@ -205,7 +205,7 @@ export default function Projects() {
                             </span>
                           )}
                           {project.featured && (
-                            <span className="text-xs font-mono text-[#888895] border border-[#272729] px-2 py-0.5 rounded">
+                            <span className="text-xs font-mono text-[#888895] border border-[#323234] px-2 py-0.5 rounded">
                               {t.projects.featured}
                             </span>
                           )}
@@ -222,10 +222,10 @@ export default function Projects() {
 
                       {/* CTA */}
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <span className="text-xs text-[#555560] group-hover:text-primary transition-colors hidden sm:block">
+                        <span className="text-xs text-[#7A7A85] group-hover:text-primary transition-colors hidden sm:block">
                           {t.projects.viewDetails}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-[#7A7A85] group-hover:text-primary group-hover:translate-x-1 transition-all" />
                       </div>
                     </div>
                   </Link>
@@ -234,10 +234,10 @@ export default function Projects() {
             })}
           </div>
         ) : (
-          <div className="py-32 text-center border-t border-[#272729] flex flex-col items-center gap-4">
+          <div className="py-32 text-center border-t border-[#323234] flex flex-col items-center gap-4">
             <SearchX className="w-10 h-10 text-[#333336]" />
             <div>
-              <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+              <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
                 {t.projects.emptyTitle}
               </p>
               <p className="text-sm text-[#888895]">{t.projects.emptyDesc}</p>

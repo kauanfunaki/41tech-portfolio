@@ -58,34 +58,34 @@
 :root {
   --background: 240 4% 5%;          /* #0D0D0E */
   --foreground: 0 0% 94%;           /* #F0F0F0 */
-  --border: 240 3% 16%;             /* #272729 */
+  --border: 240 3% 16%;             /* #323234 */
   --card: 240 4% 8%;                /* #131314 */
   --card-foreground: 0 0% 94%;
   --card-border: 240 3% 14%;        /* #232325 */
   --sidebar: 224 70% 6%;
   --sidebar-foreground: 0 0% 100%;
   --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 230 97% 54%;
+  --sidebar-primary: 21 100% 65%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 224 70% 10%;
   --sidebar-accent-foreground: 0 0% 80%;
-  --sidebar-ring: 230 97% 54%;
+  --sidebar-ring: 21 100% 65%;
   --popover: 240 4% 8%;
   --popover-foreground: 0 0% 94%;
   --popover-border: 240 3% 14%;
-  --primary: 230 97% 54%;           /* #123DFF — brand blue */
-  --primary-foreground: 0 0% 100%;
+  --primary: 21 100% 65%;           /* #FF8A4C — warm amber/coral accent */
+  --primary-foreground: 240 6% 6%;  /* dark text on amber (white fails contrast) */
   --secondary: 240 3% 12%;
   --secondary-foreground: 240 4% 65%;
   --muted: 240 3% 11%;
   --muted-foreground: 240 4% 55%;   /* #8A8A90 */
-  --accent: 230 97% 54%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 21 100% 65%;
+  --accent-foreground: 240 6% 6%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
   --input: 240 3% 16%;
-  --ring: 230 97% 54%;
-  --chart-1: 230 97% 54%;
+  --ring: 21 100% 65%;
+  --chart-1: 21 100% 65%;
   --chart-2: 191 100% 43%;
   --chart-3: 220 50% 50%;
   --chart-4: 260 70% 60%;
@@ -108,26 +108,26 @@
   --sidebar: 224 70% 6%;
   --sidebar-foreground: 0 0% 100%;
   --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 230 97% 54%;
+  --sidebar-primary: 21 100% 65%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 224 70% 10%;
   --sidebar-accent-foreground: 0 0% 80%;
-  --sidebar-ring: 230 97% 54%;
+  --sidebar-ring: 21 100% 65%;
   --popover: 240 4% 8%;
   --popover-foreground: 0 0% 94%;
   --popover-border: 240 3% 14%;
-  --primary: 230 97% 54%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 21 100% 65%;
+  --primary-foreground: 240 6% 6%;
   --secondary: 240 3% 12%;
   --secondary-foreground: 240 4% 65%;
   --muted: 240 3% 11%;
   --muted-foreground: 240 4% 55%;
-  --accent: 230 97% 54%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 21 100% 65%;
+  --accent-foreground: 240 6% 6%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
   --input: 240 3% 16%;
-  --ring: 230 97% 54%;
+  --ring: 21 100% 65%;
 }
 
 /* ─── Loading Screen ─── */
@@ -160,14 +160,14 @@
 }
 
 .terminal-loader {
-  border: 0.1em solid #272729;
+  border: 0.1em solid #323234;
   background-color: #131314;
-  color: #6480ff;
+  color: #FF8A4C;
   font-family: 'Space Mono', 'Courier New', monospace;
   font-size: 1rem;
   padding: 1.5em 1em;
   width: 14em;
-  box-shadow: 0 0 32px rgba(18, 61, 255, 0.18), 0 4px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 32px rgba(255, 138, 76, 0.18), 0 4px 16px rgba(0, 0, 0, 0.5);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
@@ -220,7 +220,7 @@
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 0.2em solid #6480ff;
+  border-right: 0.2em solid #FF8A4C;
   animation:
     kf-type-delete 4s steps(12) infinite,
     kf-blink-cursor 0.5s step-end infinite alternate;
@@ -247,13 +247,13 @@
   .section-num {
     font-family: var(--app-font-mono);
     font-size: 0.7rem;
-    color: hsl(240 4% 38%);
+    color: hsl(240 4% 52%);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
   .gradient-text {
-    background: linear-gradient(to right, #F0F0F0 20%, #123DFF 70%);
+    background: linear-gradient(to right, #F0F0F0 20%, #FF8A4C 70%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -261,7 +261,7 @@
 
   /* ── Subtle effects — kept ONLY for admin and CTA buttons ── */
   .glow-blue {
-    box-shadow: 0 0 16px rgba(18, 61, 255, 0.35), 0 0 40px rgba(18, 61, 255, 0.1);
+    box-shadow: 0 0 16px rgba(255, 138, 76, 0.35), 0 0 40px rgba(255, 138, 76, 0.1);
   }
 
   /* ── Admin-only ── */
@@ -274,8 +274,8 @@
 
   .tech-grid {
     background-image:
-      linear-gradient(rgba(18, 61, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(18, 61, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255, 138, 76, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 138, 76, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
@@ -287,7 +287,7 @@
     gap: 1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid #272729;
+    border-bottom: 1px solid #323234;
     cursor: pointer;
     transition: all 200ms;
   }
@@ -298,7 +298,7 @@
 
   /* ── Card interactive — unified hover for all public cards ── */
   .card-interactive {
-    border: 1px solid #272729;
+    border: 1px solid #323234;
     background-color: #131314;
     border-radius: 0.5rem;
     transition: border-color 200ms, background-color 200ms, box-shadow 200ms;
@@ -306,7 +306,7 @@
   .card-interactive:hover {
     border-color: #3A3A3E;
     background-color: #1A1A1B;
-    box-shadow: 0 0 0 1px rgba(18, 61, 255, 0.08);
+    box-shadow: 0 0 0 1px rgba(255, 138, 76, 0.08);
   }
 
   /* ── Focus ring — accessible keyboard navigation ── */

@@ -95,7 +95,7 @@ export default function ProjectDetail() {
         <Button
           asChild
           size="sm"
-          className="bg-primary hover:bg-primary/90 text-white rounded"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded"
         >
           <Link href="/projetos">{t.projectDetail.backToProjects}</Link>
         </Button>
@@ -106,11 +106,11 @@ export default function ProjectDetail() {
   return (
     <div className="min-h-screen bg-[#0D0D0E]">
       {/* ── Hero header ── */}
-      <section className="pt-32 pb-16 border-b border-[#272729]">
+      <section className="pt-32 pb-16 border-b border-[#323234]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <Link
             href="/projetos"
-            className="inline-flex items-center text-xs font-mono text-[#555560] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
+            className="inline-flex items-center text-xs font-mono text-[#7A7A85] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {t.projectDetail.back}
@@ -124,7 +124,7 @@ export default function ProjectDetail() {
             {/* Tags */}
             <div className="flex flex-wrap items-center gap-2 mb-5">
               {project.category && (
-                <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
                   {project.category}
                 </span>
               )}
@@ -134,7 +134,7 @@ export default function ProjectDetail() {
                 </span>
               )}
               {project.problem && project.solution && project.result && (
-                <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
                   {t.projects.caseTag}
                 </span>
               )}
@@ -155,7 +155,7 @@ export default function ProjectDetail() {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" />
                     {t.projectDetail.demo}
@@ -166,7 +166,7 @@ export default function ProjectDetail() {
                     href={project.repositoryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
                   >
                     <Github className="w-4 h-4" />
                     {t.projectDetail.repo}
@@ -186,7 +186,7 @@ export default function ProjectDetail() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-6xl mx-auto px-6 md:px-12 py-8"
         >
-          <div className="aspect-video w-full rounded border border-[#272729] overflow-hidden bg-[#131314]">
+          <div className="aspect-video w-full rounded border border-[#323234] overflow-hidden bg-[#131314]">
             <img
               src={coverUrl}
               alt={project.title}
@@ -203,7 +203,7 @@ export default function ProjectDetail() {
           <Link href={`/cases/${project.linkedCaseSlug}`}>
             <div className="flex items-center justify-between px-6 py-4 border border-primary/30 bg-primary/5 rounded hover:bg-primary/10 transition-colors group">
               <div>
-                <p className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-0.5">
+                <p className="text-xs font-mono text-[#7A7A85] uppercase tracking-widest mb-0.5">
                   {t.projectDetail.viewCaseLabel}
                 </p>
                 <p className="text-sm font-semibold text-[#F0F0F0]">
@@ -230,10 +230,10 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.impact}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#272729] border border-[#272729] rounded overflow-hidden">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
                   {metrics.map((metric, i) => (
                     <div key={i} className="bg-[#0D0D0E] px-6 py-5">
                       <p className="text-base font-semibold text-[#F0F0F0]">{metric}</p>
@@ -250,7 +250,7 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.overview}
                 </h2>
                 <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
@@ -266,10 +266,10 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.problem}
                 </h2>
-                <div className="border-l-2 border-[#272729] pl-6">
+                <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
                     {project.problem}
                   </p>
@@ -284,7 +284,7 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.solution}
                 </h2>
                 <div className="border-l-2 border-primary/40 pl-6">
@@ -302,10 +302,10 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.result}
                 </h2>
-                <div className="border-l-2 border-[#272729] pl-6">
+                <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
                     {project.result}
                   </p>
@@ -320,14 +320,14 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.techStack}
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {projectTechs.map((tech) => (
                     <div
                       key={tech.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-[#272729] bg-[#131314] text-sm text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-[#323234] bg-[#131314] text-sm text-[#888895] hover:text-[#F0F0F0] transition-colors"
                     >
                       {tech.iconUrl ? (
                         <img
@@ -353,14 +353,14 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
                   {t.projectDetail.gallery}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryImages.map((imgUrl, i) => (
                     <div
                       key={i}
-                      className="aspect-video w-full rounded border border-[#272729] bg-[#131314] overflow-hidden"
+                      className="aspect-video w-full rounded border border-[#323234] bg-[#131314] overflow-hidden"
                     >
                       <img
                         src={imgUrl}
@@ -378,7 +378,7 @@ export default function ProjectDetail() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pt-12 border-t border-[#272729]"
+              className="pt-12 border-t border-[#323234]"
             >
               <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-3">
                 {t.projectDetail.ctaTitle}
@@ -388,7 +388,7 @@ export default function ProjectDetail() {
               </p>
               <button
                 onClick={handleContactClick}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold rounded transition-colors"
               >
                 {t.projectDetail.ctaBtn}
                 <Send className="w-4 h-4" />
@@ -398,14 +398,14 @@ export default function ProjectDetail() {
 
           {/* ── Sidebar (right) ── */}
           <div className="lg:col-span-4">
-            <div className="border border-[#272729] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
-              <h3 className="font-mono text-xs text-[#555560] uppercase tracking-widest pb-4 border-b border-[#272729]">
+            <div className="border border-[#323234] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
+              <h3 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pb-4 border-b border-[#323234]">
                 {t.projectDetail.sidebarTitle}
               </h3>
 
               {/* Status */}
               <div>
-                <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+                <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
                   {t.projectDetail.statusLabel}
                 </p>
                 <span className="text-sm text-[#F0F0F0] capitalize">
@@ -419,7 +419,7 @@ export default function ProjectDetail() {
 
               {/* Links */}
               {(project.demoUrl || project.repositoryUrl) && (
-                <div className="pt-4 border-t border-[#272729] space-y-2">
+                <div className="pt-4 border-t border-[#323234] space-y-2">
                   {project.demoUrl && (
                     <a
                       href={project.demoUrl}
@@ -447,7 +447,7 @@ export default function ProjectDetail() {
 
               {/* Linked documentation */}
               {project.linkedCaseSlug && (
-                <div className="pt-4 border-t border-[#272729]">
+                <div className="pt-4 border-t border-[#323234]">
                   <Link
                     href={`/cases/${project.linkedCaseSlug}`}
                     className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors font-medium"
