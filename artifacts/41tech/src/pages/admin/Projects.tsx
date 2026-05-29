@@ -422,7 +422,7 @@ export default function AdminProjects() {
 
                     {/* Gallery */}
                     <div className="md:col-span-2 space-y-3">
-                      <FormLabel>Galeria de imagens</FormLabel>
+                      <p className="text-sm font-medium leading-none">Galeria de imagens</p>
                       <p className="text-xs text-muted-foreground">
                         Faça upload de cada imagem — a URL será adicionada automaticamente à lista abaixo. Ou cole URLs manualmente, uma por linha.
                       </p>

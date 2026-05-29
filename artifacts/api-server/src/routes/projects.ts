@@ -51,17 +51,28 @@ async function getProjectTechnologies(projectId: number) {
 }
 
 router.get("/", async (req: Request, res: Response) => {
-  const parsed = ListProjectsQueryParams.safeParse(req.query);
-  const params = parsed.success ? parsed.data : {};
+  try {
+    const parsed = ListProjectsQueryParams.safeParse(req.query);
+    const params = parsed.success ? parsed.data : {};
 
-  const rows = await db.select().from(projectsTable).orderBy(projectsTable.createdAt);
-  const projects = rows.map(mapProject);
+    const rows = await db.select().from(projectsTable).orderBy(projectsTable.createdAt);
+    const projects = rows.map(mapProject);
 
-  const filtered = params.featured !== undefined
-    ? projects.filter((p) => p.featured === params.featured)
-    : projects;
+    const filtered = params.featured !== undefined
+      ? projects.filter((p) => p.featured === params.featured)
+      : projects;
 
-  res.json(filtered);
+    res.json(filtered);
+  } catch (err: any) {
+    // Common cause: pending DB migration (e.g. linked_case_slug column missing).
+    // Run: ALTER TABLE projects ADD COLUMN IF NOT EXISTS linked_case_slug TEXT;
+    console.error("[GET /projects] error:", err?.message ?? err);
+    res.status(500).json({
+      error: "Erro ao buscar projetos",
+      hint: "Verifique se há migrações pendentes no banco de dados.",
+      detail: err?.message,
+    });
+  }
 });
 
 router.post("/", requireAuth, async (req: Request, res: Response) => {
