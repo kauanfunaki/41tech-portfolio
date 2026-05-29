@@ -8,12 +8,12 @@ export const translations = {
     },
     nav: {
       home: "Início",
-      expertise: "Expertise",
+      expertise: "Especialidades",
       projects: "Projetos",
       experience: "Experiência",
       cases: "Cases",
       about: "Sobre mim",
-      contact: "Entrar em contato",
+      contact: "Contato",
     },
     footer: {
       description:
@@ -258,7 +258,7 @@ export const translations = {
       experience: "Experience",
       cases: "Case Studies",
       about: "About me",
-      contact: "Get in touch",
+      contact: "Contact",
     },
     footer: {
       description:

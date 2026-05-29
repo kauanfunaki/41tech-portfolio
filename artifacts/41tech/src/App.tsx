@@ -96,7 +96,12 @@ function Router() {
         <PublicLayout><Experience /></PublicLayout>
       </Route>
 
-      {/* Legacy — kept for backward compat, not in nav */}
+      {/* Contato (= página Sobre Mim) */}
+      <Route path="/contato">
+        <PublicLayout><AboutUs /></PublicLayout>
+      </Route>
+
+      {/* Legacy alias — backward compat */}
       <Route path="/sobre-mim">
         <PublicLayout><AboutUs /></PublicLayout>
       </Route>

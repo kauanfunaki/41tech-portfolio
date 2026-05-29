@@ -1,7 +1,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useGetSiteSettings } from "@workspace/api-client-react";
 import { Logo } from "@/components/brand/Logo";
 import { useLanguage } from "@/lib/languageContext";
@@ -49,17 +48,11 @@ export function PublicLayout({ children }: { children: ReactNode }) {
   // Close mobile menu on navigation
   useEffect(() => { setMobileOpen(false); }, [location]);
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (settings?.whatsappUrl) {
-      e.preventDefault();
-      window.open(settings.whatsappUrl, "_blank", "noopener,noreferrer");
-    }
-  };
-
   const navLinks = [
     { href: "/expertise", label: t.nav.expertise },
     { href: "/projetos", label: t.nav.projects },
     { href: "/experiencia", label: t.nav.experience },
+    { href: "/contato", label: t.nav.contact },
   ];
 
   return (
@@ -95,18 +88,9 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          {/* Desktop right: lang + CTA */}
+          {/* Desktop right: lang toggle */}
           <div className="hidden md:flex items-center gap-4">
             <LangToggle />
-            <Button
-              asChild
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-white border-0 rounded font-semibold px-4"
-            >
-              <a href="/#contato" onClick={handleContactClick}>
-                {t.nav.contact}
-              </a>
-            </Button>
           </div>
 
           {/* Mobile hamburger */}
@@ -132,16 +116,8 @@ export function PublicLayout({ children }: { children: ReactNode }) {
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-[#272729] flex items-center justify-between">
+              <div className="pt-4 border-t border-[#272729]">
                 <LangToggle large />
-                <Button
-                  asChild
-                  className="bg-primary hover:bg-primary/90 text-white border-0 rounded font-semibold"
-                >
-                  <a href="/#contato" onClick={handleContactClick}>
-                    {t.nav.contact}
-                  </a>
-                </Button>
               </div>
             </div>
           </div>
