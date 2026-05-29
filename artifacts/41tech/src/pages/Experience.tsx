@@ -41,7 +41,7 @@ const fadeUp = {
 function HighlightCard({ item }: { item: WorkHighlight }) {
   const Icon = HIGHLIGHT_ICONS[item.icon] ?? Briefcase;
   return (
-    <div className="p-6 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors flex flex-col gap-3">
+    <div className="card-interactive p-6 flex flex-col gap-3">
       <Icon className="w-5 h-5 text-primary shrink-0" />
       <h3 className="text-sm font-semibold text-[#F0F0F0]">{item.title}</h3>
       <p className="text-sm text-[#888895] leading-relaxed">{item.description}</p>
@@ -117,13 +117,13 @@ export default function Experience() {
                 <motion.article
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-16 py-12 border-b border-[#272729] last:border-0"
+                  className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 lg:gap-16 py-10 border-b border-[#272729] last:border-0"
                 >
                   {/* ── Meta column (left) ── */}
                   <div className="shrink-0 space-y-3">
                     {entry.current && (
                       <span className="inline-flex items-center gap-1.5 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-0.5 rounded">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse motion-reduce:animate-none" />
                         {t.experience.currentLabel}
                       </span>
                     )}

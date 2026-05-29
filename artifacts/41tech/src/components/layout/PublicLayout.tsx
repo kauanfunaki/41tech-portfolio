@@ -11,10 +11,12 @@ function LangToggle({ large = false }: { large?: boolean }) {
   const toggle = (l: Lang) => () => setLang(l);
   const base = large ? "px-4 py-2 text-sm" : "px-2.5 py-1 text-xs";
   return (
-    <div className={`flex items-center rounded border border-[#272729] overflow-hidden ${large ? "" : ""}`}>
+    <div className="flex items-center rounded border border-[#272729] overflow-hidden" role="group" aria-label="Seletor de idioma">
       <button
         onClick={toggle("pt")}
-        className={`${base} font-bold tracking-wide transition-colors ${
+        aria-label="Português"
+        aria-pressed={lang === "pt"}
+        className={`${base} font-bold tracking-wide transition-colors focus-ring ${
           lang === "pt" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
@@ -22,7 +24,9 @@ function LangToggle({ large = false }: { large?: boolean }) {
       </button>
       <button
         onClick={toggle("en")}
-        className={`${base} font-bold tracking-wide transition-colors ${
+        aria-label="English"
+        aria-pressed={lang === "en"}
+        className={`${base} font-bold tracking-wide transition-colors focus-ring ${
           lang === "en" ? "bg-primary text-white" : "text-[#888895] hover:text-[#F0F0F0]"
         }`}
       >
@@ -72,20 +76,23 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`transition-colors ${
-                  location.startsWith(link.href)
-                    ? "text-[#F0F0F0]"
-                    : "text-[#888895] hover:text-[#F0F0F0]"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium" aria-label="Navegação principal">
+            {navLinks.map((link) => {
+              const isActive = location === link.href || location.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative pb-0.5 transition-colors focus-ring ${
+                    isActive
+                      ? "text-[#F0F0F0] border-b border-primary"
+                      : "text-[#888895] hover:text-[#F0F0F0] border-b border-transparent"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop right: lang toggle */}
@@ -95,9 +102,10 @@ export function PublicLayout({ children }: { children: ReactNode }) {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-[#888895] hover:text-[#F0F0F0] transition-colors"
+            className="md:hidden p-2 text-[#888895] hover:text-[#F0F0F0] transition-colors focus-ring rounded"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -105,17 +113,22 @@ export function PublicLayout({ children }: { children: ReactNode }) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-[#0D0D0E] border-t border-[#272729]">
+          <div className="md:hidden bg-[#0D0D0E] border-t border-[#272729]" role="navigation" aria-label="Menu mobile">
             <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-lg font-medium text-[#F0F0F0] hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location === link.href || location.startsWith(link.href + "/");
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-lg font-medium transition-colors focus-ring rounded ${
+                      isActive ? "text-primary" : "text-[#F0F0F0] hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
               <div className="pt-4 border-t border-[#272729]">
                 <LangToggle large />
               </div>
@@ -143,7 +156,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             <ul className="space-y-2 text-sm text-[#888895]">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-[#F0F0F0] transition-colors">
+                  <Link href={link.href} className="hover:text-[#F0F0F0] transition-colors focus-ring rounded">
                     {link.label}
                   </Link>
                 </li>

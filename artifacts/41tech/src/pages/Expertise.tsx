@@ -42,7 +42,7 @@ const fadeUp = {
 function StatusChip({ status, labelActive, labelDone }: { status: "active" | "done"; labelActive: string; labelDone: string }) {
   return status === "active" ? (
     <span className="inline-flex items-center gap-1.5 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-0.5 rounded">
-      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse motion-reduce:animate-none" />
       {labelActive}
     </span>
   ) : (
@@ -55,7 +55,7 @@ function StatusChip({ status, labelActive, labelDone }: { status: "active" | "do
 function SpecialtyCard({ specialty }: { specialty: SpecialtyEntry }) {
   const Icon = SPECIALTY_ICONS[specialty.icon] ?? Globe;
   return (
-    <div className="p-6 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors flex flex-col gap-4">
+    <div className="card-interactive p-6 flex flex-col gap-4">
       <Icon className="w-5 h-5 text-primary shrink-0" />
       <div>
         <h3 className="text-sm font-semibold text-[#F0F0F0] mb-2">{specialty.title}</h3>

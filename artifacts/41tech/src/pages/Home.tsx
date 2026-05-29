@@ -184,7 +184,7 @@ export default function Home() {
               <Button
                 size="lg"
                 asChild
-                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
+                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] text-white border-0 rounded transition-all hover:shadow-[0_0_20px_rgba(18,61,255,0.35)]"
               >
                 <Link href="/projetos">
                   {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
@@ -194,7 +194,7 @@ export default function Home() {
                 size="lg"
                 variant="outline"
                 onClick={openWhatsApp}
-                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 rounded backdrop-blur-sm"
+                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] rounded backdrop-blur-sm transition-all"
               >
                 {t.home.contactCtaBtn}
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -220,7 +220,8 @@ export default function Home() {
       ══════════════════════════════════════════════ */}
       <section className="border-t border-[#272729]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#272729]">
+          {/* Mobile: 2×2 grid with border-b + border-r; Desktop: 4×1 row */}
+          <div className="grid grid-cols-2 md:grid-cols-4">
             {t.home.metrics.map((m, i) => (
               <motion.div
                 key={i}
@@ -228,7 +229,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="px-6 py-8 first:pl-0 last:pr-0"
+                className={`px-5 md:px-6 py-8 hover:bg-[#131314] transition-colors
+                  ${i % 2 === 0 ? "border-r border-[#272729]" : ""}
+                  ${i < 2 ? "border-b md:border-b-0 border-[#272729]" : ""}
+                  md:border-r md:last:border-r-0 border-[#272729]
+                  ${i === 0 ? "md:pl-0" : ""}
+                  ${i === 3 ? "md:pr-0" : ""}
+                `}
               >
                 <p className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-1">{m.value}</p>
                 <p className="text-xs font-mono text-[#555560] leading-snug">{m.label}</p>
@@ -300,7 +307,7 @@ export default function Home() {
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="p-6 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors flex flex-col gap-3"
+                    className="card-interactive p-6 flex flex-col gap-3 min-h-[180px]"
                   >
                     <Icon className="w-4 h-4 text-primary" />
                     <h3 className="text-sm font-semibold text-[#F0F0F0]">{s.title}</h3>
@@ -336,7 +343,7 @@ export default function Home() {
             {featuredProject ? (
               <motion.div variants={fadeUp}>
                 <Link href={`/projetos/${featuredProject.slug}`}>
-                  <div className="group grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 p-8 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors">
+                  <div className="group card-interactive grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 p-8 focus-ring">
                     {/* Info */}
                     <div className="flex flex-col gap-5 justify-center">
                       <div className="flex flex-wrap items-center gap-2">
@@ -498,13 +505,13 @@ export default function Home() {
             {currentRole && (
               <motion.div
                 variants={fadeUp}
-                className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8 lg:gap-16 p-8 border border-[#272729] rounded bg-[#131314]"
+                className="card-interactive grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8 lg:gap-16 p-8"
               >
                 {/* Meta */}
                 <div className="space-y-2">
                   {currentRole.current && (
                     <span className="inline-flex items-center gap-1.5 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-0.5 rounded">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse motion-reduce:animate-none" />
                       {lang === "pt" ? "Atual" : "Current"}
                     </span>
                   )}
@@ -590,7 +597,7 @@ export default function Home() {
                   href={settings.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
                 >
                   <MessageCircle className="w-4 h-4 text-primary shrink-0" />
                   <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">WhatsApp</span>
@@ -600,7 +607,7 @@ export default function Home() {
               {settings?.contactEmail && (
                 <a
                   href={`mailto:${settings.contactEmail}`}
-                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
                 >
                   <Mail className="w-4 h-4 text-[#555560] shrink-0" />
                   <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">{settings.contactEmail}</span>
@@ -612,7 +619,7 @@ export default function Home() {
                   href={settings.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
                 >
                   <Linkedin className="w-4 h-4 text-[#555560] shrink-0" />
                   <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">LinkedIn</span>

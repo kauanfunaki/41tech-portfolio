@@ -198,6 +198,29 @@
     border-bottom-color: color-mix(in srgb, hsl(var(--primary)) 30%, transparent);
   }
 
+  /* ── Card interactive — unified hover for all public cards ── */
+  .card-interactive {
+    border: 1px solid #272729;
+    background-color: #131314;
+    border-radius: 0.5rem;
+    transition: border-color 200ms, background-color 200ms, box-shadow 200ms;
+  }
+  .card-interactive:hover {
+    border-color: #3A3A3E;
+    background-color: #1A1A1B;
+    box-shadow: 0 0 0 1px rgba(18, 61, 255, 0.08);
+  }
+
+  /* ── Focus ring — accessible keyboard navigation ── */
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   /* ── Tech marquee ── */
   .animate-marquee {
     animation: marquee-scroll 35s linear infinite;
@@ -211,4 +234,22 @@
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* ── Respect reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation-duration: 120s; /* Very slow instead of stopping to preserve layout */
+  }
+  /* pulse animations should stop */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Exception: marquee needs slow animation to keep layout intact */
+  .animate-marquee {
+    animation-duration: 120s !important;
+    animation-iteration-count: infinite !important;
+  }
 }

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { useListProjects } from "@workspace/api-client-react";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, SearchX } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { inferCategory } from "@/lib/inferCategory";
@@ -115,9 +115,9 @@ export default function Projects() {
                 <button
                   key={key}
                   onClick={() => handleCategoryChange(key)}
-                  className={`px-3 py-1 text-xs font-medium rounded border transition-colors ${
+                  className={`px-3 py-1 text-xs font-medium rounded border transition-colors focus-ring ${
                     selectedCategory === key
-                      ? "bg-primary text-white border-primary"
+                      ? "bg-primary text-white border-primary shadow-[0_0_8px_rgba(18,61,255,0.3)]"
                       : "bg-transparent border-[#272729] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448]"
                   }`}
                 >
@@ -234,11 +234,14 @@ export default function Projects() {
             })}
           </div>
         ) : (
-          <div className="py-32 text-center border-t border-[#272729]">
-            <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-3">
-              {t.projects.emptyTitle}
-            </p>
-            <p className="text-sm text-[#888895]">{t.projects.emptyDesc}</p>
+          <div className="py-32 text-center border-t border-[#272729] flex flex-col items-center gap-4">
+            <SearchX className="w-10 h-10 text-[#333336]" />
+            <div>
+              <p className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-2">
+                {t.projects.emptyTitle}
+              </p>
+              <p className="text-sm text-[#888895]">{t.projects.emptyDesc}</p>
+            </div>
           </div>
         )}
       </div>

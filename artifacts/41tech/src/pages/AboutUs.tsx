@@ -67,7 +67,7 @@ export default function AboutUs() {
                     onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-[#272729]">
+                  <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-[#555560]">
                     {(me?.name ?? "K").charAt(0)}
                   </div>
                 )}
@@ -88,9 +88,10 @@ export default function AboutUs() {
                     href={me?.linkedinUrl ?? settings?.linkedinUrl ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors"
+                    aria-label="LinkedIn"
+                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors focus-ring"
                   >
-                    <Linkedin className="w-4 h-4" />
+                    <Linkedin className="w-4 h-4" aria-hidden="true" />
                   </a>
                 )}
                 {me?.githubUrl && (
@@ -98,9 +99,10 @@ export default function AboutUs() {
                     href={me.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors"
+                    aria-label="GitHub"
+                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors focus-ring"
                   >
-                    <Github className="w-4 h-4" />
+                    <Github className="w-4 h-4" aria-hidden="true" />
                   </a>
                 )}
               </div>
@@ -212,10 +214,11 @@ export default function AboutUs() {
           </p>
           <button
             onClick={handleContactClick}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded transition-colors"
+            aria-label={t.about.ctaBtn}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] text-white text-sm font-semibold rounded transition-all hover:shadow-[0_0_16px_rgba(18,61,255,0.3)]"
           >
             {t.about.ctaBtn}
-            <Send className="w-4 h-4" />
+            <Send className="w-4 h-4" aria-hidden="true" />
           </button>
         </motion.section>
       </div>
