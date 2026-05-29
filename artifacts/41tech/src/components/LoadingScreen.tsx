@@ -9,7 +9,7 @@ export function LoadingScreen({ onDone }: LoadingScreenProps) {
 
   useEffect(() => {
     const exitTimer = setTimeout(() => setExiting(true), 2200);
-    const doneTimer = setTimeout(onDone, 2700);
+    const doneTimer = setTimeout(onDone, 4700);
     return () => {
       clearTimeout(exitTimer);
       clearTimeout(doneTimer);
