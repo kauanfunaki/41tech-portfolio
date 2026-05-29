@@ -85,54 +85,93 @@ export default function Home() {
       {/* ── 00 HERO ─────────────────────────────────── */}
       <section className="relative pt-28 pb-16 md:pt-44 md:pb-28 min-h-[88vh] flex items-center">
         <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-            className="max-w-4xl"
-          >
-            {/* Label */}
-            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
-              <span className="section-num">// 00</span>
-              <span className="section-num">{t.home.badge}</span>
-            </motion.div>
+          {/* Two-column when hero media is configured; single column otherwise */}
+          {(() => {
+            const hasVideo = !!(settings?.heroVideoEnabled && settings?.heroVideoUrl);
+            const hasMedia = hasVideo || !!settings?.heroFallbackImageUrl;
 
-            {/* Headline */}
-            <motion.h1
-              variants={fadeUp}
-              className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
-              style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
-            >
-              {t.home.headline1}
-              <br />
-              <span className="text-primary">{t.home.headline2}</span>
-            </motion.h1>
+            return (
+              <div className={`grid items-center gap-12 lg:gap-20 ${hasMedia ? "lg:grid-cols-[1fr_1fr]" : ""}`}>
 
-            {/* Subheading */}
-            <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-xl mb-12 leading-relaxed">
-              {t.home.subheading}
-            </motion.p>
+                {/* ── Text column ── */}
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={{ show: { transition: { staggerChildren: 0.1 } } }}
+                >
+                  {/* Label */}
+                  <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
+                    <span className="section-num">// 00</span>
+                    <span className="section-num">{t.home.badge}</span>
+                  </motion.div>
 
-            {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-              <Button
-                size="lg"
-                onClick={handlePrimaryCtaClick}
-                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
-              >
-                {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => document.getElementById("projetos-destaque")?.scrollIntoView({ behavior: "smooth" })}
-                className="h-12 px-7 text-sm font-semibold border-[#272729] text-[#F0F0F0] hover:bg-[#1C1C1E] rounded"
-              >
-                {settings?.ctaSecondaryLabel || t.home.ctaSecondary}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </motion.div>
-          </motion.div>
+                  {/* Headline */}
+                  <motion.h1
+                    variants={fadeUp}
+                    className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
+                    style={{ fontSize: `clamp(2.5rem, ${hasMedia ? "5vw" : "9vw"}, ${hasMedia ? "5rem" : "7.5rem"})` }}
+                  >
+                    {t.home.headline1}
+                    <br />
+                    <span className="text-primary">{t.home.headline2}</span>
+                  </motion.h1>
+
+                  {/* Subheading */}
+                  <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-xl mb-12 leading-relaxed">
+                    {t.home.subheading}
+                  </motion.p>
+
+                  {/* CTAs */}
+                  <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+                    <Button
+                      size="lg"
+                      onClick={handlePrimaryCtaClick}
+                      className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
+                    >
+                      {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      onClick={() => document.getElementById("projetos-destaque")?.scrollIntoView({ behavior: "smooth" })}
+                      className="h-12 px-7 text-sm font-semibold border-[#272729] text-[#F0F0F0] hover:bg-[#1C1C1E] rounded"
+                    >
+                      {settings?.ctaSecondaryLabel || t.home.ctaSecondary}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </motion.div>
+                </motion.div>
+
+                {/* ── Media column (only when configured) ── */}
+                {hasMedia && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.3 }}
+                    className="w-full"
+                  >
+                    {hasVideo ? (
+                      <video
+                        src={settings!.heroVideoUrl!}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster={settings?.heroFallbackImageUrl ?? undefined}
+                        className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
+                      />
+                    ) : (
+                      <img
+                        src={settings!.heroFallbackImageUrl!}
+                        alt=""
+                        className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
+                      />
+                    )}
+                  </motion.div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Scroll indicator */}
           <motion.div
