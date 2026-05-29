@@ -106,80 +106,101 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           01 — HERO
       ══════════════════════════════════════════════ */}
-      <section
-        className="relative pt-28 pb-16 md:pt-44 md:pb-28 min-h-[92vh] flex items-center overflow-hidden"
-        style={{ background: "radial-gradient(ellipse 80% 55% at 50% 0%, rgba(18,61,255,0.07) 0%, transparent 65%)" }}
-      >
-        <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
-          <div className={`grid items-center gap-12 lg:gap-20 ${hasHeroMedia ? "lg:grid-cols-[1fr_1fr]" : ""}`}>
+      <section className="relative pt-28 pb-16 md:pt-44 md:pb-28 min-h-[92vh] flex items-center overflow-hidden">
 
-            {/* Text */}
-            <motion.div initial="hidden" animate="show" variants={stagger(0.1)}>
-              <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
-                <span className="section-num">// 00</span>
-                <span className="section-num">{t.home.badge}</span>
-              </motion.div>
+        {/* ── Background media (absolute, fills entire hero) ── */}
+        {hasHeroMedia && (
+          <>
+            {hasVideo ? (
+              <video
+                src={settings!.heroVideoUrl!}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={settings?.heroFallbackImageUrl ?? undefined}
+                className="absolute inset-0 w-full h-full object-cover"
+                aria-hidden="true"
+              />
+            ) : (
+              <img
+                src={settings!.heroFallbackImageUrl!}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
 
-              <motion.h1
-                variants={fadeUp}
-                className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
-                style={{ fontSize: `clamp(2.6rem, ${hasHeroMedia ? "5vw" : "9vw"}, ${hasHeroMedia ? "5rem" : "7.5rem"})` }}
-              >
-                {t.home.headline1}
-                <br />
-                <span className="text-primary">{t.home.headline2}</span>
-              </motion.h1>
+            {/* Overlay: gradient left-to-right so text stays legible on the left */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(13,13,14,0.92) 0%, rgba(13,13,14,0.72) 45%, rgba(13,13,14,0.30) 100%)",
+              }}
+            />
+            {/* Bottom fade so the hero merges cleanly into the next section */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, transparent, #0D0D0E)" }}
+            />
+          </>
+        )}
 
-              <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-lg mb-12 leading-relaxed">
-                {t.home.subheading}
-              </motion.p>
+        {/* Subtle blue radial when no media (original look) */}
+        {!hasHeroMedia && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 55% at 50% 0%, rgba(18,61,255,0.07) 0%, transparent 65%)",
+            }}
+          />
+        )}
 
-              <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
-                <Button
-                  size="lg"
-                  asChild
-                  className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
-                >
-                  <Link href="/projetos">
-                    {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
-                  </Link>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={openWhatsApp}
-                  className="h-12 px-7 text-sm font-semibold border-[#272729] text-[#F0F0F0] hover:bg-[#1C1C1E] rounded"
-                >
-                  {t.home.contactCtaBtn}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
+        {/* ── Foreground content ── */}
+        <div className="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10">
+          <motion.div initial="hidden" animate="show" variants={stagger(0.1)} className="max-w-2xl">
+            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
+              <span className="section-num">// 00</span>
+              <span className="section-num">{t.home.badge}</span>
             </motion.div>
 
-            {/* Media (optional) */}
-            {hasHeroMedia && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+            <motion.h1
+              variants={fadeUp}
+              className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
+              style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
+            >
+              {t.home.headline1}
+              <br />
+              <span className="text-primary">{t.home.headline2}</span>
+            </motion.h1>
+
+            <motion.p variants={fadeUp} className="text-lg text-[#C0C0C8] max-w-lg mb-12 leading-relaxed">
+              {t.home.subheading}
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+              <Button
+                size="lg"
+                asChild
+                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
               >
-                {hasVideo ? (
-                  <video
-                    src={settings!.heroVideoUrl!}
-                    autoPlay muted loop playsInline
-                    poster={settings?.heroFallbackImageUrl ?? undefined}
-                    className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
-                  />
-                ) : (
-                  <img
-                    src={settings!.heroFallbackImageUrl!}
-                    alt=""
-                    className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
-                  />
-                )}
-              </motion.div>
-            )}
-          </div>
+                <Link href="/projetos">
+                  {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={openWhatsApp}
+                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 rounded backdrop-blur-sm"
+              >
+                {t.home.contactCtaBtn}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Scroll indicator */}
           <motion.div
