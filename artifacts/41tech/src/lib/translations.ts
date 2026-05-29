@@ -8,7 +8,9 @@ export const translations = {
     },
     nav: {
       home: "Início",
+      expertise: "Expertise",
       projects: "Projetos",
+      experience: "Experiência",
       cases: "Cases",
       about: "Sobre mim",
       contact: "Entrar em contato",
@@ -251,7 +253,9 @@ export const translations = {
     },
     nav: {
       home: "Home",
+      expertise: "Expertise",
       projects: "Projects",
+      experience: "Experience",
       cases: "Case Studies",
       about: "About me",
       contact: "Get in touch",

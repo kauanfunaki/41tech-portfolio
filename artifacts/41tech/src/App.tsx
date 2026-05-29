@@ -1,4 +1,5 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +16,8 @@ import ProjectDetail from "@/pages/ProjectDetail";
 import Cases from "@/pages/Cases";
 import CaseDetail from "@/pages/CaseDetail";
 import AboutUs from "@/pages/AboutUs";
+import Expertise from "@/pages/Expertise";
+import Experience from "@/pages/Experience";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/Login";
@@ -31,7 +34,6 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: (failureCount, error: unknown) => {
-        // Don't retry on 401/403
         const status = (error as { status?: number })?.status;
         if (status === 401 || status === 403) return false;
         return failureCount < 1;
@@ -41,12 +43,21 @@ const queryClient = new QueryClient({
   },
 });
 
+/** Redirect helper — preserves SPA navigation without full reload */
+function RedirectTo({ to }: { to: string }) {
+  const [, navigate] = useLocation();
+  useEffect(() => {
+    navigate(to, { replace: true });
+  }, [to, navigate]);
+  return null;
+}
+
 function Router() {
   return (
     <Switch>
-      {/* Admin Routes */}
+      {/* ── Admin Routes (unchanged) ── */}
       <Route path="/admin-41tech/login" component={AdminLogin} />
-      
+
       <Route path="/admin-41tech/settings">
         <AdminLayout><AdminSettings /></AdminLayout>
       </Route>
@@ -66,9 +77,14 @@ function Router() {
         <AdminLayout><AdminTechnologies /></AdminLayout>
       </Route>
 
-      {/* Public Routes */}
+      {/* ── Public Routes ── */}
       <Route path="/">
         <PublicLayout><Home /></PublicLayout>
+      </Route>
+
+      {/* Core nav pages */}
+      <Route path="/expertise">
+        <PublicLayout><Expertise /></PublicLayout>
       </Route>
       <Route path="/projetos">
         <PublicLayout><Projects /></PublicLayout>
@@ -76,13 +92,21 @@ function Router() {
       <Route path="/projetos/:slug">
         <PublicLayout><ProjectDetail /></PublicLayout>
       </Route>
+      <Route path="/experiencia">
+        <PublicLayout><Experience /></PublicLayout>
+      </Route>
+
+      {/* Legacy — kept for backward compat, not in nav */}
       <Route path="/sobre-mim">
         <PublicLayout><AboutUs /></PublicLayout>
       </Route>
+
+      {/* /cases redirects to /projetos (Cases data is preserved in admin) */}
       <Route path="/cases">
-        <PublicLayout><Cases /></PublicLayout>
+        <RedirectTo to="/projetos" />
       </Route>
       <Route path="/cases/:slug">
+        {/* Individual case detail kept alive for any existing links */}
         <PublicLayout><CaseDetail /></PublicLayout>
       </Route>
 

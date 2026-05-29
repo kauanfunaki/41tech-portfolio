@@ -57,9 +57,9 @@ export function PublicLayout({ children }: { children: ReactNode }) {
   };
 
   const navLinks = [
+    { href: "/expertise", label: t.nav.expertise },
     { href: "/projetos", label: t.nav.projects },
-    { href: "/cases", label: t.nav.cases },
-    { href: "/sobre-mim", label: t.nav.about },
+    { href: "/experiencia", label: t.nav.experience },
   ];
 
   return (
