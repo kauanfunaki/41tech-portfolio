@@ -8,7 +8,7 @@ import { inferCategory } from "@/lib/inferCategory";
 import { useSEO } from "@/hooks/useSEO";
 import { useT } from "@/lib/languageContext";
 
-// Internal keys are always Portuguese (match DB values and URL params)
+// Internal keys match DB values and URL params (always Portuguese)
 const ALL_CATEGORY_KEYS = [
   "Todos",
   "Sistema Web",
@@ -87,7 +87,7 @@ export default function Projects() {
             <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
               {t.projects.title}
             </h1>
-            <p className="text-lg text-[#888895] max-w-xl leading-relaxed">
+            <p className="text-lg text-[#888895] max-w-2xl leading-relaxed">
               {t.projects.subtitle}
             </p>
           </motion.div>
@@ -134,24 +134,24 @@ export default function Projects() {
         {isLoading ? (
           <div className="space-y-0">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex items-center gap-6 py-6 border-b border-[#272729]">
+              <div key={i} className="flex items-center gap-6 py-7 border-b border-[#272729]">
                 <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0" />
                 <Skeleton className="w-16 h-16 rounded bg-[#1A1A1B] shrink-0" />
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-5 w-48 bg-[#1A1A1B]" />
                   <Skeleton className="h-4 w-72 bg-[#1A1A1B]" />
                 </div>
+                <Skeleton className="h-4 w-20 bg-[#1A1A1B] shrink-0 hidden sm:block" />
               </div>
             ))}
           </div>
         ) : filteredProjects.length ? (
           <div>
             {filteredProjects.map((project, i) => {
-              const cardImg =
-                project.thumbnailUrl ||
-                project.coverImageUrl ||
-                null;
+              const cardImg = project.thumbnailUrl || project.coverImageUrl || null;
               const category = project.category || inferCategory(project.title);
+              // Project is "fully documented" when it has the full case structure
+              const isDocumented = !!(project.problem && project.solution && project.result);
 
               return (
                 <motion.div
@@ -192,15 +192,20 @@ export default function Projects() {
 
                       {/* Main content */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-3 mb-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
                           <h3 className="text-base font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">
                             {project.title}
                           </h3>
                           <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
                             {category}
                           </span>
+                          {isDocumented && (
+                            <span className="text-xs font-mono text-primary/80 border border-primary/20 bg-primary/5 px-2 py-0.5 rounded">
+                              {t.projects.caseTag}
+                            </span>
+                          )}
                           {project.featured && (
-                            <span className="text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2 py-0.5 rounded">
+                            <span className="text-xs font-mono text-[#888895] border border-[#272729] px-2 py-0.5 rounded">
                               {t.projects.featured}
                             </span>
                           )}
@@ -215,8 +220,13 @@ export default function Projects() {
                         )}
                       </div>
 
-                      {/* Arrow */}
-                      <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                      {/* CTA */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="text-xs text-[#555560] group-hover:text-primary transition-colors hidden sm:block">
+                          {t.projects.viewDetails}
+                        </span>
+                        <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      </div>
                     </div>
                   </Link>
                 </motion.div>
