@@ -130,6 +130,104 @@
   --ring: 230 97% 54%;
 }
 
+/* ─── Loading Screen ─── */
+@keyframes kf-blink-cursor {
+  50% { border-right-color: transparent; }
+}
+
+@keyframes kf-type-delete {
+  0%,  10%  { width: 0; }
+  45%, 55%  { width: 7.5em; }
+  90%, 100% { width: 0; }
+}
+
+@keyframes kf-fade-out {
+  to { opacity: 0; pointer-events: none; }
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0d0d0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-overlay--exit {
+  animation: kf-fade-out 0.5s ease forwards;
+}
+
+.terminal-loader {
+  border: 0.1em solid #272729;
+  background-color: #131314;
+  color: #6480ff;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: 1rem;
+  padding: 1.5em 1em;
+  width: 14em;
+  box-shadow: 0 0 32px rgba(18, 61, 255, 0.18), 0 4px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.terminal-loader .terminal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5em;
+  background-color: #1c1c21;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 0 0.4em;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-loader .terminal-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.terminal-loader .control {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background-color: #555;
+}
+
+.terminal-loader .control.close    { background-color: #e33; }
+.terminal-loader .control.minimize { background-color: #ee0; }
+.terminal-loader .control.maximize { background-color: #0b0; }
+
+.terminal-loader .terminal-title {
+  font-size: 0.7em;
+  color: #8a8a90;
+  font-family: 'Space Mono', monospace;
+  margin: 0;
+  line-height: 1;
+}
+
+.terminal-loader .terminal-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 0.2em solid #6480ff;
+  animation:
+    kf-type-delete 4s steps(12) infinite,
+    kf-blink-cursor 0.5s step-end infinite alternate;
+  margin-top: 1.5em;
+  margin-bottom: 0;
+}
+
 @layer base {
   * {
     @apply border-border;

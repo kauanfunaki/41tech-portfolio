@@ -1,5 +1,6 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -130,10 +131,22 @@ function Router() {
 }
 
 function App() {
+  const [showLoader, setShowLoader] = useState(() => {
+    const isAdmin = window.location.pathname.startsWith('/admin-41tech');
+    const seen = sessionStorage.getItem('kf-loader-seen');
+    return !isAdmin && !seen;
+  });
+
+  const handleLoaderDone = useCallback(() => {
+    sessionStorage.setItem('kf-loader-seen', '1');
+    setShowLoader(false);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <TooltipProvider>
+          {showLoader && <LoadingScreen onDone={handleLoaderDone} />}
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
             <Router />
           </WouterRouter>
