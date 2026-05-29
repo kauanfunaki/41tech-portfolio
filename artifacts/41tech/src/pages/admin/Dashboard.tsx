@@ -1,6 +1,6 @@
 import { useGetStatsSummary, getGetStatsSummaryQueryKey } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FolderGit2, Briefcase, Cpu, Loader2 } from "lucide-react";
+import { FolderGit2, Star, Cpu, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
@@ -41,10 +41,10 @@ export default function Dashboard() {
       color: "text-primary"
     },
     {
-      title: "Total de Cases",
-      value: stats?.totalCases || 0,
-      icon: Briefcase,
-      description: "Estudos de caso publicados",
+      title: "Especialidades",
+      value: stats?.totalTechnologies || 0,
+      icon: Star,
+      description: "Tecnologias cadastradas",
       color: "text-secondary"
     },
     {

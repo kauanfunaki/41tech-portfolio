@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { useGetSiteSettings, useListTechnologies, useListTeamMembers } from "@workspace/api-client-react";
+import { useGetSiteSettings, useListTeamMembers } from "@workspace/api-client-react";
 import { Send, CheckCircle2, Github, Linkedin, MapPin } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { useT } from "@/lib/languageContext";
@@ -14,24 +14,12 @@ export default function AboutUs() {
   });
 
   const { data: settings } = useGetSiteSettings();
-  const { data: technologies } = useListTechnologies();
   const { data: teamMembers } = useListTeamMembers();
 
   const me = useMemo(() => {
     if (!teamMembers?.length) return null;
     return teamMembers.filter(m => m.isActive).sort((a, b) => a.sortOrder - b.sortOrder)[0] ?? null;
   }, [teamMembers]);
-
-  const techGroups = useMemo(() => {
-    if (!technologies?.length) return [];
-    const map: Record<string, typeof technologies> = {};
-    for (const tech of technologies) {
-      const cat = tech.category || "Outros";
-      if (!map[cat]) map[cat] = [];
-      map[cat].push(tech);
-    }
-    return Object.entries(map).map(([category, techs]) => ({ category, techs }));
-  }, [technologies]);
 
   const handleContactClick = () => {
     if (settings?.whatsappUrl) {
@@ -207,52 +195,6 @@ export default function AboutUs() {
             ))}
           </div>
         </motion.section>
-
-        {/* Stack */}
-        {techGroups.length > 0 && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="font-mono text-xs text-[#555560] uppercase tracking-widest mb-8">{t.about.sectionStack}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {techGroups.map((group, i) => (
-                <motion.div
-                  key={group.category}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06 }}
-                  className="space-y-4"
-                >
-                  <h3 className="text-xs font-mono text-[#555560] uppercase tracking-widest border-b border-[#272729] pb-2">
-                    {group.category}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {group.techs.map((tech) => (
-                      <div
-                        key={tech.id}
-                        className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#272729] text-xs text-[#888895] hover:text-[#F0F0F0] transition-colors cursor-default"
-                      >
-                        {tech.iconUrl ? (
-                          <img
-                            src={tech.iconUrl}
-                            alt={tech.name}
-                            className="w-3.5 h-3.5 object-contain"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                          />
-                        ) : null}
-                        <span className="font-mono">{tech.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
-        )}
 
         {/* CTA */}
         <motion.section

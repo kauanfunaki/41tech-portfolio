@@ -75,8 +75,11 @@ export default function Home() {
     return (withoutFeatured.length >= 3 ? withoutFeatured : allProjects).slice(0, 3);
   }, [allProjects, featuredProject]);
 
-  const techList = useMemo(() => {
-    const items = technologies?.map((t) => t.name) ?? FALLBACK_TECHS;
+  // Tech items include iconUrl from admin (already in API response)
+  const techItems = useMemo(() => {
+    const items = technologies?.length
+      ? technologies.map((t) => ({ name: t.name, iconUrl: t.iconUrl ?? null }))
+      : FALLBACK_TECHS.map((name) => ({ name, iconUrl: null }));
     // Duplicate for seamless marquee loop
     return [...items, ...items];
   }, [technologies]);
@@ -227,12 +230,20 @@ export default function Home() {
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0D0D0E] to-transparent z-10 pointer-events-none" />
 
           <div className="flex animate-marquee gap-3 w-max">
-            {techList.map((tech, i) => (
+            {techItems.map((tech, i) => (
               <span
                 key={i}
-                className="text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded whitespace-nowrap"
               >
-                {tech}
+                {tech.iconUrl && (
+                  <img
+                    src={tech.iconUrl}
+                    alt={tech.name}
+                    className="w-3.5 h-3.5 object-contain shrink-0"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                  />
+                )}
+                {tech.name}
               </span>
             ))}
           </div>

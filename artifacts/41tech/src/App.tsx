@@ -24,9 +24,11 @@ import AdminLogin from "@/pages/admin/Login";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminProjects from "@/pages/admin/Projects";
 import AdminTeam from "@/pages/admin/Team";
-import AdminCases from "@/pages/admin/Cases";
+import AdminCases from "@/pages/admin/Cases"; // kept for data access, not in nav
 import AdminTechnologies from "@/pages/admin/Technologies";
 import AdminSettings from "@/pages/admin/Settings";
+import ExpertiseAdmin from "@/pages/admin/ExpertiseAdmin";
+import ExperienceAdmin from "@/pages/admin/ExperienceAdmin";
 
 import NotFound from "@/pages/not-found";
 
@@ -70,8 +72,15 @@ function Router() {
       <Route path="/admin-41tech/team">
         <AdminLayout><AdminTeam /></AdminLayout>
       </Route>
+      {/* /admin-41tech/cases kept for data access only — not in nav */}
       <Route path="/admin-41tech/cases">
         <AdminLayout><AdminCases /></AdminLayout>
+      </Route>
+      <Route path="/admin-41tech/expertise">
+        <AdminLayout><ExpertiseAdmin /></AdminLayout>
+      </Route>
+      <Route path="/admin-41tech/experience">
+        <AdminLayout><ExperienceAdmin /></AdminLayout>
       </Route>
       <Route path="/admin-41tech/technologies">
         <AdminLayout><AdminTechnologies /></AdminLayout>

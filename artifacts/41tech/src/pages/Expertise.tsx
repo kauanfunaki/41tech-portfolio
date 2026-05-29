@@ -13,6 +13,7 @@ import {
   ArrowRight,
   ExternalLink,
 } from "lucide-react";
+import { useListTechnologies } from "@workspace/api-client-react";
 import { useSEO } from "@/hooks/useSEO";
 import { useLanguage } from "@/lib/languageContext";
 import {
@@ -82,10 +83,29 @@ export default function Expertise() {
     description: t.expertise.heroSubtitle,
   });
 
+  const { data: technologies } = useListTechnologies();
+
   const education = useMemo(() => educationData[lang], [lang]);
   const certifications = useMemo(() => certificationsData[lang], [lang]);
   const specialties = useMemo(() => specialtiesData[lang], [lang]);
-  const stack = useMemo(() => stackData[lang], [lang]);
+
+  // Stack: use admin API (grouped by category) with fallback to static data
+  const stack = useMemo(() => {
+    if (technologies?.length) {
+      const map: Record<string, Array<{ name: string; iconUrl: string | null }>> = {};
+      for (const tech of technologies) {
+        const cat = tech.category || (lang === "pt" ? "Outros" : "Other");
+        if (!map[cat]) map[cat] = [];
+        map[cat].push({ name: tech.name, iconUrl: tech.iconUrl ?? null });
+      }
+      return Object.entries(map).map(([label, items]) => ({ label, items }));
+    }
+    // Fallback to static data if API is empty
+    return stackData[lang].map((g) => ({
+      label: g.label,
+      items: g.items.map((name) => ({ name, iconUrl: null })),
+    }));
+  }, [technologies, lang]);
 
   return (
     <div className="min-h-screen bg-[#0D0D0E]">
@@ -305,10 +325,18 @@ export default function Expertise() {
                   <div className="flex flex-wrap gap-2">
                     {group.items.map((item) => (
                       <span
-                        key={item}
-                        className="text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
+                        key={item.name}
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
                       >
-                        {item}
+                        {item.iconUrl && (
+                          <img
+                            src={item.iconUrl}
+                            alt={item.name}
+                            className="w-3.5 h-3.5 object-contain shrink-0"
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                          />
+                        )}
+                        {item.name}
                       </span>
                     ))}
                   </div>
