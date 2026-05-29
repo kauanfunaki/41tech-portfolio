@@ -197,4 +197,18 @@
     padding-left: 0.75rem;
     border-bottom-color: color-mix(in srgb, hsl(var(--primary)) 30%, transparent);
   }
+
+  /* ── Tech marquee ── */
+  .animate-marquee {
+    animation: marquee-scroll 35s linear infinite;
+    will-change: transform;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }

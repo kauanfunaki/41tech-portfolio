@@ -1,183 +1,188 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "wouter";
-import { ArrowRight, Server, Activity, Database, Blocks, LayoutTemplate, Workflow, Send } from "lucide-react";
+import {
+  ArrowRight,
+  Globe,
+  Workflow,
+  BarChart2,
+  Cable,
+  Server,
+  Brain,
+  Briefcase,
+  CheckCircle2,
+  MessageCircle,
+  Mail,
+  Linkedin,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { useListProjects, useGetSiteSettings, useListTechnologies, useListCases } from "@workspace/api-client-react";
+import {
+  useListProjects,
+  useGetSiteSettings,
+  useListTechnologies,
+} from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { useToast } from "@/hooks/use-toast";
 import { inferCategory } from "@/lib/inferCategory";
 import { useSEO } from "@/hooks/useSEO";
-import { useT } from "@/lib/languageContext";
+import { useLanguage } from "@/lib/languageContext";
+import { useToast } from "@/hooks/use-toast";
+import { specialtiesData } from "@/data/expertiseData";
+import { timelineData } from "@/data/experienceData";
 
-const SERVICE_ICONS = [LayoutTemplate, Workflow, Activity, Blocks, Database, Server];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.08 } }),
+// ── Specialty icons map ──────────────────────────────────────────────────────
+const SPECIALTY_ICONS: Record<string, React.ElementType> = {
+  Globe, Workflow, BarChart2, Cable, Server, Brain,
 };
 
+// ── Animation variants ───────────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
+const stagger = (delay = 0.07) => ({
+  hidden: {},
+  show: { transition: { staggerChildren: delay } },
+});
+
+// ── Static fallback tech list (shown if DB is empty) ────────────────────────
+const FALLBACK_TECHS = [
+  "React", "TypeScript", "Node.js", "PostgreSQL", "Power BI",
+  "n8n", "Docker", "Tailwind CSS", "Vite", "Drizzle ORM",
+  "GitHub Actions", "EasyPanel", "LLMs", "REST APIs", "Figma",
+];
+
 export default function Home() {
-  const t = useT();
+  const { lang, t } = useLanguage();
+  const { toast } = useToast();
 
   useSEO({
     title: "Kauan Funaki | Dev Full Stack B2B",
     description: t.home.subheading,
   });
 
-  const { data: projects } = useListProjects({ featured: true });
+  const { data: allProjects } = useListProjects();
   const { data: settings } = useGetSiteSettings();
   const { data: technologies } = useListTechnologies();
-  const { data: allCases } = useListCases();
-  const { toast } = useToast();
 
-  const [contactForm, setContactForm] = useState({ name: "", company: "", contact: "", message: "" });
-
-  const recentCases = useMemo(() => {
-    if (!allCases) return [];
-    return allCases.filter((c) => c.isPublic !== false).slice(0, 3);
-  }, [allCases]);
-
-  const services = useMemo(
-    () => t.home.services.map((s, i) => ({ ...s, icon: SERVICE_ICONS[i] })),
-    [t]
+  // ── Derived data ─────────────────────────────────────────────────────────
+  const featuredProject = useMemo(
+    () => allProjects?.find((p) => p.featured) ?? allProjects?.[0] ?? null,
+    [allProjects]
   );
 
-  const techGroups = useMemo(() => {
-    if (!technologies?.length) return [];
-    const map: Record<string, typeof technologies> = {};
-    for (const tech of technologies) {
-      const cat = tech.category || "Outros";
-      if (!map[cat]) map[cat] = [];
-      map[cat].push(tech);
-    }
-    return Object.entries(map).map(([category, techs]) => ({ category, techs }));
+  const previewProjects = useMemo(() => {
+    if (!allProjects) return [];
+    const withoutFeatured = allProjects.filter((p) => p.id !== featuredProject?.id);
+    return (withoutFeatured.length >= 3 ? withoutFeatured : allProjects).slice(0, 3);
+  }, [allProjects, featuredProject]);
+
+  const techList = useMemo(() => {
+    const items = technologies?.map((t) => t.name) ?? FALLBACK_TECHS;
+    // Duplicate for seamless marquee loop
+    return [...items, ...items];
   }, [technologies]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!settings?.whatsappUrl) {
-      toast({ title: t.home.contactUnavailableTitle, description: t.home.contactUnavailableDesc, variant: "destructive" });
-      return;
-    }
-    const text = `Olá, sou ${contactForm.name}, da empresa ${contactForm.company}. Quero conversar sobre: ${contactForm.message}. Meu contato é ${contactForm.contact}.`;
-    const url = new URL(settings.whatsappUrl);
-    url.searchParams.set("text", text);
-    const w = window.open(url.toString(), "_blank", "noopener,noreferrer");
-    if (!w) toast({ title: t.home.popupBlockedTitle, description: t.home.popupBlockedDesc, variant: "destructive" });
-  };
+  const specialties = useMemo(() => specialtiesData[lang].slice(0, 6), [lang]);
+  const currentRole = useMemo(() => timelineData[lang][0], [lang]);
 
-  const handlePrimaryCtaClick = () => {
+  // ── Handlers ─────────────────────────────────────────────────────────────
+  const openWhatsApp = () => {
     if (settings?.whatsappUrl) {
       const w = window.open(settings.whatsappUrl, "_blank", "noopener,noreferrer");
-      if (!w) document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
+      if (!w) toast({ title: t.home.popupBlockedTitle, description: t.home.popupBlockedDesc, variant: "destructive" });
     } else {
-      document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
+      toast({ title: t.home.contactUnavailableTitle, description: t.home.contactUnavailableDesc, variant: "destructive" });
     }
   };
+
+  const hasVideo = !!(settings?.heroVideoEnabled && settings?.heroVideoUrl);
+  const hasHeroMedia = hasVideo || !!settings?.heroFallbackImageUrl;
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0D0D0E]">
 
-      {/* ── 00 HERO ─────────────────────────────────── */}
-      <section className="relative pt-28 pb-16 md:pt-44 md:pb-28 min-h-[88vh] flex items-center">
+      {/* ══════════════════════════════════════════════
+          01 — HERO
+      ══════════════════════════════════════════════ */}
+      <section
+        className="relative pt-28 pb-16 md:pt-44 md:pb-28 min-h-[92vh] flex items-center overflow-hidden"
+        style={{ background: "radial-gradient(ellipse 80% 55% at 50% 0%, rgba(18,61,255,0.07) 0%, transparent 65%)" }}
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
-          {/* Two-column when hero media is configured; single column otherwise */}
-          {(() => {
-            const hasVideo = !!(settings?.heroVideoEnabled && settings?.heroVideoUrl);
-            const hasMedia = hasVideo || !!settings?.heroFallbackImageUrl;
+          <div className={`grid items-center gap-12 lg:gap-20 ${hasHeroMedia ? "lg:grid-cols-[1fr_1fr]" : ""}`}>
 
-            return (
-              <div className={`grid items-center gap-12 lg:gap-20 ${hasMedia ? "lg:grid-cols-[1fr_1fr]" : ""}`}>
+            {/* Text */}
+            <motion.div initial="hidden" animate="show" variants={stagger(0.1)}>
+              <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
+                <span className="section-num">// 00</span>
+                <span className="section-num">{t.home.badge}</span>
+              </motion.div>
 
-                {/* ── Text column ── */}
-                <motion.div
-                  initial="hidden"
-                  animate="show"
-                  variants={{ show: { transition: { staggerChildren: 0.1 } } }}
+              <motion.h1
+                variants={fadeUp}
+                className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
+                style={{ fontSize: `clamp(2.6rem, ${hasHeroMedia ? "5vw" : "9vw"}, ${hasHeroMedia ? "5rem" : "7.5rem"})` }}
+              >
+                {t.home.headline1}
+                <br />
+                <span className="text-primary">{t.home.headline2}</span>
+              </motion.h1>
+
+              <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-lg mb-12 leading-relaxed">
+                {t.home.subheading}
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+                <Button
+                  size="lg"
+                  asChild
+                  className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
                 >
-                  {/* Label */}
-                  <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
-                    <span className="section-num">// 00</span>
-                    <span className="section-num">{t.home.badge}</span>
-                  </motion.div>
+                  <Link href="/projetos">
+                    {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
+                  </Link>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={openWhatsApp}
+                  className="h-12 px-7 text-sm font-semibold border-[#272729] text-[#F0F0F0] hover:bg-[#1C1C1E] rounded"
+                >
+                  {t.home.contactCtaBtn}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </motion.div>
+            </motion.div>
 
-                  {/* Headline */}
-                  <motion.h1
-                    variants={fadeUp}
-                    className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
-                    style={{ fontSize: `clamp(2.5rem, ${hasMedia ? "5vw" : "9vw"}, ${hasMedia ? "5rem" : "7.5rem"})` }}
-                  >
-                    {t.home.headline1}
-                    <br />
-                    <span className="text-primary">{t.home.headline2}</span>
-                  </motion.h1>
-
-                  {/* Subheading */}
-                  <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-xl mb-12 leading-relaxed">
-                    {t.home.subheading}
-                  </motion.p>
-
-                  {/* CTAs */}
-                  <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-                    <Button
-                      size="lg"
-                      onClick={handlePrimaryCtaClick}
-                      className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
-                    >
-                      {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      onClick={() => document.getElementById("projetos-destaque")?.scrollIntoView({ behavior: "smooth" })}
-                      className="h-12 px-7 text-sm font-semibold border-[#272729] text-[#F0F0F0] hover:bg-[#1C1C1E] rounded"
-                    >
-                      {settings?.ctaSecondaryLabel || t.home.ctaSecondary}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </motion.div>
-                </motion.div>
-
-                {/* ── Media column (only when configured) ── */}
-                {hasMedia && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.3 }}
-                    className="w-full"
-                  >
-                    {hasVideo ? (
-                      <video
-                        src={settings!.heroVideoUrl!}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        poster={settings?.heroFallbackImageUrl ?? undefined}
-                        className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
-                      />
-                    ) : (
-                      <img
-                        src={settings!.heroFallbackImageUrl!}
-                        alt=""
-                        className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
-                      />
-                    )}
-                  </motion.div>
+            {/* Media (optional) */}
+            {hasHeroMedia && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+              >
+                {hasVideo ? (
+                  <video
+                    src={settings!.heroVideoUrl!}
+                    autoPlay muted loop playsInline
+                    poster={settings?.heroFallbackImageUrl ?? undefined}
+                    className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
+                  />
+                ) : (
+                  <img
+                    src={settings!.heroFallbackImageUrl!}
+                    alt=""
+                    className="w-full aspect-video rounded border border-[#272729] object-cover bg-[#131314]"
+                  />
                 )}
-              </div>
-            );
-          })()}
+              </motion.div>
+            )}
+          </div>
 
           {/* Scroll indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
             className="absolute bottom-10 left-6 md:left-12 flex items-center gap-3 text-[#555560]"
           >
             <div className="w-8 h-px bg-[#272729]" />
@@ -186,308 +191,402 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 01 SERVIÇOS ─────────────────────────────── */}
-      <section className="border-t border-[#272729] py-24">
+      {/* ══════════════════════════════════════════════
+          02 — MÉTRICAS RÁPIDAS
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true }}
-            variants={{ show: { transition: { staggerChildren: 0.07 } } }}
-          >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-16">
-              <span className="section-num">// 01</span>
-              <h2 className="font-display font-bold text-[2.5rem] text-[#F0F0F0]">{t.home.servicesTitle}</h2>
-            </motion.div>
-
-            {/* Grid with dividing lines */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-[#272729]
-                            md:[&>*:nth-child(3n+2)]:border-x md:[&>*:nth-child(3n+2)]:border-[#272729]">
-              {services.map((service, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  variants={fadeUp}
-                  className="p-8 group hover:bg-[#131314] transition-colors"
-                >
-                  <p className="font-mono text-xs text-[#555560] mb-5">{String(i + 1).padStart(2, "0")}</p>
-                  <service.icon className="w-5 h-5 text-primary mb-5" />
-                  <h3 className="font-semibold text-[#F0F0F0] mb-2">{service.title}</h3>
-                  <p className="text-sm text-[#888895] leading-relaxed">{service.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#272729]">
+            {t.home.metrics.map((m, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+                className="px-6 py-8 first:pl-0 last:pr-0"
+              >
+                <p className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-1">{m.value}</p>
+                <p className="text-xs font-mono text-[#555560] leading-snug">{m.label}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── 02 PROJETOS ─────────────────────────────── */}
-      {projects && projects.length > 0 && (
-        <section id="projetos-destaque" className="border-t border-[#272729] py-24 scroll-mt-20">
-          <div className="max-w-6xl mx-auto px-6 md:px-12">
-            <motion.div
-              initial="hidden" whileInView="show" viewport={{ once: true }}
-              variants={{ show: { transition: { staggerChildren: 0.07 } } }}
-            >
-              <motion.div variants={fadeUp} className="flex items-baseline justify-between mb-16 flex-wrap gap-4">
-                <div className="flex items-baseline gap-4">
-                  <span className="section-num">// 02</span>
-                  <h2 className="font-display font-bold text-[2.5rem] text-[#F0F0F0]">{t.home.featuredProjectsTitle}</h2>
-                </div>
-                <Link href="/projetos" className="text-sm text-[#888895] hover:text-primary transition-colors flex items-center gap-1">
-                  {t.home.viewAllProjects} <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </motion.div>
+      {/* ══════════════════════════════════════════════
+          03 — TECH MARQUEE
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-8 overflow-hidden">
+        <div className="flex items-center gap-6 mb-4 max-w-6xl mx-auto px-6 md:px-12">
+          <span className="section-num shrink-0">// {t.home.techMarqueeLabel}</span>
+        </div>
+        <div className="relative overflow-hidden">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0D0D0E] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0D0D0E] to-transparent z-10 pointer-events-none" />
 
-              {/* Project rows */}
-              <div className="border-t border-[#272729]">
-                {projects.map((project, i) => (
-                  <motion.div key={project.id} variants={fadeUp} custom={i}>
-                    <Link href={`/projetos/${project.slug}`}>
-                      <div className="flex items-center gap-6 py-6 border-b border-[#272729] group hover:pl-3 transition-all duration-200 cursor-pointer">
-                        <span className="font-mono text-xs text-[#555560] w-6 shrink-0">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-
-                        {/* Thumbnail */}
-                        {(project.thumbnailUrl || project.coverImageUrl) && (
-                          <div className="hidden md:block w-16 h-10 rounded overflow-hidden shrink-0 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <img
-                              src={project.thumbnailUrl || project.coverImageUrl || ""}
-                              alt={project.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        )}
-
-                        <span className="font-display font-bold text-xl text-[#F0F0F0] grow group-hover:text-primary transition-colors truncate">
-                          {project.title}
-                        </span>
-
-                        {project.category && (
-                          <Badge className="shrink-0 hidden sm:inline-flex bg-transparent border-[#272729] text-[#888895] text-xs font-normal hover:bg-transparent">
-                            {project.category}
-                          </Badge>
-                        )}
-
-                        {project.metricsSummary && (
-                          <span className="hidden lg:block text-xs text-[#555560] shrink-0 max-w-[180px] truncate">
-                            {project.metricsSummary.split("|")[0].trim()}
-                          </span>
-                        )}
-
-                        <span className="text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0">
-                          →
-                        </span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+          <div className="flex animate-marquee gap-3 w-max">
+            {techList.map((tech, i) => (
+              <span
+                key={i}
+                className="text-xs font-mono text-[#888895] border border-[#272729] bg-[#131314] px-3 py-1.5 rounded whitespace-nowrap"
+              >
+                {tech}
+              </span>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* ── 03 CASES ─────────────────────────────────── */}
-      {recentCases.length > 0 && (
-        <section className="border-t border-[#272729] py-24">
-          <div className="max-w-6xl mx-auto px-6 md:px-12">
-            <motion.div
-              initial="hidden" whileInView="show" viewport={{ once: true }}
-              variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-            >
-              <motion.div variants={fadeUp} className="flex items-baseline justify-between mb-16 flex-wrap gap-4">
-                <div className="flex items-baseline gap-4">
-                  <span className="section-num">// 03</span>
-                  <h2 className="font-display font-bold text-[2.5rem] text-[#F0F0F0]">{t.home.casesTitle}</h2>
-                </div>
-                <Link href="/cases" className="text-sm text-[#888895] hover:text-primary transition-colors flex items-center gap-1">
-                  {t.home.viewAllCases} <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {recentCases.map((c, i) => (
-                  <motion.div key={c.id} variants={fadeUp} custom={i}>
-                    <Link href={`/cases/${c.slug}`}>
-                      <div className="group h-full flex flex-col border border-[#272729] rounded-lg bg-[#131314] hover:border-primary/40 transition-all duration-300 p-6 cursor-pointer">
-                        <div className="w-1 h-4 bg-primary rounded mb-5 group-hover:h-6 transition-all" />
-                        {c.clientSegment && (
-                          <span className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-3">
-                            {c.clientSegment}
-                          </span>
-                        )}
-                        <h3 className="font-semibold text-[#F0F0F0] mb-3 group-hover:text-primary transition-colors">
-                          {c.title}
-                        </h3>
-                        {c.problem && (
-                          <p className="text-sm text-[#888895] line-clamp-3 leading-relaxed flex-1">
-                            {c.problem}
-                          </p>
-                        )}
-                        {c.metricsSummary && (
-                          <p className="mt-4 text-xs text-primary font-mono truncate">
-                            {c.metricsSummary.split("·")[0].trim()}
-                          </p>
-                        )}
-                        <div className="mt-4 flex items-center text-xs text-[#555560] group-hover:text-primary transition-colors">
-                          {t.home.viewCase} <ArrowRight className="w-3 h-3 ml-1" />
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
+      {/* ══════════════════════════════════════════════
+          04 — EXPERTISE PREVIEW
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
+            <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
+              <div className="flex items-baseline gap-4">
+                <span className="section-num">// 01</span>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                  {t.home.expertisePreviewLabel}
+                </h2>
               </div>
+              <Link
+                href="/expertise"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#555560] hover:text-primary transition-colors"
+              >
+                {t.home.expertisePreviewCta}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </motion.div>
-          </div>
-        </section>
-      )}
 
-      {/* ── 04 STACK ─────────────────────────────────── */}
-      {techGroups.length > 0 && (
-        <section className="border-t border-[#272729] py-24">
-          <div className="max-w-6xl mx-auto px-6 md:px-12">
-            <motion.div
-              initial="hidden" whileInView="show" viewport={{ once: true }}
-              variants={{ show: { transition: { staggerChildren: 0.06 } } }}
-            >
-              <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-16">
-                <span className="section-num">// 04</span>
-                <h2 className="font-display font-bold text-[2.5rem] text-[#F0F0F0]">{t.home.stackTitle}</h2>
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {techGroups.map((group, i) => (
-                  <motion.div key={group.category} variants={fadeUp} custom={i} className="space-y-4">
-                    <h3 className="text-xs font-mono text-[#555560] uppercase tracking-widest border-b border-[#272729] pb-3">
-                      {group.category}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {group.techs.map((tech) => (
-                        <div
-                          key={tech.id}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded border border-[#272729] bg-[#131314] text-[#888895] hover:text-[#F0F0F0] hover:border-[#3a3a3d] transition-all cursor-default"
-                        >
-                          {tech.iconUrl ? (
-                            <img src={tech.iconUrl} alt={tech.name} className="w-3.5 h-3.5 object-contain"
-                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                          ) : (
-                            <span className="text-primary font-bold text-xs">{tech.name.charAt(0)}</span>
-                          )}
-                          <span className="font-mono text-xs">{tech.name}</span>
-                        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {specialties.map((s, i) => {
+                const Icon = SPECIALTY_ICONS[s.icon] ?? Globe;
+                return (
+                  <motion.div
+                    key={i}
+                    variants={fadeUp}
+                    className="p-6 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors flex flex-col gap-3"
+                  >
+                    <Icon className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-[#F0F0F0]">{s.title}</h3>
+                    <p className="text-xs text-[#888895] leading-relaxed line-clamp-2">{s.description}</p>
+                    <div className="flex flex-wrap gap-1 mt-auto pt-1">
+                      {s.technologies.slice(0, 3).map((tech) => (
+                        <span key={tech} className="text-xs font-mono text-[#555560] border border-[#272729] px-1.5 py-0.5 rounded">
+                          {tech}
+                        </span>
                       ))}
                     </div>
                   </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* ── 05 CTA ───────────────────────────────────── */}
-      <section className="border-t border-[#272729] py-24">
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
-          >
-            <div className="flex items-baseline gap-4 mb-10">
-              <span className="section-num">// 05</span>
+                );
+              })}
             </div>
-            <h2 className="font-display font-bold leading-tight text-[#F0F0F0] mb-6"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
-              {t.home.ctaBigPart1}{" "}
-              <span className="gradient-text">{t.home.ctaBigGradient}</span>
-            </h2>
-            <p className="text-lg text-[#888895] mb-10 max-w-2xl leading-relaxed">
-              {t.home.ctaBigSubtitle}
-            </p>
-            <Button
-              size="lg"
-              onClick={handlePrimaryCtaClick}
-              className="h-12 px-8 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
-            >
-              {t.home.ctaBigBtn} <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* ── 06 CONTATO ───────────────────────────────── */}
-      <section id="contato" className="border-t border-[#272729] py-24 scroll-mt-20">
+      {/* ══════════════════════════════════════════════
+          05 — PROJETO EM DESTAQUE
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-20">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true }}
-            variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-          >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-16">
-              <span className="section-num">// 06</span>
-              <div>
-                <h2 className="font-display font-bold text-[2.5rem] text-[#F0F0F0]">{t.home.contactTitle}</h2>
-                <p className="text-[#888895] mt-2">{t.home.contactSubtitle}</p>
-              </div>
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
+            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
+              <span className="section-num">// 02</span>
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                {t.home.featuredLabel}
+              </h2>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="max-w-2xl">
-              <form onSubmit={handleContactSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-xs font-mono text-[#888895] uppercase tracking-widest">
-                      {t.home.nameLabel}
-                    </Label>
-                    <Input
-                      id="name" required value={contactForm.name}
-                      onChange={(e) => setContactForm((p) => ({ ...p, name: e.target.value }))}
-                      className="bg-[#131314] border-[#272729] focus-visible:ring-primary h-11 text-[#F0F0F0]"
-                      placeholder={t.home.namePlaceholder}
-                    />
+            {featuredProject ? (
+              <motion.div variants={fadeUp}>
+                <Link href={`/projetos/${featuredProject.slug}`}>
+                  <div className="group grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 p-8 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors">
+                    {/* Info */}
+                    <div className="flex flex-col gap-5 justify-center">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {featuredProject.category && (
+                          <span className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                            {featuredProject.category}
+                          </span>
+                        )}
+                        {featuredProject.featured && (
+                          <span className="text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2 py-0.5 rounded">
+                            {t.home.featured}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] group-hover:text-primary transition-colors leading-tight">
+                        {featuredProject.title}
+                      </h3>
+
+                      <p className="text-sm text-[#888895] leading-relaxed max-w-lg">
+                        {featuredProject.shortDescription}
+                      </p>
+
+                      {featuredProject.metricsSummary && (
+                        <div className="flex flex-wrap gap-2">
+                          {featuredProject.metricsSummary.split("|").map((m, i) => (
+                            <span key={i} className="text-xs font-mono text-primary/80 border border-primary/20 bg-primary/5 px-2.5 py-1 rounded">
+                              {m.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-2 text-sm font-medium text-[#555560] group-hover:text-primary transition-colors mt-2">
+                        {t.home.viewProject}
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+
+                    {/* Thumbnail */}
+                    {(featuredProject.thumbnailUrl || featuredProject.coverImageUrl) && (
+                      <div className="aspect-video rounded border border-[#272729] overflow-hidden bg-[#0D0D0E] shrink-0">
+                        <img
+                          src={featuredProject.thumbnailUrl || featuredProject.coverImageUrl!}
+                          alt={featuredProject.title}
+                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                        />
+                      </div>
+                    )}
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="company" className="text-xs font-mono text-[#888895] uppercase tracking-widest">
-                      {t.home.companyLabel}
-                    </Label>
-                    <Input
-                      id="company" required value={contactForm.company}
-                      onChange={(e) => setContactForm((p) => ({ ...p, company: e.target.value }))}
-                      className="bg-[#131314] border-[#272729] focus-visible:ring-primary h-11 text-[#F0F0F0]"
-                      placeholder={t.home.companyPlaceholder}
-                    />
+                </Link>
+              </motion.div>
+            ) : (
+              <motion.div
+                variants={fadeUp}
+                className="p-12 border border-dashed border-[#272729] rounded text-center"
+              >
+                <p className="font-mono text-xs text-[#555560] mb-2">{t.home.featuredEmptyTitle}</p>
+                <p className="text-sm text-[#888895]">{t.home.featuredEmptyDesc}</p>
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          06 — PREVIEW DE PROJETOS
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
+            <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
+              <div className="flex items-baseline gap-4">
+                <span className="section-num">// 03</span>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                  {t.home.projectsPreviewLabel}
+                </h2>
+              </div>
+              <Link
+                href="/projetos"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#555560] hover:text-primary transition-colors"
+              >
+                {t.home.projectsPreviewCta}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
+
+            {previewProjects.length > 0 ? (
+              <div>
+                {previewProjects.map((project, i) => {
+                  const cardImg = project.thumbnailUrl || project.coverImageUrl || null;
+                  const category = project.category || inferCategory(project.title);
+                  return (
+                    <motion.div key={project.id} variants={fadeUp}>
+                      <Link href={`/projetos/${project.slug}`}>
+                        <div className="project-row group">
+                          <span className="font-mono text-xs text-[#555560] w-8 shrink-0 select-none">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <div className="w-14 h-14 rounded border border-[#272729] bg-[#131314] shrink-0 overflow-hidden">
+                            {cardImg ? (
+                              <img src={cardImg} alt={project.title}
+                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-[#333336]">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+                                  <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                              <h3 className="text-sm font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">{project.title}</h3>
+                              <span className="text-xs font-mono text-[#555560] border border-[#272729] px-1.5 py-0.5 rounded">{category}</span>
+                            </div>
+                            <p className="text-xs text-[#888895] line-clamp-1">{project.shortDescription}</p>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-[#555560] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <motion.div variants={fadeUp} className="py-16 border-t border-[#272729] text-center">
+                <p className="text-sm text-[#555560] font-mono">{t.home.featuredEmptyTitle}</p>
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          07 — EXPERIENCE PREVIEW
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
+            <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
+              <div className="flex items-baseline gap-4">
+                <span className="section-num">// 04</span>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                  {t.home.experiencePreviewLabel}
+                </h2>
+              </div>
+              <Link
+                href="/experiencia"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#555560] hover:text-primary transition-colors"
+              >
+                {t.home.experiencePreviewCta}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
+
+            {currentRole && (
+              <motion.div
+                variants={fadeUp}
+                className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8 lg:gap-16 p-8 border border-[#272729] rounded bg-[#131314]"
+              >
+                {/* Meta */}
+                <div className="space-y-2">
+                  {currentRole.current && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-0.5 rounded">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                      {lang === "pt" ? "Atual" : "Current"}
+                    </span>
+                  )}
+                  <p className="text-xs font-mono text-[#555560]">{currentRole.period}</p>
+                  <p className="text-xs font-mono text-[#888895] font-medium">{currentRole.company}</p>
+                </div>
+
+                {/* Content */}
+                <div className="space-y-5">
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-primary shrink-0" />
+                    <h3 className="text-base font-semibold text-[#F0F0F0]">{currentRole.role}</h3>
+                  </div>
+
+                  <ul className="space-y-2">
+                    {currentRole.results.slice(0, 4).map((r, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-[#888895]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {currentRole.technologies.slice(0, 6).map((tech) => (
+                      <span key={tech} className="text-xs font-mono text-[#555560] border border-[#272729] px-2 py-0.5 rounded">
+                        {tech}
+                      </span>
+                    ))}
+                    {currentRole.technologies.length > 6 && (
+                      <span className="text-xs font-mono text-[#555560] px-2 py-0.5">
+                        +{currentRole.technologies.length - 6}
+                      </span>
+                    )}
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="contact" className="text-xs font-mono text-[#888895] uppercase tracking-widest">
-                    {t.home.contactLabel}
-                  </Label>
-                  <Input
-                    id="contact" required value={contactForm.contact}
-                    onChange={(e) => setContactForm((p) => ({ ...p, contact: e.target.value }))}
-                    className="bg-[#131314] border-[#272729] focus-visible:ring-primary h-11 text-[#F0F0F0]"
-                    placeholder={t.home.contactPlaceholder}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="text-xs font-mono text-[#888895] uppercase tracking-widest">
-                    {t.home.messageLabel}
-                  </Label>
-                  <Textarea
-                    id="message" required value={contactForm.message}
-                    onChange={(e) => setContactForm((p) => ({ ...p, message: e.target.value }))}
-                    className="bg-[#131314] border-[#272729] focus-visible:ring-primary min-h-[120px] resize-none text-[#F0F0F0]"
-                    placeholder={t.home.messagePlaceholder}
-                  />
-                </div>
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          08 — CONTACT CTA
+      ══════════════════════════════════════════════ */}
+      <section className="border-t border-[#272729] py-24" id="contato">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={stagger(0.1)}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          >
+            {/* Left: copy */}
+            <div>
+              <motion.span variants={fadeUp} className="section-num mb-4 block">// 05</motion.span>
+              <motion.h2
+                variants={fadeUp}
+                className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#F0F0F0] leading-tight mb-6"
+              >
+                {t.home.contactCtaTitle}
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-[#888895] text-base mb-8 max-w-md leading-relaxed">
+                {t.home.contactCtaSubtitle}
+              </motion.p>
+              <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
                 <Button
-                  type="submit" size="lg"
-                  className="w-full h-12 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
+                  size="lg"
+                  onClick={openWhatsApp}
+                  className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-white border-0 rounded"
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  {t.home.sendBtn}
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  {t.home.contactCtaBtn}
                 </Button>
-              </form>
+              </motion.div>
+            </div>
+
+            {/* Right: contact links */}
+            <motion.div variants={fadeUp} className="space-y-3">
+              {settings?.whatsappUrl && (
+                <a
+                  href={settings.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                >
+                  <MessageCircle className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">WhatsApp</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </a>
+              )}
+              {settings?.contactEmail && (
+                <a
+                  href={`mailto:${settings.contactEmail}`}
+                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                >
+                  <Mail className="w-4 h-4 text-[#555560] shrink-0" />
+                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">{settings.contactEmail}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </a>
+              )}
+              {settings?.linkedinUrl && (
+                <a
+                  href={settings.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 border border-[#272729] rounded bg-[#131314] hover:border-[#3A3A3E] transition-colors group"
+                >
+                  <Linkedin className="w-4 h-4 text-[#555560] shrink-0" />
+                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">LinkedIn</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </a>
+              )}
             </motion.div>
           </motion.div>
         </div>
