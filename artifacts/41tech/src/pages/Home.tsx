@@ -590,42 +590,47 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: contact links */}
-            <motion.div variants={fadeUp} className="space-y-3">
-              {settings?.whatsappUrl && (
-                <a
-                  href={settings.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
-                >
-                  <MessageCircle className="w-4 h-4 text-primary shrink-0" />
-                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">WhatsApp</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </a>
-              )}
-              {settings?.contactEmail && (
-                <a
-                  href={`mailto:${settings.contactEmail}`}
-                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
-                >
-                  <Mail className="w-4 h-4 text-[#555560] shrink-0" />
-                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">{settings.contactEmail}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </a>
-              )}
-              {settings?.linkedinUrl && (
-                <a
-                  href={settings.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="card-interactive flex items-center gap-4 p-4 group focus-ring"
-                >
-                  <Linkedin className="w-4 h-4 text-[#555560] shrink-0" />
-                  <span className="text-sm text-[#888895] group-hover:text-[#F0F0F0] transition-colors">LinkedIn</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#555560] ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </a>
-              )}
+            {/* Right: contact pill buttons — Uiverse "wise-stingray-29" style */}
+            <motion.div variants={fadeUp}>
+              <p className="text-xs font-mono text-[#555560] uppercase tracking-widest mb-6">
+                {lang === "pt" ? "Canais de contato" : "Contact channels"}
+              </p>
+              <div className="flex flex-wrap gap-5">
+                {settings?.whatsappUrl && (
+                  <a
+                    href={settings.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                    title="WhatsApp"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[rgb(65,29,131)] text-white transition-all duration-300 hover:bg-[#128c7e] hover:scale-[1.2] focus-ring"
+                  >
+                    <MessageCircle className="w-5 h-5" aria-hidden="true" />
+                  </a>
+                )}
+                {settings?.contactEmail && (
+                  <a
+                    href={`mailto:${settings.contactEmail}`}
+                    aria-label={`Email: ${settings.contactEmail}`}
+                    title={settings.contactEmail}
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[rgb(65,29,131)] text-white transition-all duration-300 hover:bg-[#EA4335] hover:scale-[1.2] focus-ring"
+                  >
+                    <Mail className="w-5 h-5" aria-hidden="true" />
+                  </a>
+                )}
+                {settings?.linkedinUrl && (
+                  <a
+                    href={settings.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    title="LinkedIn"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[rgb(65,29,131)] text-white transition-all duration-300 hover:bg-[#0072b1] hover:scale-[1.2] focus-ring"
+                  >
+                    <Linkedin className="w-5 h-5" aria-hidden="true" />
+                  </a>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         </div>

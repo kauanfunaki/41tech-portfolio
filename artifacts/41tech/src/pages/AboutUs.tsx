@@ -82,16 +82,18 @@ export default function AboutUs() {
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              {/* Social links — Uiverse "wise-stingray-29" style */}
+              <div className="flex gap-4">
                 {(me?.linkedinUrl ?? settings?.linkedinUrl) && (
                   <a
                     href={me?.linkedinUrl ?? settings?.linkedinUrl ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors focus-ring"
+                    title="LinkedIn"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[rgb(65,29,131)] text-white transition-all duration-300 hover:bg-[#0072b1] hover:scale-[1.2] focus-ring"
                   >
-                    <Linkedin className="w-4 h-4" aria-hidden="true" />
+                    <Linkedin className="w-5 h-5" aria-hidden="true" />
                   </a>
                 )}
                 {me?.githubUrl && (
@@ -100,9 +102,10 @@ export default function AboutUs() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="w-8 h-8 rounded border border-[#272729] flex items-center justify-center text-[#555560] hover:text-[#F0F0F0] hover:border-[#444448] transition-colors focus-ring"
+                    title="GitHub"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[rgb(65,29,131)] text-white transition-all duration-300 hover:bg-[#333333] hover:scale-[1.2] focus-ring"
                   >
-                    <Github className="w-4 h-4" aria-hidden="true" />
+                    <Github className="w-5 h-5" aria-hidden="true" />
                   </a>
                 )}
               </div>
