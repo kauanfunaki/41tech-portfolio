@@ -1,7 +1,7 @@
 # Seed de projetos — portfolio.41tech.cloud
 # Uso: .\scripts\seed-projects.ps1
 
-$BASE = "https://portfolio.41tech.cloud/api"
+$BASE = "https://kauanfunaki.knaidev.cloud/api"
 $EMAIL = "admin@41tech.com.br"
 $PASS  = "41Tech@2026"
 

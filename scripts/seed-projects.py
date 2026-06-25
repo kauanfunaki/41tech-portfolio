@@ -6,7 +6,7 @@ import urllib.request
 import urllib.error
 import http.cookiejar
 
-BASE = "https://portfolio.41tech.cloud/api"
+BASE = "https://kauanfunaki.knaidev.cloud/api"
 EMAIL = "admin@41tech.com.br"
 PASS = "41Tech@2026"
 
