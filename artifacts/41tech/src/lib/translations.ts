@@ -17,7 +17,7 @@ export const translations = {
     },
     footer: {
       description:
-        "Desenvolvedor Full Stack apaixonado por transformar problemas reais em soluções digitais escaláveis.",
+        "Desenvolvo sistemas internos, automações e dashboards para empresas que precisam sair das planilhas.",
       navTitle: "Navegação",
       contactTitle: "Contato",
       rights: "Todos os direitos reservados.",
@@ -28,7 +28,7 @@ export const translations = {
       headline1: "Tecnologia aplicada à",
       headline2: "operação real.",
       subheading:
-        "Crio sistemas, automações, dashboards e integrações que transformam processos manuais em soluções digitais escaláveis.",
+        "Crio sistemas web, automações n8n e dashboards Power BI para operações B2B que ainda rodam em planilha.",
       ctaPrimary: "Transformar meu processo",
       ctaSecondary: "Ver projetos",
       servicesTitle: "O que faço",
@@ -84,9 +84,9 @@ export const translations = {
       ctaBigSubtitle:
         "Se existe uma rotina repetitiva, uma planilha crítica ou um processo manual travando sua operação, posso transformar isso em sistema.",
       ctaBigBtn: "Falar comigo",
-      contactTitle: "Vamos construir algo incrível.",
+      contactTitle: "Tem um processo que poderia ser automatizado?",
       contactSubtitle:
-        "Conte-me sobre o seu desafio. Posso ajudar a encontrar a melhor solução.",
+        "Me conta o problema. Se tiver solução técnica viável, a gente conversa.",
       nameLabel: "Nome",
       namePlaceholder: "Seu nome",
       companyLabel: "Empresa",
@@ -314,7 +314,7 @@ export const translations = {
     },
     footer: {
       description:
-        "Full Stack Developer passionate about turning real problems into scalable digital solutions.",
+        "I build internal systems, automations and dashboards for B2B companies ready to move beyond spreadsheets.",
       navTitle: "Navigation",
       contactTitle: "Contact",
       rights: "All rights reserved.",
@@ -325,7 +325,7 @@ export const translations = {
       headline1: "Technology applied to",
       headline2: "real operations.",
       subheading:
-        "I build systems, automations, dashboards and integrations that turn manual processes into scalable digital solutions.",
+        "I build web systems, n8n automations and Power BI dashboards for B2B operations still running on spreadsheets.",
       ctaPrimary: "Transform my process",
       ctaSecondary: "View projects",
       servicesTitle: "What I do",
@@ -380,9 +380,9 @@ export const translations = {
       ctaBigSubtitle:
         "If there's a repetitive routine, a critical spreadsheet or a manual process slowing down your operations, I can turn it into a system.",
       ctaBigBtn: "Talk to me",
-      contactTitle: "Let's build something amazing.",
+      contactTitle: "Is a manual process slowing your operation?",
       contactSubtitle:
-        "Tell me about your challenge. I can help find the best solution.",
+        "Describe the problem. If there's a viable technical solution, we'll talk.",
       nameLabel: "Name",
       namePlaceholder: "Your name",
       companyLabel: "Company",
