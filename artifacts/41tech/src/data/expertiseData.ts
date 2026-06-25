@@ -51,18 +51,18 @@ export interface CertificationEntry {
 export const certificationsData: Record<"pt" | "en", CertificationEntry[]> = {
   pt: [
     { name: "Análise de Dados", institution: "Bosch", year: "2024", status: "done" },
-    { name: "Linguagem de Programação Python — Básico", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Linguagem de Programação Python", institution: "Fundação Bradesco", year: "2022", status: "done" },
     { name: "Desenvolvimento Orientado a Objetos com Python", institution: "Fundação Bradesco", year: "2022", status: "done" },
-    { name: "Introdução à Programação Orientada a Objetos — POO", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Programação Orientada a Objetos — POO", institution: "Fundação Bradesco", year: "2020", status: "done" },
     { name: "Fundamentos de Lógica de Programação", institution: "Fundação Bradesco", year: "2020", status: "done" },
     { name: "Programação de Arduino Básico", institution: "Senai PR", year: "2020", status: "done" },
     { name: "Operador de Suporte Técnico em T.I", institution: "Senai PR", year: "2020", status: "done" },
   ],
   en: [
     { name: "Data Analysis", institution: "Bosch", year: "2024", status: "done" },
-    { name: "Python Programming Language — Basic", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Python Programming Language", institution: "Fundação Bradesco", year: "2022", status: "done" },
     { name: "Object-Oriented Development with Python", institution: "Fundação Bradesco", year: "2022", status: "done" },
-    { name: "Introduction to Object-Oriented Programming — OOP", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Object-Oriented Programming — OOP", institution: "Fundação Bradesco", year: "2020", status: "done" },
     { name: "Programming Logic Fundamentals", institution: "Fundação Bradesco", year: "2020", status: "done" },
     { name: "Basic Arduino Programming", institution: "Senai PR", year: "2020", status: "done" },
     { name: "IT Technical Support Operator", institution: "Senai PR", year: "2020", status: "done" },
