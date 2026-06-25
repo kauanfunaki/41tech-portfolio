@@ -68,6 +68,11 @@ const projectSchema = z.object({
   problem: z.string().optional().nullable(),
   solution: z.string().optional().nullable(),
   result: z.string().optional().nullable(),
+  shortDescriptionEn: z.string().optional().nullable(),
+  fullDescriptionEn: z.string().optional().nullable(),
+  problemEn: z.string().optional().nullable(),
+  solutionEn: z.string().optional().nullable(),
+  resultEn: z.string().optional().nullable(),
   coverImageUrl: z.string().optional().nullable().or(z.literal("")),
   thumbnailUrl: z.string().optional().nullable().or(z.literal("")),
   galleryImages: z.string().optional().nullable(),
@@ -90,6 +95,11 @@ const EMPTY_DEFAULTS: ProjectFormValues = {
   problem: "",
   solution: "",
   result: "",
+  shortDescriptionEn: "",
+  fullDescriptionEn: "",
+  problemEn: "",
+  solutionEn: "",
+  resultEn: "",
   coverImageUrl: "",
   thumbnailUrl: "",
   galleryImages: "",
@@ -150,6 +160,11 @@ export default function AdminProjects() {
       problem: project.problem || "",
       solution: project.solution || "",
       result: project.result || "",
+      shortDescriptionEn: project.shortDescriptionEn || "",
+      fullDescriptionEn: project.fullDescriptionEn || "",
+      problemEn: project.problemEn || "",
+      solutionEn: project.solutionEn || "",
+      resultEn: project.resultEn || "",
       coverImageUrl: project.coverImageUrl || "",
       thumbnailUrl: project.thumbnailUrl || "",
       galleryImages: project.galleryImages || "",
@@ -181,6 +196,11 @@ export default function AdminProjects() {
       problem: values.problem || null,
       solution: values.solution || null,
       result: values.result || null,
+      shortDescriptionEn: values.shortDescriptionEn || null,
+      fullDescriptionEn: values.fullDescriptionEn || null,
+      problemEn: values.problemEn || null,
+      solutionEn: values.solutionEn || null,
+      resultEn: values.resultEn || null,
       coverImageUrl: values.coverImageUrl || null,
       thumbnailUrl: values.thumbnailUrl || null,
       galleryImages: values.galleryImages || null,
@@ -378,6 +398,46 @@ export default function AdminProjects() {
                     <FormField control={form.control} name="result" render={({ field }) => (
                       <FormItem>
                         <FormLabel>Resultados Obtidos</FormLabel>
+                        <FormControl><Textarea {...field} value={field.value || ""} className="h-24" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+
+                  {/* EN Content */}
+                  <div className="grid grid-cols-1 gap-6 border-t border-border pt-6">
+                    <h3 className="font-medium text-lg">Conteúdo em Inglês <span className="text-sm font-normal text-muted-foreground">(opcional — se vazio, exibe o PT)</span></h3>
+                    <FormField control={form.control} name="shortDescriptionEn" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Short Description (EN)</FormLabel>
+                        <FormControl><Textarea {...field} value={field.value || ""} className="h-20" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="fullDescriptionEn" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Overview (EN)</FormLabel>
+                        <FormControl><Textarea {...field} value={field.value || ""} className="h-32" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="problemEn" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Problem (EN)</FormLabel>
+                        <FormControl><Textarea {...field} value={field.value || ""} className="h-24" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="solutionEn" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Solution (EN)</FormLabel>
+                        <FormControl><Textarea {...field} value={field.value || ""} className="h-24" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="resultEn" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Results (EN)</FormLabel>
                         <FormControl><Textarea {...field} value={field.value || ""} className="h-24" /></FormControl>
                         <FormMessage />
                       </FormItem>

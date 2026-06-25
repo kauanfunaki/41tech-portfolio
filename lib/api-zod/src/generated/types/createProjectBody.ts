@@ -15,6 +15,11 @@ export interface CreateProjectBody {
   problem?: string | null;
   solution?: string | null;
   result?: string | null;
+  shortDescriptionEn?: string | null;
+  fullDescriptionEn?: string | null;
+  problemEn?: string | null;
+  solutionEn?: string | null;
+  resultEn?: string | null;
   previewType?: CreateProjectBodyPreviewType;
   previewUrl?: string | null;
   previewAlt?: string | null;

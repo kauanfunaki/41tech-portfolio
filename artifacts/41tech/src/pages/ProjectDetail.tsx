@@ -18,10 +18,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { useSEO } from "@/hooks/useSEO";
-import { useT } from "@/lib/languageContext";
+import { useLanguage } from "@/lib/languageContext";
 
 export default function ProjectDetail() {
-  const t = useT();
+  const { t, lang } = useLanguage();
   const [, params] = useRoute("/projetos/:slug");
   const slug = params?.slug || "";
 
@@ -144,7 +144,7 @@ export default function ProjectDetail() {
               {project.title}
             </h1>
             <p className="text-lg md:text-xl text-[#888895] leading-relaxed max-w-2xl">
-              {project.shortDescription}
+              {lang === "en" ? (project.shortDescriptionEn ?? project.shortDescription) : project.shortDescription}
             </p>
 
             {/* Quick action links */}
@@ -254,7 +254,7 @@ export default function ProjectDetail() {
                   {t.projectDetail.overview}
                 </h2>
                 <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
-                  {project.fullDescription}
+                  {lang === "en" ? (project.fullDescriptionEn ?? project.fullDescription) : project.fullDescription}
                 </p>
               </motion.section>
             )}
@@ -271,7 +271,7 @@ export default function ProjectDetail() {
                 </h2>
                 <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
-                    {project.problem}
+                    {lang === "en" ? (project.problemEn ?? project.problem) : project.problem}
                   </p>
                 </div>
               </motion.section>
@@ -289,7 +289,7 @@ export default function ProjectDetail() {
                 </h2>
                 <div className="border-l-2 border-primary/40 pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
-                    {project.solution}
+                    {lang === "en" ? (project.solutionEn ?? project.solution) : project.solution}
                   </p>
                 </div>
               </motion.section>
@@ -307,7 +307,7 @@ export default function ProjectDetail() {
                 </h2>
                 <div className="border-l-2 border-[#323234] pl-6">
                   <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
-                    {project.result}
+                    {lang === "en" ? (project.resultEn ?? project.result) : project.result}
                   </p>
                 </div>
               </motion.section>

@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { inferCategory } from "@/lib/inferCategory";
 import { useSEO } from "@/hooks/useSEO";
-import { useT } from "@/lib/languageContext";
+import { useLanguage } from "@/lib/languageContext";
 
 // Internal keys match DB values and URL params (always Portuguese)
 const ALL_CATEGORY_KEYS = [
@@ -22,7 +22,7 @@ const ALL_CATEGORY_KEYS = [
 ];
 
 export default function Projects() {
-  const t = useT();
+  const { t, lang } = useLanguage();
 
   useSEO({
     title: t.projects.title,
@@ -63,9 +63,10 @@ export default function Projects() {
   const filteredProjects = useMemo(() => {
     if (!projects) return [];
     return projects.filter((project) => {
+      const desc = (lang === "en" ? project.shortDescriptionEn ?? project.shortDescription : project.shortDescription);
       const matchSearch =
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.shortDescription.toLowerCase().includes(searchQuery.toLowerCase());
+        desc.toLowerCase().includes(searchQuery.toLowerCase());
       const projectCategory = project.category || inferCategory(project.title);
       const matchCategory =
         selectedCategory === "Todos" || projectCategory === selectedCategory;
@@ -211,7 +212,7 @@ export default function Projects() {
                           )}
                         </div>
                         <p className="text-sm text-[#888895] line-clamp-1 leading-relaxed">
-                          {project.shortDescription}
+                          {lang === "en" ? (project.shortDescriptionEn ?? project.shortDescription) : project.shortDescription}
                         </p>
                         {project.metricsSummary && (
                           <p className="text-xs font-mono text-primary/70 mt-1 line-clamp-1">
