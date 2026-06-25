@@ -17,22 +17,22 @@ export interface EducationEntry {
 export const educationData: Record<"pt" | "en", EducationEntry[]> = {
   pt: [
     {
-      course: "Análise e Desenvolvimento de Sistemas",
-      institution: "UNIP",
+      course: "Tecnólogo em Análise e Desenvolvimento de Sistemas",
+      institution: "Universidade Positivo",
       period: "2023 — 2025",
-      status: "active",
+      status: "done",
       description:
-        "Formação técnica em desenvolvimento de software, algoritmos, estruturas de dados, banco de dados relacional e engenharia de sistemas.",
+        "Formação tecnológica em desenvolvimento de software, algoritmos, estruturas de dados, banco de dados relacional e engenharia de sistemas. Concluído em maio de 2025.",
     },
   ],
   en: [
     {
-      course: "Systems Analysis and Development",
-      institution: "UNIP",
+      course: "Technology Degree in Systems Analysis and Development",
+      institution: "Universidade Positivo",
       period: "2023 — 2025",
-      status: "active",
+      status: "done",
       description:
-        "Technical education in software development, algorithms, data structures, relational databases and systems engineering.",
+        "Technology degree in software development, algorithms, data structures, relational databases and systems engineering. Completed in May 2025.",
     },
   ],
 };
@@ -50,24 +50,22 @@ export interface CertificationEntry {
 
 export const certificationsData: Record<"pt" | "en", CertificationEntry[]> = {
   pt: [
-    { name: "Node.js do Zero a Expert", institution: "Udemy", year: "2023", status: "done" },
-    { name: "React + TypeScript Completo", institution: "Udemy", year: "2023", status: "done" },
-    { name: "PostgreSQL Completo", institution: "Udemy", year: "2023", status: "done" },
-    { name: "APIs REST com Express", institution: "Udemy", year: "2023", status: "done" },
-    { name: "Power BI do Básico ao Avançado", institution: "Udemy", year: "2024", status: "done" },
-    { name: "n8n — Automação e Integrações", institution: "Udemy", year: "2024", status: "done" },
-    { name: "Docker e Deploy com EasyPanel", institution: "Udemy", year: "2024", status: "done" },
-    { name: "Fundamentos de IA com LLMs", institution: "Udemy", year: "2025", status: "done" },
+    { name: "Análise de Dados", institution: "Bosch", year: "2024", status: "done" },
+    { name: "Linguagem de Programação Python — Básico", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Desenvolvimento Orientado a Objetos com Python", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Introdução à Programação Orientada a Objetos — POO", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Fundamentos de Lógica de Programação", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Programação de Arduino Básico", institution: "Senai PR", year: "2020", status: "done" },
+    { name: "Operador de Suporte Técnico em T.I", institution: "Senai PR", year: "2020", status: "done" },
   ],
   en: [
-    { name: "Node.js from Zero to Expert", institution: "Udemy", year: "2023", status: "done" },
-    { name: "React + TypeScript Complete", institution: "Udemy", year: "2023", status: "done" },
-    { name: "PostgreSQL Complete", institution: "Udemy", year: "2023", status: "done" },
-    { name: "REST APIs with Express", institution: "Udemy", year: "2023", status: "done" },
-    { name: "Power BI Basic to Advanced", institution: "Udemy", year: "2024", status: "done" },
-    { name: "n8n — Automation & Integrations", institution: "Udemy", year: "2024", status: "done" },
-    { name: "Docker & Deploy with EasyPanel", institution: "Udemy", year: "2024", status: "done" },
-    { name: "AI Fundamentals with LLMs", institution: "Udemy", year: "2025", status: "done" },
+    { name: "Data Analysis", institution: "Bosch", year: "2024", status: "done" },
+    { name: "Python Programming Language — Basic", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Object-Oriented Development with Python", institution: "Fundação Bradesco", year: "2022", status: "done" },
+    { name: "Introduction to Object-Oriented Programming — OOP", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Programming Logic Fundamentals", institution: "Fundação Bradesco", year: "2020", status: "done" },
+    { name: "Basic Arduino Programming", institution: "Senai PR", year: "2020", status: "done" },
+    { name: "IT Technical Support Operator", institution: "Senai PR", year: "2020", status: "done" },
   ],
 };
 

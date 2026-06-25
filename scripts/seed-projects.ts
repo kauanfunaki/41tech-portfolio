@@ -1,0 +1,186 @@
+/**
+ * Seed script — projetos do portfólio 41 Tech
+ * Uso: npx tsx scripts/seed-projects.ts
+ */
+
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { resolve, dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Carrega lib/db/.env
+try {
+  const lines = readFileSync(resolve(__dirname, "../lib/db/.env"), "utf-8").split("\n");
+  for (const line of lines) {
+    const m = line.match(/^([^#=\s][^=]*)=(.*)$/);
+    if (m && !process.env[m[1].trim()]) process.env[m[1].trim()] = m[2].trim();
+  }
+} catch {}
+
+import { drizzle } from "drizzle-orm/node-postgres";
+import { eq } from "drizzle-orm";
+import pg from "pg";
+import { projectsTable } from "../lib/db/src/schema/projects.js";
+
+const { Pool } = pg;
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const db = drizzle(pool);
+
+const projects = [
+  {
+    title: "41-Tech-Hub",
+    slug: "41-tech-hub",
+    shortDescription:
+      "Portal corporativo centralizado com helpdesk, RBAC e monitoramento operacional para o Grupo 41.",
+    fullDescription:
+      "O 41-Tech-Hub é o ponto único de entrada para todas as ferramentas, dashboards e sistemas internos da empresa. Construído com React 18 + Node.js + PostgreSQL, integra autenticação via Microsoft Entra ID (Azure AD), sistema de helpdesk completo com SLA em horas úteis, base de conhecimento e painel de operações (Ops Center). O controle de acesso é baseado em setor e cargo, com overrides individuais por recurso.",
+    problem:
+      "Ferramentas e sistemas internos dispersos: cada equipe acessava aplicações diferentes sem controle centralizado de acesso, identidade unificada ou visibilidade sobre o estado das ferramentas.",
+    solution:
+      "Portal React+Node.js com RBAC granular (setor × cargo × recurso), helpdesk com formulários dinâmicos por categoria, SLA em horas úteis, escalação automática, fluxo de aprovação, base de conhecimento e monitoramento de saúde das aplicações. Autenticação via Microsoft Entra ID com fallback local.",
+    result:
+      "Ponto único de entrada para todas as ferramentas internas. Rastreabilidade completa de tickets com SLA, notificações em tempo real e auditoria de ações.",
+    category: "Sistema Web",
+    metricsSummary: "60+ endpoints · 30+ tabelas · RBAC multidimensional · SLA em horas úteis",
+    status: "active",
+    featured: true,
+  },
+  {
+    title: "BI FinSight",
+    slug: "bi-finsight",
+    shortDescription:
+      "Dashboards financeiros executivos em Power BI com análise de caixa, heatmap e agenda financeira interativa.",
+    fullDescription:
+      "BI FinSight é a solução de Business Intelligence financeiro do Grupo 41, conectada diretamente ao banco de dados operacional. Conta com tela de Visão Geral (saldo, resultado, inadimplência, heatmap dos próximos 14 dias) e Agenda Financeira com calendário interativo desenvolvido em Deneb/Vega-Lite, exibindo entradas, saídas e saldo projetado por dia.",
+    problem:
+      "Informações financeiras espalhadas no ERP Omie sem visão consolidada — gestores sem acesso a indicadores de caixa, inadimplência e projeções em tempo real.",
+    solution:
+      "Modelo dimensional em Power BI conectado ao PostgreSQL, com medidas DAX avançadas para análise de passado e futuro, calendário customizado em Vega-Lite e horizonte de análise configurável (7, 15, 30 dias ou personalizado).",
+    result:
+      "Decisões financeiras tomadas com dados atualizados em tempo real. Heatmap de entrada/saída diária reduz o tempo de análise de horas para segundos.",
+    category: "BI & Dados",
+    metricsSummary: "183 medidas DAX · Calendário Deneb/Vega-Lite · Horizonte configurável",
+    status: "active",
+    featured: true,
+  },
+  {
+    title: "Watchers BPO/BLD",
+    slug: "watchers-bpo-bld",
+    shortDescription:
+      "8 scripts Python autônomos que monitoram pastas de rede e acionam workflows n8n para processamento automático de documentos.",
+    fullDescription:
+      "Sistema de automação baseado em monitoramento contínuo de pastas de rede compartilhadas. Cada watcher observa uma pasta específica (NFs BPO, NFs BLD, contratos de aluguel, recibos, folhas de pagamento), valida o arquivo recebido e aciona o workflow n8n correspondente via webhook HTTP. Após processamento, renomeia e move o arquivo para Processados ou Erros com registro de data.",
+    problem:
+      "Processamento manual de documentos fiscais e operacionais: operadores precisavam acompanhar pastas de rede, verificar arquivos, renomear conforme padrão e acionar processos manualmente.",
+    solution:
+      "8 scripts Python com watchdog que monitoram pastas em tempo real, validam estabilidade e extensão do arquivo, enviam para n8n via POST multipart, validam retorno e executam renomeação/movimentação automática. Resultados reportados ao Ops Center do Hub.",
+    result:
+      "Processamento automático de centenas de documentos por mês sem intervenção manual. Rastreabilidade completa via Ops Center. Erros isolados sem bloquear o fluxo principal.",
+    category: "Automação",
+    metricsSummary: "8 watchers · n8n integrado · Ops Center · Zero intervenção manual",
+    status: "active",
+    featured: false,
+  },
+  {
+    title: "ECAC Regularize Automation",
+    slug: "ecac-regularize-automation",
+    shortDescription:
+      "RPA Python que coleta mensagens fiscais do e-CAC e Regularize/PGFN para múltiplos CNPJs via certificado digital A1.",
+    fullDescription:
+      "Automação RPA com pywinauto e pyautogui que opera o portal e-CAC e o Regularize da Receita Federal de forma autônoma. Lê uma lista de CNPJs de planilha Excel, autentica via GOV.BR com certificado digital A1, alterna o perfil ativo no e-CAC para cada CNPJ, extrai todas as mensagens da Caixa Postal e do Regularize/PGFN usando parser posicional, e persiste os dados no MySQL remoto com deduplicação.",
+    problem:
+      "Consulta manual de mensagens fiscais no e-CAC e Regularize para dezenas de CNPJs — processo que levava horas por dia, sujeito a erro humano e impossível de escalar.",
+    solution:
+      "RPA Python com pywinauto para controle da janela do certificado A1, parser posicional para extração estruturada, ON DUPLICATE KEY UPDATE para idempotência e logout automático ao final de cada sessão.",
+    result:
+      "Processo que levava horas reduzido a minutos. Execução autônoma com log completo. Base histórica de mensagens fiscais disponível via Caixa Postal 41.",
+    category: "Automação",
+    metricsSummary: "Multi-CNPJ · Certificado A1 · MySQL · Parser posicional · Deduplicação",
+    status: "active",
+    featured: true,
+  },
+  {
+    title: "Caixa Postal 41",
+    slug: "caixa-postal-41",
+    shortDescription:
+      "Portal FastAPI para visualização e gestão das mensagens fiscais coletadas do e-CAC e Regularize/PGFN.",
+    fullDescription:
+      "App FastAPI containerizada no EasyPanel que expõe as mensagens fiscais coletadas pela automação ECAC em uma interface web clara. Exibe contadores por fonte (e-CAC / Regularize), listagem com filtros, cards de estatística e envia relatórios por e-mail com template HTML responsivo.",
+    problem:
+      "Mensagens fiscais coletadas pela automação ficavam no banco MySQL sem interface de consulta — a equipe fiscal precisava de acesso rápido às pendências por CNPJ.",
+    solution:
+      "App FastAPI containerizada com Docker no EasyPanel, servida na porta 80, com dashboard de mensagens segmentado por fonte, cards de contagem, tabelas com linhas zebradas e envio de relatório HTML por e-mail.",
+    result:
+      "Equipe fiscal com acesso imediato a todas as mensagens fiscais organizadas por CNPJ e fonte. Relatório automático por e-mail elimina consultas manuais ao banco.",
+    category: "Sistema Web",
+    metricsSummary: "FastAPI · Docker · EasyPanel · E-mail automático · e-CAC + Regularize",
+    status: "active",
+    featured: false,
+  },
+  {
+    title: "Frota-Link",
+    slug: "frota-link",
+    shortDescription:
+      "SaaS de gestão de transportadoras migrado de Supabase para infraestrutura própria com GoTrue, PostgREST e MinIO.",
+    fullDescription:
+      "Frota-Link é um SaaS de gestão de transportadoras originalmente hospedado no Supabase. O projeto envolveu planejar e executar a migração completa para VPS Hostinger com PostgreSQL 17, GoTrue self-hosted para autenticação, PostgREST como camada de API de banco e MinIO como storage S3-compatible — mantendo o frontend React intacto com apenas troca da URL do Supabase.",
+    problem:
+      "Aplicação SaaS com 45+ Edge Functions no Supabase free tier: limitações de performance, custo crescente e dependência total de plataforma externa.",
+    solution:
+      "Migração em 9 fases para VPS própria: PostgreSQL 17, GoTrue para autenticação JWT-compatível, PostgREST mapeando as mesmas rotas REST, MinIO para buckets de arquivos e API Node.js (Fastify) substituindo Edge Functions. Frontend usa @supabase/supabase-js sem alteração.",
+    result:
+      "Infraestrutura própria com controle total sobre banco, autenticação e storage. Eliminação da dependência e limitações do free tier. Frontend sem reescrita.",
+    category: "Sistema Web",
+    metricsSummary: "PostgreSQL 17 · GoTrue · PostgREST · MinIO · 45+ Edge Functions",
+    status: "active",
+    featured: true,
+  },
+  {
+    title: "DevPulse",
+    slug: "devpulse",
+    shortDescription:
+      "App de produtividade que rastreia tempo de código por projeto via extensão VS Code, com dashboard React e integração GitHub.",
+    fullDescription:
+      "DevPulse é uma ferramenta pessoal de monitoramento de produtividade para desenvolvedores. Composta por uma extensão VS Code que envia heartbeats a cada mudança de arquivo, uma API Node.js que consolida e persiste os dados, e um dashboard React com estatísticas diárias, semanais e por projeto. Integra com a API do GitHub para correlacionar commits e PRs ao tempo investido.",
+    problem:
+      "Sem visibilidade objetiva sobre tempo gasto por projeto e produtividade diária — estimativas imprecisas, sem dados históricos e sem correlação entre tempo de código e entregas.",
+    solution:
+      "Monorepo npm workspaces com extensão VS Code (heartbeats por evento de arquivo), API Express+PostgreSQL que consolida sessões por projeto e dashboard React com horas de código, tempo de tela ativo e integração GitHub.",
+    result:
+      "Rastreamento automático e preciso de horas de código por projeto. Correlação visual entre tempo investido e commits/PRs entregues.",
+    category: "Ferramenta",
+    metricsSummary: "Extensão VS Code · API Node.js · Dashboard React · GitHub integration",
+    status: "active",
+    featured: false,
+  },
+];
+
+async function main() {
+  console.log("Inserindo projetos...\n");
+
+  for (const project of projects) {
+    const existing = await db
+      .select({ id: projectsTable.id })
+      .from(projectsTable)
+      .where(eq(projectsTable.slug, project.slug));
+
+    if (existing.length > 0) {
+      console.log(`↩  ${project.slug} — já existe, pulando`);
+      continue;
+    }
+
+    await db.insert(projectsTable).values(project);
+    console.log(`✓  ${project.slug}`);
+  }
+
+  console.log("\nConcluído.");
+  await pool.end();
+}
+
+main().catch((err) => {
+  console.error(err);
+  pool.end();
+  process.exit(1);
+});
