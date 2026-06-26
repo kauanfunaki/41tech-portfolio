@@ -174,8 +174,8 @@ export default function Expertise() {
             viewport={{ once: true }}
             variants={{ show: { transition: { staggerChildren: 0.09 } } }}
           >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
-              <span className="section-num">// 02</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="w-5 h-px bg-primary shrink-0" />
               <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                 {t.expertise.educationTitle}
               </h2>
@@ -223,8 +223,8 @@ export default function Expertise() {
             viewport={{ once: true }}
             variants={{ show: { transition: { staggerChildren: 0.06 } } }}
           >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
-              <span className="section-num">// 03</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="w-5 h-px bg-primary shrink-0" />
               <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                 {t.expertise.certificationsTitle}
               </h2>
@@ -278,8 +278,8 @@ export default function Expertise() {
             viewport={{ once: true }}
             variants={{ show: { transition: { staggerChildren: 0.07 } } }}
           >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
-              <span className="section-num">// 04</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="w-5 h-px bg-primary shrink-0" />
               <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                 {t.expertise.specialtiesTitle}
               </h2>
@@ -305,8 +305,8 @@ export default function Expertise() {
             viewport={{ once: true }}
             variants={{ show: { transition: { staggerChildren: 0.07 } } }}
           >
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
-              <span className="section-num">// 05</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="w-5 h-px bg-primary shrink-0" />
               <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                 {t.expertise.stackTitle}
               </h2>
