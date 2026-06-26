@@ -98,7 +98,7 @@ export default function Home() {
     return [...items, ...items];
   }, [technologies]);
 
-  const specialties = useMemo(() => specialtiesData[lang].slice(0, 6), [lang]);
+  const specialties = useMemo(() => specialtiesData[lang].slice(0, 5), [lang]);
   const currentRole = useMemo(() => timelineData[lang][0], [lang]);
 
   // ── Handlers ─────────────────────────────────────────────────────────────
@@ -316,17 +316,26 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {specialties.map((s, i) => {
                 const Icon = SPECIALTY_ICONS[s.icon] ?? Globe;
+                const featured = i === 0;
                 return (
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="card-interactive p-6 flex flex-col gap-3 min-h-[180px]"
+                    className={`card-interactive flex flex-col gap-3 ${
+                      featured
+                        ? "p-8 min-h-[220px] lg:col-span-2"
+                        : "p-6 min-h-[180px]"
+                    }`}
                   >
-                    <Icon className="w-4 h-4 text-primary" />
-                    <h3 className="text-sm font-semibold text-[#F0F0F0]">{s.title}</h3>
-                    <p className="text-xs text-[#888895] leading-relaxed line-clamp-2">{s.description}</p>
+                    <Icon className={`text-primary ${featured ? "w-5 h-5" : "w-4 h-4"}`} />
+                    <h3 className={`font-semibold text-[#F0F0F0] ${featured ? "text-base" : "text-sm"}`}>
+                      {s.title}
+                    </h3>
+                    <p className={`text-xs text-[#888895] leading-relaxed ${featured ? "" : "line-clamp-2"}`}>
+                      {s.description}
+                    </p>
                     <div className="flex flex-wrap gap-1 mt-auto pt-1">
-                      {s.technologies.slice(0, 3).map((tech) => (
+                      {s.technologies.slice(0, featured ? 5 : 3).map((tech) => (
                         <span key={tech} className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-1.5 py-0.5 rounded">
                           {tech}
                         </span>
