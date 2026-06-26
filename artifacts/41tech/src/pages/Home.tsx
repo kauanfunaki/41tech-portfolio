@@ -215,16 +215,6 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.6 }}
-            className="absolute bottom-10 left-6 md:left-12 flex items-center gap-3 text-[#64748B]"
-          >
-            <div className="w-8 h-px bg-[#334155]" />
-            <span className="text-xs font-mono tracking-widest uppercase">scroll</span>
-          </motion.div>
         </div>
       </section>
 
