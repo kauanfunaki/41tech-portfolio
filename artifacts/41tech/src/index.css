@@ -228,6 +228,26 @@
   margin-bottom: 0;
 }
 
+/* ─── Nav underline — expands from center on hover ─── */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background-color: hsl(var(--primary));
+  transition: left 0.25s ease, right 0.25s ease;
+}
+.nav-underline:hover::after,
+.nav-underline--active::after {
+  left: 0;
+  right: 0;
+}
+
 /* ─── Grain texture overlay ─── */
 body::after {
   content: '';

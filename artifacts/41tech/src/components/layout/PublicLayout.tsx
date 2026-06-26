@@ -83,10 +83,10 @@ export function PublicLayout({ children }: { children: ReactNode }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-0.5 transition-colors focus-ring ${
+                  className={`nav-underline pb-1 transition-colors focus-ring ${
                     isActive
-                      ? "text-[#F0F0F0] border-b border-primary"
-                      : "text-[#888895] hover:text-[#F0F0F0] border-b border-transparent"
+                      ? "text-[#F0F0F0] nav-underline--active"
+                      : "text-[#888895] hover:text-[#F0F0F0]"
                   }`}
                 >
                   {link.label}
@@ -156,7 +156,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
             <ul className="space-y-2 text-sm text-[#888895]">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-[#F0F0F0] transition-colors focus-ring rounded">
+                  <Link href={link.href} className="nav-underline hover:text-[#F0F0F0] transition-colors focus-ring rounded">
                     {link.label}
                   </Link>
                 </li>
