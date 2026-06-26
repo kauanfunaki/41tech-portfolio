@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -115,7 +115,7 @@ export default function Home() {
   const hasHeroMedia = hasVideo || !!settings?.heroFallbackImageUrl;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0D0D0E]">
+    <div className="flex flex-col min-h-screen bg-[#0F172A]">
 
       {/* ══════════════════════════════════════════════
           01 — HERO
@@ -150,13 +150,13 @@ export default function Home() {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to right, rgba(13,13,14,0.92) 0%, rgba(13,13,14,0.72) 45%, rgba(13,13,14,0.30) 100%)",
+                  "linear-gradient(to right, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.72) 45%, rgba(15,23,42,0.30) 100%)",
               }}
             />
             {/* Bottom fade so the hero merges cleanly into the next section */}
             <div
               className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, transparent, #0D0D0E)" }}
+              style={{ background: "linear-gradient(to bottom, transparent, #0F172A)" }}
             />
           </>
         )}
@@ -167,7 +167,7 @@ export default function Home() {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse 80% 55% at 50% 0%, rgba(255,138,76,0.07) 0%, transparent 65%)",
+                "radial-gradient(ellipse 80% 55% at 50% 0%, rgba(34, 211, 238, 0.07) 0%, transparent 65%)",
             }}
           />
         )}
@@ -181,7 +181,7 @@ export default function Home() {
 
             <motion.h1
               variants={fadeUp}
-              className="font-display font-bold leading-[0.9] tracking-tight text-[#F0F0F0] mb-8"
+              className="font-display font-bold leading-[0.9] tracking-tight text-[#F4F4F4] mb-8"
               style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
             >
               {t.home.headline1}
@@ -197,7 +197,7 @@ export default function Home() {
               <Button
                 size="lg"
                 asChild
-                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] text-primary-foreground border-0 rounded transition-all hover:shadow-[0_0_20px_rgba(255,138,76,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] text-primary-foreground border-0 rounded transition-all hover:shadow-[0_0_20px_rgba(34, 211, 238, 0.35)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Link href="/projetos">
                   {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
@@ -207,7 +207,7 @@ export default function Home() {
                 size="lg"
                 variant="outline"
                 onClick={openWhatsApp}
-                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] rounded backdrop-blur-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F4F4F4] hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] rounded backdrop-blur-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t.home.contactCtaBtn}
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -220,9 +220,9 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.6 }}
-            className="absolute bottom-10 left-6 md:left-12 flex items-center gap-3 text-[#7A7A85]"
+            className="absolute bottom-10 left-6 md:left-12 flex items-center gap-3 text-[#64748B]"
           >
-            <div className="w-8 h-px bg-[#323234]" />
+            <div className="w-8 h-px bg-[#334155]" />
             <span className="text-xs font-mono tracking-widest uppercase">scroll</span>
           </motion.div>
         </div>
@@ -231,7 +231,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           02 — MÉTRICAS RÁPIDAS
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234]">
+      <section className="border-t border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           {/* Mobile: 2×2 grid with border-b + border-r; Desktop: 4×1 row */}
           <div className="grid grid-cols-2 md:grid-cols-4">
@@ -242,16 +242,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className={`px-5 md:px-6 py-8 hover:bg-[#131314] transition-colors
-                  ${i % 2 === 0 ? "border-r border-[#323234]" : ""}
-                  ${i < 2 ? "border-b md:border-b-0 border-[#323234]" : ""}
-                  md:border-r md:last:border-r-0 border-[#323234]
+                className={`px-5 md:px-6 py-8 hover:bg-[#1E293B] transition-colors
+                  ${i % 2 === 0 ? "border-r border-[#334155]" : ""}
+                  ${i < 2 ? "border-b md:border-b-0 border-[#334155]" : ""}
+                  md:border-r md:last:border-r-0 border-[#334155]
                   ${i === 0 ? "md:pl-0" : ""}
                   ${i === 3 ? "md:pr-0" : ""}
                 `}
               >
-                <p className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-1">{m.value}</p>
-                <p className="text-xs font-mono text-[#7A7A85] leading-snug">{m.label}</p>
+                <p className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4] mb-1">{m.value}</p>
+                <p className="text-xs font-mono text-[#64748B] leading-snug">{m.label}</p>
               </motion.div>
             ))}
           </div>
@@ -261,20 +261,20 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           03 — TECH MARQUEE
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-6 overflow-hidden">
+      <section className="border-t border-[#334155] py-6 overflow-hidden">
         <div className="flex items-center gap-6 mb-4 max-w-6xl mx-auto px-6 md:px-12">
           <span className="section-num shrink-0">// {t.home.techMarqueeLabel}</span>
         </div>
         <div className="relative overflow-hidden">
           {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0D0D0E] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0D0D0E] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0F172A] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0F172A] to-transparent z-10 pointer-events-none" />
 
           <div className="flex animate-marquee w-max">
             {techItems.map((tech, i) => (
               <span
                 key={i}
-                className="inline-flex items-center text-xs font-mono text-[#7A7A85] whitespace-nowrap"
+                className="inline-flex items-center text-xs font-mono text-[#64748B] whitespace-nowrap"
               >
                 {tech.iconUrl && (
                   <img
@@ -285,7 +285,7 @@ export default function Home() {
                   />
                 )}
                 {tech.name}
-                <span className="mx-3 text-[#3A3A3E] select-none" aria-hidden="true">·</span>
+                <span className="mx-3 text-[#475569] select-none" aria-hidden="true">·</span>
               </span>
             ))}
           </div>
@@ -295,19 +295,19 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           04 — EXPERTISE PREVIEW
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-24">
+      <section className="border-t border-[#334155] py-24">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
               <div className="flex items-center gap-4">
                 <div className="w-5 h-px bg-primary shrink-0" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                   {t.home.expertisePreviewLabel}
                 </h2>
               </div>
               <Link
                 href="/expertise"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#7A7A85] hover:text-primary transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#64748B] hover:text-primary transition-colors"
               >
                 {t.home.expertisePreviewCta}
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -329,15 +329,15 @@ export default function Home() {
                     }`}
                   >
                     <Icon className={`text-primary ${featured ? "w-5 h-5" : "w-4 h-4"}`} />
-                    <h3 className={`font-semibold text-[#F0F0F0] ${featured ? "text-base" : "text-sm"}`}>
+                    <h3 className={`font-semibold text-[#F4F4F4] ${featured ? "text-base" : "text-sm"}`}>
                       {s.title}
                     </h3>
-                    <p className={`text-xs text-[#888895] leading-relaxed ${featured ? "" : "line-clamp-2"}`}>
+                    <p className={`text-xs text-[#94A3B8] leading-relaxed ${featured ? "" : "line-clamp-2"}`}>
                       {s.description}
                     </p>
                     <div className="flex flex-wrap gap-1 mt-auto pt-1">
                       {s.technologies.slice(0, featured ? 5 : 3).map((tech) => (
-                        <span key={tech} className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-1.5 py-0.5 rounded">
+                        <span key={tech} className="text-xs font-mono text-[#64748B] border border-[#334155] px-1.5 py-0.5 rounded">
                           {tech}
                         </span>
                       ))}
@@ -353,12 +353,12 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           05 — PROJETO EM DESTAQUE
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-20">
+      <section className="border-t border-[#334155] py-20">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
               <div className="w-5 h-px bg-primary shrink-0" />
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                 {t.home.featuredLabel}
               </h2>
             </motion.div>
@@ -371,7 +371,7 @@ export default function Home() {
                     <div className="flex flex-col gap-5 justify-center">
                       <div className="flex flex-wrap items-center gap-2">
                         {featuredProject.category && (
-                          <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+                          <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                             {featuredProject.category}
                           </span>
                         )}
@@ -382,11 +382,11 @@ export default function Home() {
                         )}
                       </div>
 
-                      <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] group-hover:text-primary transition-colors leading-tight">
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4] group-hover:text-primary transition-colors leading-tight">
                         {featuredProject.title}
                       </h3>
 
-                      <p className="text-sm text-[#888895] leading-relaxed max-w-lg">
+                      <p className="text-sm text-[#94A3B8] leading-relaxed max-w-lg">
                         {featuredProject.shortDescription}
                       </p>
 
@@ -400,7 +400,7 @@ export default function Home() {
                         </div>
                       )}
 
-                      <div className="flex items-center gap-2 text-sm font-medium text-[#7A7A85] group-hover:text-primary transition-colors mt-2">
+                      <div className="flex items-center gap-2 text-sm font-medium text-[#64748B] group-hover:text-primary transition-colors mt-2">
                         {t.home.viewProject}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </div>
@@ -408,7 +408,7 @@ export default function Home() {
 
                     {/* Thumbnail */}
                     {(featuredProject.thumbnailUrl || featuredProject.coverImageUrl) && (
-                      <div className="aspect-video rounded border border-[#323234] overflow-hidden bg-[#0D0D0E] shrink-0">
+                      <div className="aspect-video rounded border border-[#334155] overflow-hidden bg-[#0F172A] shrink-0">
                         <img
                           src={featuredProject.thumbnailUrl || featuredProject.coverImageUrl!}
                           alt={featuredProject.title}
@@ -423,10 +423,10 @@ export default function Home() {
             ) : (
               <motion.div
                 variants={fadeUp}
-                className="p-12 border border-dashed border-[#323234] rounded text-center"
+                className="p-12 border border-dashed border-[#334155] rounded text-center"
               >
-                <p className="font-mono text-xs text-[#7A7A85] mb-2">{t.home.featuredEmptyTitle}</p>
-                <p className="text-sm text-[#888895]">{t.home.featuredEmptyDesc}</p>
+                <p className="font-mono text-xs text-[#64748B] mb-2">{t.home.featuredEmptyTitle}</p>
+                <p className="text-sm text-[#94A3B8]">{t.home.featuredEmptyDesc}</p>
               </motion.div>
             )}
           </motion.div>
@@ -436,19 +436,19 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           06 — PREVIEW DE PROJETOS
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-16">
+      <section className="border-t border-[#334155] py-16">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
               <div className="flex items-center gap-4">
                 <div className="w-5 h-px bg-primary shrink-0" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                   {t.home.projectsPreviewLabel}
                 </h2>
               </div>
               <Link
                 href="/projetos"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#7A7A85] hover:text-primary transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#64748B] hover:text-primary transition-colors"
               >
                 {t.home.projectsPreviewCta}
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -464,16 +464,16 @@ export default function Home() {
                     <motion.div key={project.id} variants={fadeUp}>
                       <Link href={`/projetos/${project.slug}`}>
                         <div className="project-row group">
-                          <span className="font-mono text-xs text-[#7A7A85] w-8 shrink-0 select-none">
+                          <span className="font-mono text-xs text-[#64748B] w-8 shrink-0 select-none">
                             {String(i + 1).padStart(2, "0")}
                           </span>
-                          <div className="w-14 h-14 rounded border border-[#323234] bg-[#131314] shrink-0 overflow-hidden">
+                          <div className="w-14 h-14 rounded border border-[#334155] bg-[#1E293B] shrink-0 overflow-hidden">
                             {cardImg ? (
                               <img src={cardImg} alt={project.title}
                                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center text-[#333336]">
+                              <div className="w-full h-full flex items-center justify-center text-[#2D3E52]">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
                                   <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" />
                                 </svg>
@@ -482,12 +482,12 @@ export default function Home() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                              <h3 className="text-sm font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">{project.title}</h3>
-                              <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-1.5 py-0.5 rounded">{category}</span>
+                              <h3 className="text-sm font-semibold text-[#F4F4F4] group-hover:text-primary transition-colors">{project.title}</h3>
+                              <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-1.5 py-0.5 rounded">{category}</span>
                             </div>
-                            <p className="text-xs text-[#888895] line-clamp-1">{project.shortDescription}</p>
+                            <p className="text-xs text-[#94A3B8] line-clamp-1">{project.shortDescription}</p>
                           </div>
-                          <ArrowRight className="w-4 h-4 text-[#7A7A85] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                          <ArrowRight className="w-4 h-4 text-[#64748B] group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
                         </div>
                       </Link>
                     </motion.div>
@@ -495,8 +495,8 @@ export default function Home() {
                 })}
               </div>
             ) : (
-              <motion.div variants={fadeUp} className="py-16 border-t border-[#323234] text-center">
-                <p className="text-sm text-[#7A7A85] font-mono">{t.home.featuredEmptyTitle}</p>
+              <motion.div variants={fadeUp} className="py-16 border-t border-[#334155] text-center">
+                <p className="text-sm text-[#64748B] font-mono">{t.home.featuredEmptyTitle}</p>
               </motion.div>
             )}
           </motion.div>
@@ -506,19 +506,19 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           07 — EXPERIENCE PREVIEW
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-20">
+      <section className="border-t border-[#334155] py-20">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
               <div className="flex items-center gap-4">
                 <div className="w-5 h-px bg-primary shrink-0" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                   {t.home.experiencePreviewLabel}
                 </h2>
               </div>
               <Link
                 href="/experiencia"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#7A7A85] hover:text-primary transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#64748B] hover:text-primary transition-colors"
               >
                 {t.home.experiencePreviewCta}
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -538,20 +538,20 @@ export default function Home() {
                       {lang === "pt" ? "Atual" : "Current"}
                     </span>
                   )}
-                  <p className="text-xs font-mono text-[#7A7A85]">{currentRole.period}</p>
-                  <p className="text-xs font-mono text-[#888895] font-medium">{currentRole.company}</p>
+                  <p className="text-xs font-mono text-[#64748B]">{currentRole.period}</p>
+                  <p className="text-xs font-mono text-[#94A3B8] font-medium">{currentRole.company}</p>
                 </div>
 
                 {/* Content */}
                 <div className="space-y-5">
                   <div className="flex items-center gap-2">
                     <Briefcase className="w-4 h-4 text-primary shrink-0" />
-                    <h3 className="text-base font-semibold text-[#F0F0F0]">{currentRole.role}</h3>
+                    <h3 className="text-base font-semibold text-[#F4F4F4]">{currentRole.role}</h3>
                   </div>
 
                   <ul className="space-y-2">
                     {currentRole.results.slice(0, 4).map((r, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-[#888895]">
+                      <li key={i} className="flex items-start gap-2 text-sm text-[#94A3B8]">
                         <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
                         {r}
                       </li>
@@ -560,12 +560,12 @@ export default function Home() {
 
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {currentRole.technologies.slice(0, 6).map((tech) => (
-                      <span key={tech} className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+                      <span key={tech} className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                         {tech}
                       </span>
                     ))}
                     {currentRole.technologies.length > 6 && (
-                      <span className="text-xs font-mono text-[#7A7A85] px-2 py-0.5">
+                      <span className="text-xs font-mono text-[#64748B] px-2 py-0.5">
                         +{currentRole.technologies.length - 6}
                       </span>
                     )}
@@ -580,7 +580,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           08 — CONTACT CTA
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-32" id="contato">
+      <section className="border-t border-[#334155] py-32" id="contato">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -596,11 +596,11 @@ export default function Home() {
               </motion.div>
               <motion.h2
                 variants={fadeUp}
-                className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#F0F0F0] leading-tight mb-6"
+                className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#F4F4F4] leading-tight mb-6"
               >
                 {t.home.contactCtaTitle}
               </motion.h2>
-              <motion.p variants={fadeUp} className="text-[#888895] text-base mb-8 max-w-md leading-relaxed">
+              <motion.p variants={fadeUp} className="text-[#94A3B8] text-base mb-8 max-w-md leading-relaxed">
                 {t.home.contactCtaSubtitle}
               </motion.p>
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
@@ -617,7 +617,7 @@ export default function Home() {
 
             {/* Right: contact pill buttons — Uiverse "wise-stingray-29" style */}
             <motion.div variants={fadeUp}>
-              <p className="text-xs font-mono text-[#7A7A85] uppercase tracking-widest mb-6">
+              <p className="text-xs font-mono text-[#64748B] uppercase tracking-widest mb-6">
                 {lang === "pt" ? "Canais de contato" : "Contact channels"}
               </p>
               <div className="flex flex-wrap gap-5">
@@ -628,7 +628,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="WhatsApp"
                     title="WhatsApp"
-                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#FF8A4C] text-[#0D0D0E] hover:text-white transition-all duration-300 hover:bg-[#128c7e] hover:scale-[1.2] focus-ring"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#22D3EE] text-[#0F172A] hover:text-white transition-all duration-300 hover:bg-[#128c7e] hover:scale-[1.2] focus-ring"
                   >
                     <WhatsAppIcon className="w-5 h-5" />
                   </a>
@@ -638,7 +638,7 @@ export default function Home() {
                     href={`mailto:${settings.contactEmail}`}
                     aria-label={`Email: ${settings.contactEmail}`}
                     title={settings.contactEmail}
-                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#FF8A4C] text-[#0D0D0E] hover:text-white transition-all duration-300 hover:bg-[#EA4335] hover:scale-[1.2] focus-ring"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#22D3EE] text-[#0F172A] hover:text-white transition-all duration-300 hover:bg-[#EA4335] hover:scale-[1.2] focus-ring"
                   >
                     <Mail className="w-5 h-5" aria-hidden="true" />
                   </a>
@@ -650,7 +650,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
                     title="LinkedIn"
-                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#FF8A4C] text-[#0D0D0E] hover:text-white transition-all duration-300 hover:bg-[#0072b1] hover:scale-[1.2] focus-ring"
+                    className="w-[52px] h-[52px] flex items-center justify-center rounded-[30px] bg-[#22D3EE] text-[#0F172A] hover:text-white transition-all duration-300 hover:bg-[#0072b1] hover:scale-[1.2] focus-ring"
                   >
                     <Linkedin className="w-5 h-5" aria-hidden="true" />
                   </a>

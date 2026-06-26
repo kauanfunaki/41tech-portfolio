@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -46,7 +46,7 @@ function StatusChip({ status, labelActive, labelDone }: { status: "active" | "do
       {labelActive}
     </span>
   ) : (
-    <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2.5 py-0.5 rounded">
+    <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2.5 py-0.5 rounded">
       {labelDone}
     </span>
   );
@@ -58,14 +58,14 @@ function SpecialtyCard({ specialty }: { specialty: SpecialtyEntry }) {
     <div className="card-interactive p-6 flex flex-col gap-4">
       <Icon className="w-5 h-5 text-primary shrink-0" />
       <div>
-        <h3 className="text-sm font-semibold text-[#F0F0F0] mb-2">{specialty.title}</h3>
-        <p className="text-sm text-[#888895] leading-relaxed">{specialty.description}</p>
+        <h3 className="text-sm font-semibold text-[#F4F4F4] mb-2">{specialty.title}</h3>
+        <p className="text-sm text-[#94A3B8] leading-relaxed">{specialty.description}</p>
       </div>
       <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
         {specialty.technologies.map((tech) => (
           <span
             key={tech}
-            className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded"
+            className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded"
           >
             {tech}
           </span>
@@ -108,10 +108,10 @@ export default function Expertise() {
   }, [technologies, lang]);
 
   return (
-    <div className="min-h-screen bg-[#0D0D0E]">
+    <div className="min-h-screen bg-[#0F172A]">
 
       {/* ── HERO ── */}
-      <section className="pt-32 pb-16 border-b border-[#323234]">
+      <section className="pt-32 pb-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -123,17 +123,17 @@ export default function Expertise() {
             </motion.span>
             <motion.h1
               variants={fadeUp}
-              className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6"
+              className="font-display text-5xl md:text-7xl font-bold text-[#F4F4F4] tracking-tight leading-none mb-6"
             >
               {lang === "pt" ? "Especialidades" : "Expertise"}
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg text-[#888895] max-w-xl leading-relaxed mb-10">
+            <motion.p variants={fadeUp} className="text-lg text-[#94A3B8] max-w-xl leading-relaxed mb-10">
               {t.expertise.heroSubtitle}
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link
                 href="/projetos"
-                className="inline-flex items-center gap-2 text-sm font-medium text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-medium text-[#94A3B8] hover:text-[#F4F4F4] transition-colors"
               >
                 {t.expertise.heroCta}
                 <ArrowRight className="w-4 h-4" />
@@ -144,7 +144,7 @@ export default function Expertise() {
       </section>
 
       {/* ── RESUMO TÉCNICO ── */}
-      <section className="py-16 border-b border-[#323234]">
+      <section className="py-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -157,7 +157,7 @@ export default function Expertise() {
             </motion.span>
             <motion.p
               variants={fadeUp}
-              className="text-base md:text-lg text-[#888895] leading-relaxed max-w-3xl border-l-2 border-primary/40 pl-6"
+              className="text-base md:text-lg text-[#94A3B8] leading-relaxed max-w-3xl border-l-2 border-primary/40 pl-6"
             >
               {t.expertise.summaryText}
             </motion.p>
@@ -166,7 +166,7 @@ export default function Expertise() {
       </section>
 
       {/* ── FORMAÇÃO ── */}
-      <section className="py-16 border-b border-[#323234]">
+      <section className="py-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -176,7 +176,7 @@ export default function Expertise() {
           >
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
               <div className="w-5 h-px bg-primary shrink-0" />
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                 {t.expertise.educationTitle}
               </h2>
             </motion.div>
@@ -186,26 +186,26 @@ export default function Expertise() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-8 border-b border-[#323234] last:border-0"
+                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-8 border-b border-[#334155] last:border-0"
                 >
                   {/* Period + institution */}
                   <div className="shrink-0">
-                    <p className="text-xs font-mono text-[#7A7A85] mb-1">{entry.period}</p>
-                    <p className="text-xs font-mono text-[#888895]">{entry.institution}</p>
+                    <p className="text-xs font-mono text-[#64748B] mb-1">{entry.period}</p>
+                    <p className="text-xs font-mono text-[#94A3B8]">{entry.institution}</p>
                   </div>
 
                   {/* Content */}
                   <div className="space-y-3">
                     <div className="flex flex-wrap items-center gap-3">
                       <GraduationCap className="w-4 h-4 text-primary shrink-0" />
-                      <h3 className="text-base font-semibold text-[#F0F0F0]">{entry.course}</h3>
+                      <h3 className="text-base font-semibold text-[#F4F4F4]">{entry.course}</h3>
                       <StatusChip
                         status={entry.status}
                         labelActive={t.expertise.statusActive}
                         labelDone={t.expertise.statusDone}
                       />
                     </div>
-                    <p className="text-sm text-[#888895] leading-relaxed">{entry.description}</p>
+                    <p className="text-sm text-[#94A3B8] leading-relaxed">{entry.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -215,7 +215,7 @@ export default function Expertise() {
       </section>
 
       {/* ── CERTIFICAÇÕES ── */}
-      <section className="py-16 border-b border-[#323234]">
+      <section className="py-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -225,20 +225,20 @@ export default function Expertise() {
           >
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
               <div className="w-5 h-px bg-primary shrink-0" />
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                 {t.expertise.certificationsTitle}
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#334155] border border-[#334155] rounded overflow-hidden">
               {certifications.map((cert, i) => (
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="bg-[#0D0D0E] p-5 flex flex-col gap-3 group"
+                  className="bg-[#0F172A] p-5 flex flex-col gap-3 group"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <Award className="w-4 h-4 text-[#7A7A85] shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
+                    <Award className="w-4 h-4 text-[#64748B] shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
                     <StatusChip
                       status={cert.status}
                       labelActive={t.expertise.statusActive}
@@ -246,8 +246,8 @@ export default function Expertise() {
                     />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#F0F0F0] leading-snug">{cert.name}</p>
-                    <p className="text-xs text-[#7A7A85] font-mono mt-1">
+                    <p className="text-sm font-semibold text-[#F4F4F4] leading-snug">{cert.name}</p>
+                    <p className="text-xs text-[#64748B] font-mono mt-1">
                       {cert.institution} · {cert.year}
                     </p>
                   </div>
@@ -270,7 +270,7 @@ export default function Expertise() {
       </section>
 
       {/* ── ESPECIALIDADES ── */}
-      <section className="py-16 border-b border-[#323234]">
+      <section className="py-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -280,7 +280,7 @@ export default function Expertise() {
           >
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
               <div className="w-5 h-px bg-primary shrink-0" />
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                 {t.expertise.specialtiesTitle}
               </h2>
             </motion.div>
@@ -297,7 +297,7 @@ export default function Expertise() {
       </section>
 
       {/* ── STACK POR CATEGORIA ── */}
-      <section className="py-16 border-b border-[#323234]">
+      <section className="py-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -307,7 +307,7 @@ export default function Expertise() {
           >
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
               <div className="w-5 h-px bg-primary shrink-0" />
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4]">
                 {t.expertise.stackTitle}
               </h2>
             </motion.div>
@@ -317,16 +317,16 @@ export default function Expertise() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-6 border-b border-[#323234] last:border-0 items-start"
+                  className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-10 py-6 border-b border-[#334155] last:border-0 items-start"
                 >
-                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pt-1 shrink-0">
+                  <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest pt-1 shrink-0">
                     {group.label}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {group.items.map((item) => (
                       <span
                         key={item.name}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#888895] border border-[#323234] bg-[#131314] px-3 py-1.5 rounded hover:text-[#F0F0F0] hover:border-[#3A3A3E] transition-colors cursor-default"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#94A3B8] border border-[#334155] bg-[#1E293B] px-3 py-1.5 rounded hover:text-[#F4F4F4] hover:border-[#475569] transition-colors cursor-default"
                       >
                         {item.iconUrl && (
                           <img
@@ -358,13 +358,13 @@ export default function Expertise() {
           >
             <motion.h2
               variants={fadeUp}
-              className="font-display text-3xl md:text-4xl font-bold text-[#F0F0F0] mb-4"
+              className="font-display text-3xl md:text-4xl font-bold text-[#F4F4F4] mb-4"
             >
               {lang === "pt"
                 ? "Quer aplicar isso na sua operação?"
                 : "Want to apply this to your operation?"}
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-[#888895] text-base mb-8 max-w-md">
+            <motion.p variants={fadeUp} className="text-[#94A3B8] text-base mb-8 max-w-md">
               {lang === "pt"
                 ? "Veja os projetos reais construídos com essa stack e metodologia."
                 : "See the real projects built with this stack and methodology."}

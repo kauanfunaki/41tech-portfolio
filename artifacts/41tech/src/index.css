@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
@@ -54,38 +54,38 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* ─── Public site: editorial neutral dark ─── */
+/* ─── Public site: editorial dark navy ─── */
 :root {
-  --background: 240 4% 5%;          /* #0D0D0E */
-  --foreground: 0 0% 94%;           /* #F0F0F0 */
-  --border: 240 3% 16%;             /* #323234 */
-  --card: 240 4% 8%;                /* #131314 */
-  --card-foreground: 0 0% 94%;
-  --card-border: 240 3% 14%;        /* #232325 */
-  --sidebar: 224 70% 6%;
+  --background: 222 47% 11%;        /* #0F172A */
+  --foreground: 0 0% 96%;           /* #F4F4F4 */
+  --border: 215 25% 27%;            /* #334155 */
+  --card: 218 33% 18%;              /* #1E293B */
+  --card-foreground: 0 0% 96%;
+  --card-border: 215 29% 24%;       /* #2A3A50 */
+  --sidebar: 222 47% 8%;
   --sidebar-foreground: 0 0% 100%;
-  --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 21 100% 65%;
+  --sidebar-border: 215 29% 22%;
+  --sidebar-primary: 188 86% 53%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 224 70% 10%;
+  --sidebar-accent: 218 33% 14%;
   --sidebar-accent-foreground: 0 0% 80%;
-  --sidebar-ring: 21 100% 65%;
-  --popover: 240 4% 8%;
-  --popover-foreground: 0 0% 94%;
-  --popover-border: 240 3% 14%;
-  --primary: 21 100% 65%;           /* #FF8A4C — warm amber/coral accent */
-  --primary-foreground: 240 6% 6%;  /* dark text on amber (white fails contrast) */
-  --secondary: 240 3% 12%;
-  --secondary-foreground: 240 4% 65%;
-  --muted: 240 3% 11%;
-  --muted-foreground: 240 4% 55%;   /* #8A8A90 */
-  --accent: 21 100% 65%;
-  --accent-foreground: 240 6% 6%;
+  --sidebar-ring: 188 86% 53%;
+  --popover: 218 33% 18%;
+  --popover-foreground: 0 0% 96%;
+  --popover-border: 215 29% 24%;
+  --primary: 188 86% 53%;           /* #22D3EE — neon cyan accent */
+  --primary-foreground: 222 47% 7%; /* dark navy text on cyan */
+  --secondary: 218 28% 14%;
+  --secondary-foreground: 215 17% 65%;
+  --muted: 218 33% 13%;
+  --muted-foreground: 215 16% 47%;  /* #64748B */
+  --accent: 188 86% 53%;
+  --accent-foreground: 222 47% 7%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 240 3% 16%;
-  --ring: 21 100% 65%;
-  --chart-1: 21 100% 65%;
+  --input: 215 25% 27%;
+  --ring: 188 86% 53%;
+  --chart-1: 188 86% 53%;
   --chart-2: 191 100% 43%;
   --chart-3: 220 50% 50%;
   --chart-4: 260 70% 60%;
@@ -99,35 +99,35 @@
 }
 
 .dark {
-  --background: 240 4% 5%;
-  --foreground: 0 0% 94%;
-  --border: 240 3% 16%;
-  --card: 240 4% 8%;
-  --card-foreground: 0 0% 94%;
-  --card-border: 240 3% 14%;
-  --sidebar: 224 70% 6%;
+  --background: 222 47% 11%;
+  --foreground: 0 0% 96%;
+  --border: 215 25% 27%;
+  --card: 218 33% 18%;
+  --card-foreground: 0 0% 96%;
+  --card-border: 215 29% 24%;
+  --sidebar: 222 47% 8%;
   --sidebar-foreground: 0 0% 100%;
-  --sidebar-border: 220 20% 13%;
-  --sidebar-primary: 21 100% 65%;
+  --sidebar-border: 215 29% 22%;
+  --sidebar-primary: 188 86% 53%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 224 70% 10%;
+  --sidebar-accent: 218 33% 14%;
   --sidebar-accent-foreground: 0 0% 80%;
-  --sidebar-ring: 21 100% 65%;
-  --popover: 240 4% 8%;
-  --popover-foreground: 0 0% 94%;
-  --popover-border: 240 3% 14%;
-  --primary: 21 100% 65%;
-  --primary-foreground: 240 6% 6%;
-  --secondary: 240 3% 12%;
-  --secondary-foreground: 240 4% 65%;
-  --muted: 240 3% 11%;
-  --muted-foreground: 240 4% 55%;
-  --accent: 21 100% 65%;
-  --accent-foreground: 240 6% 6%;
+  --sidebar-ring: 188 86% 53%;
+  --popover: 218 33% 18%;
+  --popover-foreground: 0 0% 96%;
+  --popover-border: 215 29% 24%;
+  --primary: 188 86% 53%;
+  --primary-foreground: 222 47% 7%;
+  --secondary: 218 28% 14%;
+  --secondary-foreground: 215 17% 65%;
+  --muted: 218 33% 13%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 188 86% 53%;
+  --accent-foreground: 222 47% 7%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 240 3% 16%;
-  --ring: 21 100% 65%;
+  --input: 215 25% 27%;
+  --ring: 188 86% 53%;
 }
 
 /* ─── Loading Screen ─── */
@@ -149,7 +149,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background-color: #0d0d0e;
+  background-color: #0F172A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,14 +160,14 @@
 }
 
 .terminal-loader {
-  border: 0.1em solid #323234;
-  background-color: #131314;
-  color: #FF8A4C;
+  border: 0.1em solid #334155;
+  background-color: #1E293B;
+  color: #22D3EE;
   font-family: 'Space Mono', 'Courier New', monospace;
   font-size: 1rem;
   padding: 1.5em 1em;
   width: 14em;
-  box-shadow: 0 0 32px rgba(255, 138, 76, 0.18), 0 4px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 32px rgba(34, 211, 238, 0.18), 0 4px 16px rgba(0, 0, 0, 0.5);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
@@ -180,7 +180,7 @@
   left: 0;
   right: 0;
   height: 1.5em;
-  background-color: #1c1c21;
+  background-color: #243850;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   padding: 0 0.4em;
@@ -201,7 +201,7 @@
   width: 0.6em;
   height: 0.6em;
   border-radius: 50%;
-  background-color: #555;
+  background-color: #475569;
 }
 
 .terminal-loader .control.close    { background-color: #e33; }
@@ -210,7 +210,7 @@
 
 .terminal-loader .terminal-title {
   font-size: 0.7em;
-  color: #8a8a90;
+  color: #64748B;
   font-family: 'Space Mono', monospace;
   margin: 0;
   line-height: 1;
@@ -220,7 +220,7 @@
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 0.2em solid #FF8A4C;
+  border-right: 0.2em solid #22D3EE;
   animation:
     kf-type-delete 4s steps(12) infinite,
     kf-blink-cursor 0.5s step-end infinite alternate;
@@ -286,7 +286,7 @@ body::after {
   }
 
   .gradient-text {
-    background: linear-gradient(to right, #F0F0F0 20%, #FF8A4C 70%);
+    background: linear-gradient(to right, #F4F4F4 20%, #22D3EE 70%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -294,7 +294,7 @@ body::after {
 
   /* ── Subtle effects — kept ONLY for admin and CTA buttons ── */
   .glow-blue {
-    box-shadow: 0 0 16px rgba(255, 138, 76, 0.35), 0 0 40px rgba(255, 138, 76, 0.1);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.35), 0 0 40px rgba(34, 211, 238, 0.1);
   }
 
   /* ── Admin-only ── */
@@ -307,8 +307,8 @@ body::after {
 
   .tech-grid {
     background-image:
-      linear-gradient(rgba(255, 138, 76, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 138, 76, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
@@ -320,7 +320,7 @@ body::after {
     gap: 1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid #323234;
+    border-bottom: 1px solid #334155;
     border-left: 2px solid transparent;
     cursor: pointer;
     transition: all 200ms;
@@ -333,15 +333,15 @@ body::after {
 
   /* ── Card interactive — unified hover for all public cards ── */
   .card-interactive {
-    border: 1px solid #323234;
-    background-color: #131314;
+    border: 1px solid #334155;
+    background-color: #1E293B;
     border-radius: 0.5rem;
     transition: border-color 200ms, background-color 200ms, box-shadow 200ms;
   }
   .card-interactive:hover {
-    border-color: #3A3A3E;
-    background-color: #1A1A1B;
-    box-shadow: 0 0 0 1px rgba(255, 138, 76, 0.08);
+    border-color: #475569;
+    background-color: #253348;
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08);
   }
 
   /* ── Focus ring — accessible keyboard navigation ── */

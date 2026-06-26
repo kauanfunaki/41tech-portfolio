@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import {
   useGetProject,
@@ -77,10 +77,10 @@ export default function ProjectDetail() {
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-32 min-h-screen">
-        <Skeleton className="h-4 w-32 mb-12 bg-[#1A1A1B]" />
-        <Skeleton className="h-12 w-3/4 mb-4 bg-[#1A1A1B]" />
-        <Skeleton className="h-5 w-1/2 mb-16 bg-[#1A1A1B]" />
-        <Skeleton className="aspect-video w-full rounded bg-[#1A1A1B]" />
+        <Skeleton className="h-4 w-32 mb-12 bg-[#253348]" />
+        <Skeleton className="h-12 w-3/4 mb-4 bg-[#253348]" />
+        <Skeleton className="h-5 w-1/2 mb-16 bg-[#253348]" />
+        <Skeleton className="aspect-video w-full rounded bg-[#253348]" />
       </div>
     );
   }
@@ -88,8 +88,8 @@ export default function ProjectDetail() {
   if (isError || !project) {
     return (
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-40 text-center min-h-screen flex flex-col items-center justify-center">
-        <LayoutTemplate className="w-16 h-16 text-[#333336] mb-8" />
-        <h1 className="text-2xl font-bold mb-6 text-[#F0F0F0]">
+        <LayoutTemplate className="w-16 h-16 text-[#2D3E52] mb-8" />
+        <h1 className="text-2xl font-bold mb-6 text-[#F4F4F4]">
           {t.projectDetail.notFound}
         </h1>
         <Button
@@ -104,13 +104,13 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0D0D0E]">
+    <div className="min-h-screen bg-[#0F172A]">
       {/* ── Hero header ── */}
-      <section className="pt-32 pb-16 border-b border-[#323234]">
+      <section className="pt-32 pb-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <Link
             href="/projetos"
-            className="inline-flex items-center text-xs font-mono text-[#7A7A85] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
+            className="inline-flex items-center text-xs font-mono text-[#64748B] hover:text-[#F4F4F4] mb-10 transition-colors uppercase tracking-wider gap-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {t.projectDetail.back}
@@ -124,7 +124,7 @@ export default function ProjectDetail() {
             {/* Tags */}
             <div className="flex flex-wrap items-center gap-2 mb-5">
               {project.category && (
-                <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+                <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                   {project.category}
                 </span>
               )}
@@ -134,16 +134,16 @@ export default function ProjectDetail() {
                 </span>
               )}
               {project.problem && project.solution && project.result && (
-                <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+                <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                   {t.projects.caseTag}
                 </span>
               )}
             </div>
 
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#F4F4F4] tracking-tight leading-none mb-6">
               {project.title}
             </h1>
-            <p className="text-lg md:text-xl text-[#888895] leading-relaxed max-w-2xl">
+            <p className="text-lg md:text-xl text-[#94A3B8] leading-relaxed max-w-2xl">
               {lang === "en" ? (project.shortDescriptionEn ?? project.shortDescription) : project.shortDescription}
             </p>
 
@@ -166,7 +166,7 @@ export default function ProjectDetail() {
                     href={project.repositoryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448] text-sm font-semibold rounded transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[#334155] text-[#94A3B8] hover:text-[#F4F4F4] hover:border-[#475569] text-sm font-semibold rounded transition-colors"
                   >
                     <Github className="w-4 h-4" />
                     {t.projectDetail.repo}
@@ -186,7 +186,7 @@ export default function ProjectDetail() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-6xl mx-auto px-6 md:px-12 py-8"
         >
-          <div className="aspect-video w-full rounded border border-[#323234] overflow-hidden bg-[#131314]">
+          <div className="aspect-video w-full rounded border border-[#334155] overflow-hidden bg-[#1E293B]">
             <img
               src={coverUrl}
               alt={project.title}
@@ -203,10 +203,10 @@ export default function ProjectDetail() {
           <Link href={`/cases/${project.linkedCaseSlug}`}>
             <div className="flex items-center justify-between px-6 py-4 border border-primary/30 bg-primary/5 rounded hover:bg-primary/10 transition-colors group">
               <div>
-                <p className="text-xs font-mono text-[#7A7A85] uppercase tracking-widest mb-0.5">
+                <p className="text-xs font-mono text-[#64748B] uppercase tracking-widest mb-0.5">
                   {t.projectDetail.viewCaseLabel}
                 </p>
-                <p className="text-sm font-semibold text-[#F0F0F0]">
+                <p className="text-sm font-semibold text-[#F4F4F4]">
                   {t.projectDetail.viewCaseBtn}
                 </p>
               </div>
@@ -230,13 +230,13 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.impact}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#334155] border border-[#334155] rounded overflow-hidden">
                   {metrics.map((metric, i) => (
-                    <div key={i} className="bg-[#0D0D0E] px-6 py-5">
-                      <p className="text-base font-semibold text-[#F0F0F0]">{metric}</p>
+                    <div key={i} className="bg-[#0F172A] px-6 py-5">
+                      <p className="text-base font-semibold text-[#F4F4F4]">{metric}</p>
                     </div>
                   ))}
                 </div>
@@ -250,10 +250,10 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.overview}
                 </h2>
-                <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
+                <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">
                   {lang === "en" ? (project.fullDescriptionEn ?? project.fullDescription) : project.fullDescription}
                 </p>
               </motion.section>
@@ -266,11 +266,11 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.problem}
                 </h2>
-                <div className="border-l-2 border-[#323234] pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
+                <div className="border-l-2 border-[#334155] pl-6">
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">
                     {lang === "en" ? (project.problemEn ?? project.problem) : project.problem}
                   </p>
                 </div>
@@ -284,11 +284,11 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.solution}
                 </h2>
                 <div className="border-l-2 border-primary/40 pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">
                     {lang === "en" ? (project.solutionEn ?? project.solution) : project.solution}
                   </p>
                 </div>
@@ -302,11 +302,11 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.result}
                 </h2>
-                <div className="border-l-2 border-[#323234] pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">
+                <div className="border-l-2 border-[#334155] pl-6">
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">
                     {lang === "en" ? (project.resultEn ?? project.result) : project.result}
                   </p>
                 </div>
@@ -320,14 +320,14 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.techStack}
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {projectTechs.map((tech) => (
                     <div
                       key={tech.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-[#323234] bg-[#131314] text-sm text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-[#334155] bg-[#1E293B] text-sm text-[#94A3B8] hover:text-[#F4F4F4] transition-colors"
                     >
                       {tech.iconUrl ? (
                         <img
@@ -353,14 +353,14 @@ export default function ProjectDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">
                   {t.projectDetail.gallery}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryImages.map((imgUrl, i) => (
                     <div
                       key={i}
-                      className="aspect-video w-full rounded border border-[#323234] bg-[#131314] overflow-hidden"
+                      className="aspect-video w-full rounded border border-[#334155] bg-[#1E293B] overflow-hidden"
                     >
                       <img
                         src={imgUrl}
@@ -378,12 +378,12 @@ export default function ProjectDetail() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pt-12 border-t border-[#323234]"
+              className="pt-12 border-t border-[#334155]"
             >
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-3">
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4] mb-3">
                 {t.projectDetail.ctaTitle}
               </h3>
-              <p className="text-[#888895] text-base mb-6 max-w-md">
+              <p className="text-[#94A3B8] text-base mb-6 max-w-md">
                 {t.projectDetail.ctaSubtitle}
               </p>
               <button
@@ -398,17 +398,17 @@ export default function ProjectDetail() {
 
           {/* ── Sidebar (right) ── */}
           <div className="lg:col-span-4">
-            <div className="border border-[#323234] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
-              <h3 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pb-4 border-b border-[#323234]">
+            <div className="border border-[#334155] rounded bg-[#1E293B] p-6 space-y-6 sticky top-24">
+              <h3 className="font-mono text-xs text-[#64748B] uppercase tracking-widest pb-4 border-b border-[#334155]">
                 {t.projectDetail.sidebarTitle}
               </h3>
 
               {/* Status */}
               <div>
-                <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
+                <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-2">
                   {t.projectDetail.statusLabel}
                 </p>
-                <span className="text-sm text-[#F0F0F0] capitalize">
+                <span className="text-sm text-[#F4F4F4] capitalize">
                   {project.status === "completed"
                     ? t.projectDetail.statusCompleted
                     : project.status === "in_progress"
@@ -419,13 +419,13 @@ export default function ProjectDetail() {
 
               {/* Links */}
               {(project.demoUrl || project.repositoryUrl) && (
-                <div className="pt-4 border-t border-[#323234] space-y-2">
+                <div className="pt-4 border-t border-[#334155] space-y-2">
                   {project.demoUrl && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-[#888895] hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-sm text-[#94A3B8] hover:text-primary transition-colors"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       {t.projectDetail.demo}
@@ -436,7 +436,7 @@ export default function ProjectDetail() {
                       href={project.repositoryUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-[#888895] hover:text-[#F0F0F0] transition-colors"
+                      className="flex items-center gap-2 text-sm text-[#94A3B8] hover:text-[#F4F4F4] transition-colors"
                     >
                       <Github className="w-3.5 h-3.5" />
                       {t.projectDetail.repo}
@@ -447,7 +447,7 @@ export default function ProjectDetail() {
 
               {/* Linked documentation */}
               {project.linkedCaseSlug && (
-                <div className="pt-4 border-t border-[#323234]">
+                <div className="pt-4 border-t border-[#334155]">
                   <Link
                     href={`/cases/${project.linkedCaseSlug}`}
                     className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors font-medium"

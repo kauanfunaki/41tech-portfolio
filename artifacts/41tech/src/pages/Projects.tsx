@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { useListProjects } from "@workspace/api-client-react";
 import { ArrowRight, Search, SearchX } from "lucide-react";
@@ -75,19 +75,19 @@ export default function Projects() {
   }, [projects, searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[#0D0D0E]">
+    <div className="min-h-screen bg-[#0F172A]">
       {/* Page Header */}
-      <section className="pt-32 pb-16 border-b border-[#323234]">
+      <section className="pt-32 pb-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F4F4F4] tracking-tight leading-none mb-6">
               {t.projects.title}
             </h1>
-            <p className="text-lg text-[#888895] max-w-2xl leading-relaxed">
+            <p className="text-lg text-[#94A3B8] max-w-2xl leading-relaxed">
               {t.projects.subtitle}
             </p>
           </motion.div>
@@ -100,12 +100,12 @@ export default function Projects() {
           >
             {/* Search */}
             <div className="relative max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7A7A85]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#64748B]" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t.projects.searchPlaceholder}
-                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#323234] rounded text-sm text-[#F0F0F0] placeholder:text-[#7A7A85] focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-9 pr-4 h-10 bg-transparent border border-[#334155] rounded text-sm text-[#F4F4F4] placeholder:text-[#64748B] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
 
@@ -117,8 +117,8 @@ export default function Projects() {
                   onClick={() => handleCategoryChange(key)}
                   className={`px-3 py-1 text-xs font-medium rounded border transition-colors focus-ring ${
                     selectedCategory === key
-                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_8px_rgba(255,138,76,0.3)]"
-                      : "bg-transparent border-[#323234] text-[#888895] hover:text-[#F0F0F0] hover:border-[#444448]"
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_8px_rgba(34, 211, 238, 0.3)]"
+                      : "bg-transparent border-[#334155] text-[#94A3B8] hover:text-[#F4F4F4] hover:border-[#475569]"
                   }`}
                 >
                   {t.projects.categories[i]}
@@ -134,14 +134,14 @@ export default function Projects() {
         {isLoading ? (
           <div className="space-y-0">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex items-center gap-6 py-7 border-b border-[#323234]">
-                <Skeleton className="w-8 h-4 bg-[#1A1A1B] shrink-0" />
-                <Skeleton className="w-16 h-16 rounded bg-[#1A1A1B] shrink-0" />
+              <div key={i} className="flex items-center gap-6 py-7 border-b border-[#334155]">
+                <Skeleton className="w-8 h-4 bg-[#253348] shrink-0" />
+                <Skeleton className="w-16 h-16 rounded bg-[#253348] shrink-0" />
                 <div className="flex-1 space-y-2">
-                  <Skeleton className="h-5 w-48 bg-[#1A1A1B]" />
-                  <Skeleton className="h-4 w-72 bg-[#1A1A1B]" />
+                  <Skeleton className="h-5 w-48 bg-[#253348]" />
+                  <Skeleton className="h-4 w-72 bg-[#253348]" />
                 </div>
-                <Skeleton className="h-4 w-20 bg-[#1A1A1B] shrink-0 hidden sm:block" />
+                <Skeleton className="h-4 w-20 bg-[#253348] shrink-0 hidden sm:block" />
               </div>
             ))}
           </div>
@@ -164,12 +164,12 @@ export default function Projects() {
                   <Link href={`/projetos/${project.slug}`}>
                     <div className="project-row group">
                       {/* Index */}
-                      <span className="font-mono text-xs text-[#7A7A85] w-8 shrink-0 select-none">
+                      <span className="font-mono text-xs text-[#64748B] w-8 shrink-0 select-none">
                         {String(i + 1).padStart(2, "0")}
                       </span>
 
                       {/* Thumbnail */}
-                      <div className="w-16 h-16 rounded border border-[#323234] bg-[#131314] shrink-0 overflow-hidden">
+                      <div className="w-16 h-16 rounded border border-[#334155] bg-[#1E293B] shrink-0 overflow-hidden">
                         {cardImg ? (
                           <img
                             src={cardImg}
@@ -180,7 +180,7 @@ export default function Projects() {
                             }}
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[#333336]">
+                          <div className="w-full h-full flex items-center justify-center text-[#2D3E52]">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
                               <rect x="3" y="3" width="18" height="18" rx="2" />
                               <line x1="3" y1="9" x2="21" y2="9" />
@@ -193,10 +193,10 @@ export default function Projects() {
                       {/* Main content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <h3 className="text-base font-semibold text-[#F0F0F0] group-hover:text-primary transition-colors">
+                          <h3 className="text-base font-semibold text-[#F4F4F4] group-hover:text-primary transition-colors">
                             {project.title}
                           </h3>
-                          <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+                          <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                             {category}
                           </span>
                           {isDocumented && (
@@ -205,12 +205,12 @@ export default function Projects() {
                             </span>
                           )}
                           {project.featured && (
-                            <span className="text-xs font-mono text-[#888895] border border-[#323234] px-2 py-0.5 rounded">
+                            <span className="text-xs font-mono text-[#94A3B8] border border-[#334155] px-2 py-0.5 rounded">
                               {t.projects.featured}
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-[#888895] line-clamp-1 leading-relaxed">
+                        <p className="text-sm text-[#94A3B8] line-clamp-1 leading-relaxed">
                           {lang === "en" ? (project.shortDescriptionEn ?? project.shortDescription) : project.shortDescription}
                         </p>
                         {project.metricsSummary && (
@@ -222,10 +222,10 @@ export default function Projects() {
 
                       {/* CTA */}
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <span className="text-xs text-[#7A7A85] group-hover:text-primary transition-colors hidden sm:block">
+                        <span className="text-xs text-[#64748B] group-hover:text-primary transition-colors hidden sm:block">
                           {t.projects.viewDetails}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-[#7A7A85] group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-[#64748B] group-hover:text-primary group-hover:translate-x-1 transition-all" />
                       </div>
                     </div>
                   </Link>
@@ -234,13 +234,13 @@ export default function Projects() {
             })}
           </div>
         ) : (
-          <div className="py-32 text-center border-t border-[#323234] flex flex-col items-center gap-4">
-            <SearchX className="w-10 h-10 text-[#333336]" />
+          <div className="py-32 text-center border-t border-[#334155] flex flex-col items-center gap-4">
+            <SearchX className="w-10 h-10 text-[#2D3E52]" />
             <div>
-              <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
+              <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-2">
                 {t.projects.emptyTitle}
               </p>
-              <p className="text-sm text-[#888895]">{t.projects.emptyDesc}</p>
+              <p className="text-sm text-[#94A3B8]">{t.projects.emptyDesc}</p>
             </div>
           </div>
         )}

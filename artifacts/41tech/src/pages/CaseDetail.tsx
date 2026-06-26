@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { useGetCase, getGetCaseQueryKey, useGetSiteSettings } from "@workspace/api-client-react";
 import {
@@ -61,10 +61,10 @@ function CaseDetailInner() {
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-32 min-h-screen">
-        <Skeleton className="h-4 w-32 mb-12 bg-[#1A1A1B]" />
-        <Skeleton className="h-12 w-3/4 mb-4 bg-[#1A1A1B]" />
-        <Skeleton className="h-5 w-1/2 mb-16 bg-[#1A1A1B]" />
-        <Skeleton className="aspect-video w-full rounded bg-[#1A1A1B]" />
+        <Skeleton className="h-4 w-32 mb-12 bg-[#253348]" />
+        <Skeleton className="h-12 w-3/4 mb-4 bg-[#253348]" />
+        <Skeleton className="h-5 w-1/2 mb-16 bg-[#253348]" />
+        <Skeleton className="aspect-video w-full rounded bg-[#253348]" />
       </div>
     );
   }
@@ -72,8 +72,8 @@ function CaseDetailInner() {
   if (isError || !caseStudy) {
     return (
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-40 text-center min-h-screen flex flex-col items-center justify-center">
-        <LayoutTemplate className="w-16 h-16 text-[#333336] mb-8" />
-        <h1 className="text-2xl font-bold mb-6 text-[#F0F0F0]">
+        <LayoutTemplate className="w-16 h-16 text-[#2D3E52] mb-8" />
+        <h1 className="text-2xl font-bold mb-6 text-[#F4F4F4]">
           {t.caseDetail.notFound}
         </h1>
         <Link
@@ -87,13 +87,13 @@ function CaseDetailInner() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0D0D0E]">
+    <div className="min-h-screen bg-[#0F172A]">
       {/* Header */}
-      <section className="pt-32 pb-16 border-b border-[#323234]">
+      <section className="pt-32 pb-16 border-b border-[#334155]">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <Link
             href="/cases"
-            className="inline-flex items-center text-xs font-mono text-[#7A7A85] hover:text-[#F0F0F0] mb-10 transition-colors uppercase tracking-wider gap-2"
+            className="inline-flex items-center text-xs font-mono text-[#64748B] hover:text-[#F4F4F4] mb-10 transition-colors uppercase tracking-wider gap-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {t.caseDetail.back}
@@ -105,7 +105,7 @@ function CaseDetailInner() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <span className="text-xs font-mono text-[#7A7A85] border border-[#323234] px-2 py-0.5 rounded">
+              <span className="text-xs font-mono text-[#64748B] border border-[#334155] px-2 py-0.5 rounded">
                 {t.caseDetail.badge}
               </span>
               {caseStudy.clientSegment && (
@@ -115,7 +115,7 @@ function CaseDetailInner() {
               )}
             </div>
 
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#F4F4F4] tracking-tight leading-none mb-6">
               {caseStudy.title}
             </h1>
           </motion.div>
@@ -130,7 +130,7 @@ function CaseDetailInner() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-6xl mx-auto px-6 md:px-12 py-8"
         >
-          <div className="aspect-video w-full rounded border border-[#323234] overflow-hidden bg-[#131314]">
+          <div className="aspect-video w-full rounded border border-[#334155] overflow-hidden bg-[#1E293B]">
             {caseStudy.videoUrl ? (
               <video
                 src={caseStudy.videoUrl}
@@ -164,11 +164,11 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.impact}</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#323234] border border-[#323234] rounded overflow-hidden">
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">{t.caseDetail.impact}</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#334155] border border-[#334155] rounded overflow-hidden">
                   {metrics.map((metric, i) => (
-                    <div key={i} className="bg-[#0D0D0E] px-6 py-5">
-                      <p className="text-base font-semibold text-[#F0F0F0]">{metric}</p>
+                    <div key={i} className="bg-[#0F172A] px-6 py-5">
+                      <p className="text-base font-semibold text-[#F4F4F4]">{metric}</p>
                     </div>
                   ))}
                 </div>
@@ -182,9 +182,9 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.challenge}</h2>
-                <div className="border-l-2 border-[#323234] pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.problem}</p>
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">{t.caseDetail.challenge}</h2>
+                <div className="border-l-2 border-[#334155] pl-6">
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.problem}</p>
                 </div>
               </motion.section>
             )}
@@ -196,9 +196,9 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.solution}</h2>
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">{t.caseDetail.solution}</h2>
                 <div className="border-l-2 border-primary/40 pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.solution}</p>
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.solution}</p>
                 </div>
               </motion.section>
             )}
@@ -210,9 +210,9 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.result}</h2>
-                <div className="border-l-2 border-[#323234] pl-6">
-                  <p className="text-[#888895] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.result}</p>
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">{t.caseDetail.result}</h2>
+                <div className="border-l-2 border-[#334155] pl-6">
+                  <p className="text-[#94A3B8] text-base leading-relaxed whitespace-pre-wrap">{caseStudy.result}</p>
                 </div>
               </motion.section>
             )}
@@ -224,10 +224,10 @@ function CaseDetailInner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-6">{t.caseDetail.gallery}</h2>
+                <h2 className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-6">{t.caseDetail.gallery}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryImages.map((imgUrl, i) => (
-                    <div key={i} className="aspect-video w-full rounded border border-[#323234] bg-[#131314] overflow-hidden">
+                    <div key={i} className="aspect-video w-full rounded border border-[#334155] bg-[#1E293B] overflow-hidden">
                       <img
                         src={imgUrl}
                         alt={`${t.caseDetail.gallery} ${i + 1}`}
@@ -244,12 +244,12 @@ function CaseDetailInner() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pt-12 border-t border-[#323234]"
+              className="pt-12 border-t border-[#334155]"
             >
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0] mb-3">
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F4F4F4] mb-3">
                 {t.caseDetail.ctaTitle}
               </h3>
-              <p className="text-[#888895] text-base mb-6 max-w-md">
+              <p className="text-[#94A3B8] text-base mb-6 max-w-md">
                 {t.caseDetail.ctaSubtitle}
               </p>
               <button
@@ -264,17 +264,17 @@ function CaseDetailInner() {
 
           {/* Sidebar */}
           <div className="lg:col-span-4">
-            <div className="border border-[#323234] rounded bg-[#131314] p-6 space-y-6 sticky top-24">
-              <h3 className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest pb-4 border-b border-[#323234]">
+            <div className="border border-[#334155] rounded bg-[#1E293B] p-6 space-y-6 sticky top-24">
+              <h3 className="font-mono text-xs text-[#64748B] uppercase tracking-widest pb-4 border-b border-[#334155]">
                 {t.caseDetail.sidebarTitle}
               </h3>
 
               {/* Type */}
               <div>
-                <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
+                <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-2">
                   {t.caseDetail.typeLabel}
                 </p>
-                <div className="flex items-center gap-1.5 text-sm text-[#888895]">
+                <div className="flex items-center gap-1.5 text-sm text-[#94A3B8]">
                   <Briefcase className="w-3.5 h-3.5" />
                   {t.caseDetail.badge}
                 </div>
@@ -282,23 +282,23 @@ function CaseDetailInner() {
 
               {/* Segment */}
               {caseStudy.clientSegment && (
-                <div className="pt-4 border-t border-[#323234]">
-                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-2">
+                <div className="pt-4 border-t border-[#334155]">
+                  <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-2">
                     {t.caseDetail.segmentLabel}
                   </p>
-                  <span className="text-sm text-[#F0F0F0]">{caseStudy.clientSegment}</span>
+                  <span className="text-sm text-[#F4F4F4]">{caseStudy.clientSegment}</span>
                 </div>
               )}
 
               {/* Metrics */}
               {metrics.length > 0 && (
-                <div className="pt-4 border-t border-[#323234]">
-                  <p className="font-mono text-xs text-[#7A7A85] uppercase tracking-widest mb-3">
+                <div className="pt-4 border-t border-[#334155]">
+                  <p className="font-mono text-xs text-[#64748B] uppercase tracking-widest mb-3">
                     {t.caseDetail.resultsLabel}
                   </p>
                   <div className="space-y-1.5">
                     {metrics.map((m, i) => (
-                      <p key={i} className="text-sm text-[#888895]">{m}</p>
+                      <p key={i} className="text-sm text-[#94A3B8]">{m}</p>
                     ))}
                   </div>
                 </div>
@@ -306,7 +306,7 @@ function CaseDetailInner() {
 
               {/* Related URL */}
               {caseStudy.relatedUrl && (
-                <div className="pt-4 border-t border-[#323234]">
+                <div className="pt-4 border-t border-[#334155]">
                   <a
                     href={caseStudy.relatedUrl}
                     target="_blank"
