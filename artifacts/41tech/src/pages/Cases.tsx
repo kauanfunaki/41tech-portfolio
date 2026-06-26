@@ -44,7 +44,6 @@ export default function Cases() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="section-num mb-4 block">// 00</span>
             <h1 className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6">
               {t.cases.title}
             </h1>

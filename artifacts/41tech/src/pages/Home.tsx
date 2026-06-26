@@ -176,7 +176,6 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10">
           <motion.div initial="hidden" animate="show" variants={stagger(0.1)} className="max-w-2xl">
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-10">
-              <span className="section-num">// 00</span>
               <span className="section-num">{t.home.badge}</span>
             </motion.div>
 
@@ -262,7 +261,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           03 — TECH MARQUEE
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-8 overflow-hidden">
+      <section className="border-t border-[#323234] py-6 overflow-hidden">
         <div className="flex items-center gap-6 mb-4 max-w-6xl mx-auto px-6 md:px-12">
           <span className="section-num shrink-0">// {t.home.techMarqueeLabel}</span>
         </div>
@@ -295,12 +294,12 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           04 — EXPERTISE PREVIEW
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-20">
+      <section className="border-t border-[#323234] py-24">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
-              <div className="flex items-baseline gap-4">
-                <span className="section-num">// 01</span>
+              <div className="flex items-center gap-4">
+                <div className="w-5 h-px bg-primary shrink-0" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                   {t.home.expertisePreviewLabel}
                 </h2>
@@ -347,8 +346,8 @@ export default function Home() {
       <section className="border-t border-[#323234] py-20">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
-            <motion.div variants={fadeUp} className="flex items-baseline gap-4 mb-12">
-              <span className="section-num">// 02</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="w-5 h-px bg-primary shrink-0" />
               <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                 {t.home.featuredLabel}
               </h2>
@@ -427,12 +426,12 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           06 — PREVIEW DE PROJETOS
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-20">
+      <section className="border-t border-[#323234] py-16">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
-              <div className="flex items-baseline gap-4">
-                <span className="section-num">// 03</span>
+              <div className="flex items-center gap-4">
+                <div className="w-5 h-px bg-primary shrink-0" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                   {t.home.projectsPreviewLabel}
                 </h2>
@@ -501,8 +500,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger()}>
             <motion.div variants={fadeUp} className="flex items-baseline justify-between gap-6 mb-12 flex-wrap">
-              <div className="flex items-baseline gap-4">
-                <span className="section-num">// 04</span>
+              <div className="flex items-center gap-4">
+                <div className="w-5 h-px bg-primary shrink-0" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0F0F0]">
                   {t.home.experiencePreviewLabel}
                 </h2>
@@ -571,7 +570,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════
           08 — CONTACT CTA
       ══════════════════════════════════════════════ */}
-      <section className="border-t border-[#323234] py-24" id="contato">
+      <section className="border-t border-[#323234] py-32" id="contato">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial="hidden"
@@ -582,7 +581,9 @@ export default function Home() {
           >
             {/* Left: copy */}
             <div>
-              <motion.span variants={fadeUp} className="section-num mb-4 block">// 05</motion.span>
+              <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
+                <div className="w-5 h-px bg-primary shrink-0" />
+              </motion.div>
               <motion.h2
                 variants={fadeUp}
                 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#F0F0F0] leading-tight mb-6"
