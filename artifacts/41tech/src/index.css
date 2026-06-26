@@ -301,12 +301,14 @@ body::after {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #323234;
+    border-left: 2px solid transparent;
     cursor: pointer;
     transition: all 200ms;
   }
   .project-row:hover {
     padding-left: 0.75rem;
     border-bottom-color: color-mix(in srgb, hsl(var(--primary)) 30%, transparent);
+    border-left-color: hsl(var(--primary));
   }
 
   /* ── Card interactive — unified hover for all public cards ── */

@@ -197,7 +197,7 @@ export default function Home() {
               <Button
                 size="lg"
                 asChild
-                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] text-primary-foreground border-0 rounded transition-all hover:shadow-[0_0_20px_rgba(255,138,76,0.35)]"
+                className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] text-primary-foreground border-0 rounded transition-all hover:shadow-[0_0_20px_rgba(255,138,76,0.35)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Link href="/projetos">
                   {settings?.ctaPrimaryLabel || t.home.ctaPrimary}
@@ -207,7 +207,7 @@ export default function Home() {
                 size="lg"
                 variant="outline"
                 onClick={openWhatsApp}
-                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] rounded backdrop-blur-sm transition-all"
+                className="h-12 px-7 text-sm font-semibold border-white/20 text-[#F0F0F0] hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0E] rounded backdrop-blur-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t.home.contactCtaBtn}
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -402,7 +402,7 @@ export default function Home() {
                         <img
                           src={featuredProject.thumbnailUrl || featuredProject.coverImageUrl!}
                           alt={featuredProject.title}
-                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 scale-100 group-hover:scale-[1.05] transition-all duration-300"
                           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                         />
                       </div>
@@ -597,7 +597,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={openWhatsApp}
-                  className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground border-0 rounded"
+                  className="h-12 px-7 text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground border-0 rounded transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <WhatsAppIcon className="w-4 h-4 mr-2" />
                   {t.home.contactCtaBtn}
