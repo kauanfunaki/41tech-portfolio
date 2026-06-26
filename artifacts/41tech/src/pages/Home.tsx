@@ -324,7 +324,7 @@ export default function Home() {
                     variants={fadeUp}
                     className={`card-interactive flex flex-col gap-3 ${
                       featured
-                        ? "p-8 min-h-[220px] lg:col-span-2"
+                        ? "p-6 lg:p-8 min-h-[180px] lg:min-h-[220px] lg:col-span-2"
                         : "p-6 min-h-[180px]"
                     }`}
                   >

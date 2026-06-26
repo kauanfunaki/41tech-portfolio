@@ -71,9 +71,6 @@ export default function Experience() {
             animate="show"
             variants={{ show: { transition: { staggerChildren: 0.09 } } }}
           >
-            <motion.span variants={fadeUp} className="section-num mb-4 block">
-              // 00
-            </motion.span>
             <motion.h1
               variants={fadeUp}
               className="font-display text-5xl md:text-7xl font-bold text-[#F0F0F0] tracking-tight leading-none mb-6"
